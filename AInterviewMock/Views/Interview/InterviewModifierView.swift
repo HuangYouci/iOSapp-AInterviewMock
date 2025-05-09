@@ -15,8 +15,8 @@ struct InterviewModifierView: View {
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading){
-                Text("面試")
-                Text("準備開始！")
+                Text(NSLocalizedString("InterviewModifierView_titleLine1", comment: "First line of the title on the interview modification/start screen"))
+                Text(NSLocalizedString("InterviewModifierView_titleLine2", comment: "Second line of the title on the interview modification/start screen"))
             }
             .font(.largeTitle)
             .bold()
@@ -26,7 +26,7 @@ struct InterviewModifierView: View {
                     .frame(height: 5)
                 VStack(alignment: .leading, spacing: 15){
                     
-                    Text("啟動花費")
+                    Text(NSLocalizedString("InterviewModifierView_costSectionTitle", comment: "Section title for 'Cost to start'"))
                         .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
                 
@@ -39,7 +39,7 @@ struct InterviewModifierView: View {
                                     .scaledToFit()
                                     .frame(width: 70, height: 70)
                                     .foregroundStyle(Color("AppGold"))
-                                Text("\(selected!.cost)")
+                                Text("\(selected!.cost)") // Dynamic value
                                     .font(.title)
                                     .bold()
                                     .foregroundStyle(Color(.accent))
@@ -57,12 +57,12 @@ struct InterviewModifierView: View {
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(Color(.accent))
-                            Text("說明")
+                            Text(NSLocalizedString("InterviewModifierView_explanationTitle", comment: "Title for the explanation section about cost and starting the interview"))
                                 .bold()
                             Spacer()
                         }
-                        Text("此模擬面試需花費 \(selected!.cost) 個代幣。下一步開始面試，將生成面試題目並開始回答，此時已扣除面試花費，請勿離開程式！")
-                        Text("代幣不足嗎？您可以點選「暫存」，本頁之前的設定都已保留，之後再從紀錄選取進行面試。")
+                        Text(String(format: NSLocalizedString("InterviewModifierView_explanationBodyCost", comment: "Explanation text about the cost of the interview. Contains one integer placeholder for the cost."), selected!.cost))
+                        Text(NSLocalizedString("InterviewModifierView_explanationBodyInsufficientCoins", comment: "Explanation text for what to do if coins are insufficient."))
                     }
                     .padding()
                     .overlay(
@@ -84,12 +84,12 @@ struct InterviewModifierView: View {
                                     .scaledToFit()
                                     .frame(width: 15, height: 15)
                                     .foregroundStyle(Color(.red))
-                                Text("代幣不足")
+                                Text(NSLocalizedString("InterviewModifierView_insufficientCoinsTitle", comment: "Title for the insufficient coins warning section"))
                                     .bold()
                                 Spacer()
                             }
-                            Text("此模擬面試需花費 \(selected!.cost) 個代幣，您只有 \(CoinManager.shared.coins)) 個代幣。")
-                            Text("請先「暫存」，並購買或獲得一些代幣再嘗試。")
+                            Text(String(format: NSLocalizedString("InterviewModifierView_insufficientCoinsBody", comment: "Warning message when user has insufficient coins. Contains two integer placeholders: required cost and current coins."), selected!.cost, CoinManager.shared.coins))
+                            Text(NSLocalizedString("InterviewModifierView_insufficientCoinsSuggestion", comment: "Suggestion when user has insufficient coins."))
                         }
                         .padding()
                         .overlay(
@@ -102,20 +102,20 @@ struct InterviewModifierView: View {
                     }
                     
                     
-                    Text("題目數量")
+                    Text(NSLocalizedString("InterviewModifierView_questionCountSectionTitle", comment: "Section title for 'Number of Questions'"))
                         .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
                     
                     VStack(alignment: .leading, spacing: 5){
                         VStack(alignment: .leading){
-                            Text("題目數量")
+                            Text(NSLocalizedString("InterviewModifierView_questionCountLabel", comment: "Label for 'Number of Questions' display"))
                                 .bold()
                                 .foregroundStyle(Color(.accent))
                             HStack(alignment: .bottom){
-                                Text("\(selected!.questionNumbers)")
+                                Text("\(selected!.questionNumbers)") // Dynamic value
                                     .bold()
                                     .font(.largeTitle)
-                                Text("題")
+                                Text(NSLocalizedString("InterviewModifierView_questionCountUnit", comment: "Unit for question count, e.g., 'questions' or 'items'"))
                                     .bold()
                                     .padding(.bottom, 5)
                                 Spacer()
@@ -129,7 +129,7 @@ struct InterviewModifierView: View {
                             } label: {
                                 HStack{
                                     Spacer()
-                                    Text("基礎")
+                                    Text(NSLocalizedString("InterviewModifierView_questionCountButtonBasic", comment: "Button text for basic number of questions (e.g., 5)"))
                                     Spacer()
                                 }
                             }
@@ -146,7 +146,7 @@ struct InterviewModifierView: View {
                             } label: {
                                 HStack{
                                     Spacer()
-                                    Text("適中")
+                                    Text(NSLocalizedString("InterviewModifierView_questionCountButtonModerate", comment: "Button text for moderate number of questions (e.g., 10)"))
                                     Spacer()
                                 }
                             }
@@ -160,7 +160,7 @@ struct InterviewModifierView: View {
                             } label: {
                                 HStack{
                                     Spacer()
-                                    Text("完整")
+                                    Text(NSLocalizedString("InterviewModifierView_questionCountButtonFull", comment: "Button text for full number of questions (e.g., 15)"))
                                     Spacer()
                                 }
                             }
@@ -173,7 +173,7 @@ struct InterviewModifierView: View {
                             } label: {
                                 HStack{
                                     Spacer()
-                                    Text("大量")
+                                    Text(NSLocalizedString("InterviewModifierView_questionCountButtonExtensive", comment: "Button text for extensive number of questions (e.g., 20)"))
                                     Spacer()
                                 }
                             }
@@ -198,20 +198,20 @@ struct InterviewModifierView: View {
                     )
                     .padding(.horizontal)
                     
-                    Text("進階調整器")
+                    Text(NSLocalizedString("InterviewModifierView_advancedAdjustmentsSectionTitle", comment: "Section title for 'Advanced Adjustments'"))
                         .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
                     
                     VStack(alignment: .leading){
                         HStack{
-                            Text("正式程度")
+                            Text(NSLocalizedString("InterviewModifierView_formalityLevelLabel", comment: "Label for 'Formality Level'"))
                                 .bold()
                                 .foregroundStyle(Color(.accent))
-                            Text(styleDescription(s: "正式", i: selected!.questionFormalStyle))
+                            Text(styleDescription(s: NSLocalizedString("InterviewModifierView_formalityLevelAdj", comment: "Adj for 'Formality Level'"), i: selected!.questionFormalStyle))
                                 .bold()
                             Spacer()
                         }
-                        Text("決定模擬面試的語氣與氣氛，輕鬆或正式。")
+                        Text(NSLocalizedString("InterviewModifierView_formalityLevelDescription", comment: "Description for formality level slider."))
                             .foregroundStyle(Color(.systemGray))
                         
                         Slider(
@@ -241,14 +241,14 @@ struct InterviewModifierView: View {
                     
                     VStack(alignment: .leading){
                         HStack{
-                            Text("嚴格程度")
+                            Text(NSLocalizedString("InterviewModifierView_strictnessLevelLabel", comment: "Label for 'Strictness Level'"))
                                 .bold()
                                 .foregroundStyle(Color(.accent))
-                            Text(styleDescription(s: "嚴格", i: selected!.questionStrictStyle))
+                            Text(styleDescription(s: NSLocalizedString("InterviewModifierView_strictnessLevelAdj", comment: "Adj for 'Strictness Level'"), i: selected!.questionStrictStyle))
                                 .bold()
                             Spacer()
                         }
-                        Text("控制問題的深度與難度，根據你的準備程度來調整。")
+                        Text(NSLocalizedString("InterviewModifierView_strictnessLevelDescription", comment: "Description for strictness level slider."))
                             .foregroundStyle(Color(.systemGray))
                         
                         Slider(
@@ -282,7 +282,7 @@ struct InterviewModifierView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                            Text("回復預設")
+                            Text(NSLocalizedString("InterviewModifierView_resetToDefaultButton", comment: "Button text to reset settings to default"))
                                 .bold()
                                 .frame(minWidth: 20)
                             Spacer()
@@ -316,19 +316,19 @@ struct InterviewModifierView: View {
     
     private func styleDescription(s: String, i: Double) -> String {
         if(i == 1) {
-            "極為\(s)"
+            NSLocalizedString("InterviewModifierView_adjExtremely", comment: "Adj Extremely") + s
         } else if(i > 0.8){
-            "\(s)"
+            s
         } else if (i > 0.6) {
-            "偏\(s)"
+            NSLocalizedString("InterviewModifierView_adjBit", comment: "Adj Bit") + s
         } else if (i > 0.4) {
-            "一般"
+            NSLocalizedString("InterviewModifierView_adjNormal", comment: "Adj Normal")
         } else if (i > 0.2) {
-            "偏不\(s)"
+            NSLocalizedString("InterviewModifierView_adjBitNot", comment: "Adj Bit not") + s
         } else if (i > 0) {
-            "不\(s)"
+            NSLocalizedString("InterviewModifierView_adjNot", comment: "Adj Not") + s
         } else {
-            "極為不\(s)"
+            NSLocalizedString("InterviewModifierView_adjExtremelyNot", comment: "Adj Extremely Not") + s
         }
     }
     

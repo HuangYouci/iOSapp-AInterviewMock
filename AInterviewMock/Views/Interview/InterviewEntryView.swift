@@ -14,8 +14,8 @@ struct InterviewEntryView: View {
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading){
-                Text("你想練習")
-                Text("什麼面試呢？")
+                Text(NSLocalizedString("InterviewEntryView_titleLine1", comment: "First line of the title on the interview type selection screen"))
+                Text(NSLocalizedString("InterviewEntryView_titleLine2", comment: "Second line of the title on the interview type selection screen"))
             }
             .font(.largeTitle)
             .bold()
@@ -34,17 +34,17 @@ struct InterviewEntryView: View {
     private func typeBuilder(of obj: InterviewProfile) -> some View {
         VStack{
             HStack(spacing: 5){
-                Image(systemName: "\(obj.templateImage)")
+                Image(systemName: "\(obj.templateImage)") // This is dynamic from obj
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30, height: 30)
                     .foregroundStyle(Color(.accent))
                     .padding()
                 VStack(alignment: .leading){
-                    Text(obj.templateName)
+                    Text(obj.templateName) // Assumed to be already localized string from InterviewProfile
                         .font(.title2)
                         .bold()
-                    Text(obj.templateDescription)
+                    Text(obj.templateDescription) // Assumed to be already localized string from InterviewProfile
                         .foregroundStyle(Color(.systemGray))
                 }
                 Spacer()

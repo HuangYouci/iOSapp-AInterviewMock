@@ -19,8 +19,8 @@ struct InterviewFileView: View {
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading){
-                Text("有檔案")
-                Text("需要提供嗎？")
+                Text(NSLocalizedString("InterviewFileView_titleLine1", comment: "First line of the title on the file selection screen"))
+                Text(NSLocalizedString("InterviewFileView_titleLine2", comment: "Second line of the title on the file selection screen"))
             }
             .font(.largeTitle)
             .bold()
@@ -39,7 +39,7 @@ struct InterviewFileView: View {
                                 Text(filesName[index])
                                     .lineLimit(1)
                                 Spacer()
-                                Text("\(String(format: "%.2f", filesSize[index])) MB")
+                                Text(String(format: NSLocalizedString("InterviewFileView_fileSizeFormatMB", comment: "Format string for file size in MB, e.g. '%.2f MB'. The %.2f will be replaced by the file size."), filesSize[index]))
                                     .foregroundStyle(Color(.systemGray))
                             }
                             if (filesSize[index] > 5){
@@ -48,7 +48,7 @@ struct InterviewFileView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 15, height: 15)
-                                    Text("檔案過大！請重新選擇小於 4MB 的檔案。")
+                                    Text(NSLocalizedString("InterviewFileView_fileTooLargeError", comment: "Error message when a selected file is too large."))
                                 }
                                 .foregroundStyle(Color(.red))
                             }
@@ -78,7 +78,7 @@ struct InterviewFileView: View {
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
                                     .foregroundStyle(Color(.accent))
-                                Text("新增新檔案")
+                                Text(NSLocalizedString("InterviewFileView_addNewFileButton", comment: "Button text to add a new file"))
                                     .bold()
                                     .foregroundStyle(Color(.accent))
                                     .frame(minWidth: 20)
@@ -108,7 +108,7 @@ struct InterviewFileView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                            Text("清除所有檔案")
+                            Text(NSLocalizedString("InterviewFileView_clearAllFilesButton", comment: "Button text to clear all selected files"))
                                 .bold()
                                 .frame(minWidth: 20)
                             Spacer()
@@ -150,10 +150,8 @@ struct InterviewFileView: View {
                 if let url = urls.first {
                     selectionFiles[focusState] = url.path
                     
-                    // Name
                     filesName[focusState] = url.lastPathComponent
                     
-                    // Size
                     var fileSize: Int = 0
                     do {
                         let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
@@ -166,7 +164,6 @@ struct InterviewFileView: View {
                     let sizeMB = sizeKB / 1024.0
                     filesSize[focusState] = sizeMB
                     
-                    // Size Check
                     if (sizeMB > 4){
                         selectionFiles[focusState] = ""
                     }

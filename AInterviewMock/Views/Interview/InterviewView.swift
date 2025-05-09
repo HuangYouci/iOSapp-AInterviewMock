@@ -125,14 +125,14 @@ struct InterviewView: View {
                                     ScrollViewReader { proxy in
                                         ScrollView{
                                             VStack(alignment: .leading, spacing: 10){
-                                                Text("進度")
+                                                Text(NSLocalizedString("InterviewView_progressTitle", comment: "Title for the progress steps list"))
                                                     .font(.title2)
                                                     .bold()
-                                                progressBuilder(s: 1, t: "面試類型")
-                                                progressBuilder(s: 2, t: "面試細節")
-                                                progressBuilder(s: 3, t: "資料準備")
-                                                progressBuilder(s: 4, t: "資料確認")
-                                                progressBuilder(s: 5, t: "準備開始")
+                                                progressBuilder(s: 1, t: NSLocalizedString("InterviewView_progressStep1InterviewType", comment: "Progress step 1: Interview Type"))
+                                                progressBuilder(s: 2, t: NSLocalizedString("InterviewView_progressStep2InterviewDetails", comment: "Progress step 2: Interview Details"))
+                                                progressBuilder(s: 3, t: NSLocalizedString("InterviewView_progressStep3DataPreparation", comment: "Progress step 3: Data Preparation (Files)"))
+                                                progressBuilder(s: 4, t: NSLocalizedString("InterviewView_progressStep4DataConfirmation", comment: "Progress step 4: Data Confirmation"))
+                                                progressBuilder(s: 5, t: NSLocalizedString("InterviewView_progressStep5ReadyToStart", comment: "Progress step 5: Ready to Start"))
                                                 Color.clear
                                                     .frame(height: 0)
                                                     .frame(maxWidth: .infinity)
@@ -154,7 +154,7 @@ struct InterviewView: View {
                                                 perviousButtonAction()
                                             } label: {
                                                 HStack{
-                                                    Text(perviousButtonText())
+                                                    Text(perviousButtonText()) // This function returns a String (already localized)
                                                         .font(.title3)
                                                 }
                                             }
@@ -166,7 +166,7 @@ struct InterviewView: View {
                                             nextButtonAction()
                                         } label: {
                                             HStack{
-                                                Text(nextButtonText())
+                                                Text(nextButtonText()) // This function returns a String (already localized)
                                                     .font(.title3)
                                                 Image(systemName: "chevron.right")
                                                     .resizable()
@@ -208,7 +208,7 @@ struct InterviewView: View {
         }
     }
     
-    private func progressBuilder(s: Int, t: String) -> some View {
+    private func progressBuilder(s: Int, t: String) -> some View { // t is now a String (already localized)
         HStack{
             if (session == s){
                 Image(systemName: "\(s).circle.fill")
@@ -231,12 +231,12 @@ struct InterviewView: View {
             }
             
             if (session == s){
-                Text(t)
+                Text(t) // Text receives the already localized string
                 .bold()
             } else if (session < s){
-                Text(t)
+                Text(t) // Text receives the already localized string
             } else {
-                Text(t)
+                Text(t) // Text receives the already localized string
                 .foregroundStyle(Color(.systemGray))
             }
             
@@ -289,12 +289,12 @@ struct InterviewView: View {
         
         return true
     }
-    private func nextButtonText() -> String {
+    private func nextButtonText() -> String { // Returns String (already localized)
         switch (session){
         case 5:
-            return "開始面試"
+            return NSLocalizedString("InterviewView_nextButtonStartInterview", comment: "Button text: Start Interview")
         default:
-            return "下一步"
+            return NSLocalizedString("InterviewView_nextButtonNextStep", comment: "Button text: Next")
         }
     }
     private func nextButtonAction() {
@@ -326,16 +326,16 @@ struct InterviewView: View {
             return true
         }
     }
-    private func perviousButtonText() -> String {
+    private func perviousButtonText() -> String { // Returns String (already localized)
         switch (session){
         case 6:
-            return "離開"
+            return NSLocalizedString("InterviewView_previousButtonLeave", comment: "Button text: Leave")
         case 5:
-            return "暫存"
+            return NSLocalizedString("InterviewView_previousButtonSaveChanges", comment: "Button text: Save Changes / Save Draft")
         case 1:
-            return "取消"
+            return NSLocalizedString("InterviewView_previousButtonCancel", comment: "Button text: Cancel")
         default:
-            return "上一步"
+            return NSLocalizedString("InterviewView_previousButtonPreviousStep", comment: "Button text: Previous Step")
         }
     }
     private func perviousButtonAction() {

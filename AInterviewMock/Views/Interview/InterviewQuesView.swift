@@ -19,8 +19,8 @@ struct InterviewQuesView: View {
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading){
-                Text("告訴我們")
-                Text("面試的細節吧！")
+                Text(NSLocalizedString("InterviewQuesView_titleLine1", comment: "First line of the title on the pre-interview questions screen"))
+                Text(NSLocalizedString("InterviewQuesView_titleLine2", comment: "Second line of the title on the pre-interview questions screen"))
             }
             .font(.largeTitle)
             .bold()
@@ -39,11 +39,11 @@ struct InterviewQuesView: View {
                                 Text(selectionQuestions[index].question)
                                 if (selectionQuestions[index].required){
                                     Spacer()
-                                    Text("必填")
+                                    Text(NSLocalizedString("InterviewQuesView_requiredFieldIndicator", comment: "Indicator text for a required field, e.g., 'Required'"))
                                         .foregroundStyle(Color(.red))
                                 }
                             }
-                            TextField("答案", text: $selectionQuestions[index].answer)
+                            TextField(NSLocalizedString("InterviewQuesView_answerTextFieldPlaceholder", comment: "Placeholder text for the answer input field"), text: $selectionQuestions[index].answer)
                                 .focused($focusedField, equals: .question(index: index))
                         }
                         .padding()

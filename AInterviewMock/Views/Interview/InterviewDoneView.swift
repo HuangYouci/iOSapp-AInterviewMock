@@ -14,8 +14,8 @@ struct InterviewDoneView: View {
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading){
-                Text("準備就緒")
-                Text("再檢查一下面試設定吧！")
+                Text(NSLocalizedString("InterviewDoneView_titleLine1", comment: "First line of the title on the final review screen before starting interview"))
+                Text(NSLocalizedString("InterviewDoneView_titleLine2", comment: "Second line of the title on the final review screen"))
             }
             .font(.largeTitle)
             .bold()
@@ -30,7 +30,7 @@ struct InterviewDoneView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                            Text("面試類型")
+                            Text(NSLocalizedString("InterviewDoneView_section1TitleInterviewType", comment: "Section title for 'Interview Type' review"))
                                 .bold()
                                 .font(.title3)
                             Spacer()
@@ -46,7 +46,7 @@ struct InterviewDoneView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                            Text("面試細節")
+                            Text(NSLocalizedString("InterviewDoneView_section2TitleInterviewDetails", comment: "Section title for 'Interview Details' (pre-questions) review"))
                                 .bold()
                                 .font(.title3)
                             Spacer()
@@ -61,7 +61,7 @@ struct InterviewDoneView: View {
                                         .scaledToFit()
                                         .frame(width: 15, height: 10)
                                     if (item.answer.isEmpty){
-                                        Text("無作答")
+                                        Text(NSLocalizedString("InterviewDoneView_noAnswerProvided", comment: "Indicator text when no answer was provided for a pre-question"))
                                             .foregroundStyle(Color(.systemGray))
                                     } else {
                                         Text(item.answer)
@@ -77,7 +77,7 @@ struct InterviewDoneView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-                            Text("資料準備")
+                            Text(NSLocalizedString("InterviewDoneView_section3TitleDataPreparation", comment: "Section title for 'Data Preparation' (files) review"))
                                 .bold()
                                 .font(.title3)
                             Spacer()
@@ -92,7 +92,7 @@ struct InterviewDoneView: View {
                                 }
                             }
                             if (selected.filesPath.isEmpty){
-                                Text("無資料")
+                                Text(NSLocalizedString("InterviewDoneView_noDataProvided", comment: "Indicator text when no files were provided"))
                                     .foregroundStyle(Color(.systemGray))
                             }
                         }

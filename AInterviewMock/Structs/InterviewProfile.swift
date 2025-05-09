@@ -62,16 +62,17 @@ struct DefaultInterviewType {
     // template
     static var college: InterviewProfile {
             return InterviewProfile(
-                templateName: "大學面試",
-                templateDescription: "針對大學面試做準備",
+                id: UUID(),
+                templateName: NSLocalizedString("InterviewProfile_college_templateName", comment: "Name of the college interview template"),
+                templateDescription: NSLocalizedString("InterviewProfile_college_templateDescription", comment: "Description for the college interview template"),
                 templateImage: "graduationcap.fill",
-                templatePrompt: "你是一間大學面試的面試官，請你依照以下資訊提供面試的題目，題目不可重複或過於相似且需符合資訊要求，除了參考資訊以及可能的附件之外，亦可搜尋目標校系的資料進行綜合出題：",
+                templatePrompt: NSLocalizedString("InterviewProfile_college_templatePrompt", comment: "Base prompt for AI for college interview template. This might be long and could also be a key if parts of it need to change by language, but for now, localizing the whole string."),
                 preQuestions: [
-                    InterviewProfilePreQuestions(question: "目標的學校是什麼？", answer: "", required: true),
-                    InterviewProfilePreQuestions(question: "目標的科系是什麼？", answer: "", required: true),
-                    InterviewProfilePreQuestions(question: "該科系有要求自我介紹嗎，有的話有什麼條件嗎？", answer: "", required: false),
-                    InterviewProfilePreQuestions(question: "據你所知，該科系偏重詢問什麼方向的題目？", answer: "", required: false),
-                    InterviewProfilePreQuestions(question: "該科系在面試有什麼其他的特別要求嗎？", answer: "", required: false)
+                    InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion1_school", comment: "Pre-interview question: Target school?"), answer: "", required: true),
+                    InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion2_department", comment: "Pre-interview question: Target department?"), answer: "", required: true),
+                    InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion3_selfIntro", comment: "Pre-interview question: Self-introduction requirements?"), answer: "", required: false),
+                    InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion4_focusTopics", comment: "Pre-interview question: Department's typical question focus?"), answer: "", required: false),
+                    InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion5_specialReqs", comment: "Pre-interview question: Other special interview requirements?"), answer: "", required: false)
                 ],
                 filesPath: [],
                 questions: [],

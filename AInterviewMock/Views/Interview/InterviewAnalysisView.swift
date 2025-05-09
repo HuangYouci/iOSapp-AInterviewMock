@@ -55,7 +55,7 @@ struct InterviewAnalysisView: View {
                 
                 // Overall Rating
                 VStack(alignment: .leading){
-                    Text("評分")
+                    Text(NSLocalizedString("InterviewAnalysisView_overallRatingSectionTitle", comment: "Section title for 'Overall Rating'"))
                         .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
                     VStack(alignment: .leading){
@@ -65,7 +65,7 @@ struct InterviewAnalysisView: View {
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(Color(.accent))
-                            Text("評分")
+                            Text(NSLocalizedString("InterviewAnalysisView_overallRatingLabel", comment: "Label for 'Overall Rating' value"))
                                 .bold()
                             Spacer()
                         }
@@ -86,7 +86,7 @@ struct InterviewAnalysisView: View {
                 
                 // Feedback
                 VStack(alignment: .leading){
-                    Text("評語")
+                    Text(NSLocalizedString("InterviewAnalysisView_feedbackSectionTitle", comment: "Section title for 'Feedback' (overall comments)"))
                         .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
                     ForEach(selected.feedbacks) { item in
@@ -97,7 +97,7 @@ struct InterviewAnalysisView: View {
                                     .scaledToFit()
                                     .frame(width: 15, height: 15)
                                     .foregroundStyle(Color(.accent))
-                                Text("評語")
+                                Text(NSLocalizedString("InterviewAnalysisView_feedbackItemLabel", comment: "Label for an individual feedback item/comment"))
                                     .bold()
                                 Spacer()
                                 if (item.positive){
@@ -124,7 +124,7 @@ struct InterviewAnalysisView: View {
                 
                 // Each Question Feedback
                 VStack(alignment: .leading){
-                    Text("回答")
+                    Text(NSLocalizedString("InterviewAnalysisView_answersSectionTitle", comment: "Section title for 'Answers' (per-question analysis)"))
                         .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
                     ForEach(selected.questions) { item in
@@ -135,29 +135,29 @@ struct InterviewAnalysisView: View {
                                     .scaledToFit()
                                     .frame(width: 15, height: 15)
                                     .foregroundStyle(Color(.accent))
-                                Text("問答")
+                                Text(NSLocalizedString("InterviewAnalysisView_qnaItemLabel", comment: "Label for an individual question-answer item"))
                                     .bold()
                                 Spacer()
                             }
-                            Text("題目")
+                            Text(NSLocalizedString("InterviewAnalysisView_questionSublabel", comment: "Sublabel for 'Question' within Q&A item"))
                                 .foregroundStyle(Color(.systemGray))
                                 .font(.caption)
                                 .padding(.top, 5)
                             Text(item.question)
                             
-                            Text("回答")
+                            Text(NSLocalizedString("InterviewAnalysisView_answerSublabel", comment: "Sublabel for 'Answer' within Q&A item"))
                                 .foregroundStyle(Color(.systemGray))
                                 .font(.caption)
                                 .padding(.top, 5)
                             Text(item.answer)
                             
-                            Text("反饋")
+                            Text(NSLocalizedString("InterviewAnalysisView_feedbackSublabel", comment: "Sublabel for 'Feedback' within Q&A item"))
                                 .foregroundStyle(Color(.systemGray))
                                 .font(.caption)
                                 .padding(.top, 5)
                             Text(item.feedback)
                             
-                            Text("參考評分")
+                            Text(NSLocalizedString("InterviewAnalysisView_referenceScoreSublabel", comment: "Sublabel for 'Reference Score' within Q&A item"))
                                 .foregroundStyle(Color(.systemGray))
                                 .font(.caption)
                                 .padding(.top, 5)

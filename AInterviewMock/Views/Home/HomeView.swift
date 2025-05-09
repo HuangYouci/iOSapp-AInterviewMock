@@ -23,7 +23,7 @@ struct HomeView: View {
                         .scaledToFit()
                         .frame(width: 35, height: 35)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                    Text("模擬面試")
+                    Text(NSLocalizedString("HomeView_appTitle", comment: "The main title of the application"))
                         .font(.largeTitle)
                         .bold()
                         .foregroundStyle(Color(.accent))
@@ -65,21 +65,21 @@ struct HomeView: View {
             VStack {
                 Spacer()
                 VStack(alignment: .leading){
-                    Text("更新程式")
+                    Text(NSLocalizedString("HomeView_updateAppTitle", comment: "Title for the force update screen"))
                         .font(.title)
                         .bold()
-                    Text("本程式已推出最新版本，請至 App Store 更新本程式。")
+                    Text(NSLocalizedString("HomeView_updateAppMessage", comment: "Message instructing user to update from App Store"))
                     Color.clear
                         .frame(height: 10)
                     HStack{
                         VStack(alignment: .leading){
-                            Text("目前版本")
+                            Text(NSLocalizedString("HomeView_currentVersionLabel", comment: "Label for current app version"))
                             Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
                                 .font(.title3)
                         }
                         VStack(alignment: .leading){
-                            Text("最新版本")
-                            Text(newestVersion)
+                            Text(NSLocalizedString("HomeView_latestVersionLabel", comment: "Label for latest app version available"))
+                            Text(newestVersion) // This is dynamic
                                 .font(.title3)
                         }
                     }
@@ -87,8 +87,8 @@ struct HomeView: View {
                         .frame(height: 10)
                     ScrollView {
                         VStack(alignment: .leading){
-                            Text("更新內容")
-                            Text(whatsNew)
+                            Text(NSLocalizedString("HomeView_updateNotesLabel", comment: "Label for what's new/release notes section"))
+                            Text(whatsNew) // This is dynamic (release notes from App Store)
                         }
                     }
                     .frame(maxHeight: 100)

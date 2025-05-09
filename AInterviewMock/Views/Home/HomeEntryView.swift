@@ -23,7 +23,7 @@ struct HomeEntryView: View {
                         runningMockInterview = true
                     } label: {
                         VStack{
-                            Text("開始模擬面試")
+                            Text(NSLocalizedString("HomeEntryView_startMockInterviewButton", comment: "Button text to start a mock interview"))
                                 .font(.title)
                                 .bold()
                                 .foregroundStyle(Color(.white))
@@ -63,7 +63,7 @@ struct HomeEntryView: View {
                         }
                     } label: {
                         VStack(alignment: .leading){
-                            Text("管理結果")
+                            Text(NSLocalizedString("HomeEntryView_manageResultsButton", comment: "Button text to navigate to manage interview results"))
                                 .font(.title)
                                 .bold()
                                 .foregroundStyle(Color(.white))
@@ -106,7 +106,7 @@ struct HomeEntryView: View {
                     displayCoinView = true
                 } label: {
                     VStack(alignment: .leading){
-                        Text("硬幣")
+                        Text(NSLocalizedString("HomeEntryView_coinsButton", comment: "Button text to navigate to the coin/store view"))
                             .font(.title)
                             .bold()
                             .foregroundStyle(Color(.white))
@@ -157,7 +157,7 @@ struct HomeEntryView: View {
                     .scaledToFit()
                     .frame(width: 25, height: 25)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
-                Text("模擬面試")
+                Text(NSLocalizedString("HomeEntryView_coinViewTitle", comment: "Title displayed at the top of the coin view/store screen"))
                     .font(.title2)
                     .bold()
                     .foregroundStyle(Color(.accent))

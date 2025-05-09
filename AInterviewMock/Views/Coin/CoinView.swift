@@ -19,7 +19,7 @@ struct CoinView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15){
                 
-                Text("代幣")
+                Text(NSLocalizedString("CoinView_sectionTitleCoins", comment: "Section title for 'Coins' display area"))
                     .foregroundStyle(Color(.systemGray))
                     .padding(.horizontal)
             
@@ -32,7 +32,7 @@ struct CoinView: View {
                                 .scaledToFit()
                                 .frame(width: 70, height: 70)
                                 .foregroundStyle(Color("AppGold"))
-                            Text("\(cm.coins)")
+                            Text("\(cm.coins)") // Dynamic content
                                 .font(.title)
                                 .bold()
                                 .foregroundStyle(Color(.accent))
@@ -50,11 +50,11 @@ struct CoinView: View {
                             .scaledToFit()
                             .frame(width: 15, height: 15)
                             .foregroundStyle(Color(.accent))
-                        Text("說明")
+                        Text(NSLocalizedString("CoinView_explanationTitle", comment: "Title for the coin explanation section"))
                             .bold()
                         Spacer()
                     }
-                    Text("代幣是啟用模擬面試的來源，需要一些代幣才能進行模擬面試。一次模擬面試需要約 10 到 20 枚代幣。代幣可透過單次購買或訂閱無限取用方案來獲得。")
+                    Text(NSLocalizedString("CoinView_explanationBody", comment: "Explanation text about what coins are and how to get them"))
                 }
                 .padding()
                 .overlay(
@@ -66,7 +66,7 @@ struct CoinView: View {
                 )
                 .padding(.horizontal)
                 
-                Text("獲得代幣")
+                Text(NSLocalizedString("CoinView_sectionTitleGetCoins", comment: "Section title for 'Get Coins' options"))
                     .foregroundStyle(Color(.systemGray))
                     .padding(.horizontal)
                 
@@ -78,23 +78,23 @@ struct CoinView: View {
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(Color(.accent))
-                            Text("訂閱用戶")
+                            Text(NSLocalizedString("CoinView_subscriberUserTitle", comment: "Title for subscribed user section"))
                                 .bold()
                             Spacer()
                         }
-                        Text("目前訂閱啟用中。每一小時可獲取 50 代幣（無法累計）。如果目前代幣大於 50，則不會進行更動。")
+                        Text(NSLocalizedString("CoinView_subscriberUserDescription", comment: "Description for subscribed user benefits regarding coins"))
                         if (cm.isPremiumCoinAvailable){
                             Button {
                                 cm.premiumGetCoin()
                             } label: {
-                                Text("取得")
+                                Text(NSLocalizedString("CoinView_getCoinButton", comment: "Button text to claim free coins for subscribers"))
                                     .padding(10)
                                     .foregroundStyle(Color(.white))
                                     .background(Color.accentColor)
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         } else {
-                            Text("冷卻中")
+                            Text(NSLocalizedString("CoinView_cooldownStatus", comment: "Status text when coin claim is on cooldown"))
                                 .padding(10)
                                 .foregroundStyle(Color(.white))
                                 .background(Color(.systemGray2))
@@ -115,22 +115,34 @@ struct CoinView: View {
                 if (adViewModel.isAdLoaded){
                     Button {
                         if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                           let rootViewController = scene.windows.first?.rootViewController {
-                            adViewModel.showAd(from: rootViewController) {
-                                cm.addCoin(5)
+                               let root = scene.windows.first?.rootViewController {
+
+                                // 往上遞迴找出最上層的 ViewController
+                                var topVC = root
+                                while let presented = topVC.presentedViewController {
+                                    topVC = presented
+                                }
+
+                                // 如果沒有正在 present 的畫面，再顯示廣告
+                                if topVC.presentedViewController == nil {
+                                    adViewModel.showAd(from: topVC) {
+                                        cm.addCoin(5)
+                                    }
+                                } else {
+                                    print("⚠️ 目前有畫面正在展示，無法顯示廣告")
+                                }
                             }
-                        }
                     } label: {
                         VStack(alignment: .leading){
                             HStack{
-                                Text("觀看廣告")
+                                Text(NSLocalizedString("CoinView_watchAdTitle", comment: "Title for the watch ad to get coins card"))
                                     .font(.title)
                                     .bold()
                                 Spacer()
                             }
-                            Text("輕鬆獲得代幣")
-                            Text("（在一段期間內有次數限制）")
-                            Text("獲得一些代幣")
+                            Text(NSLocalizedString("CoinView_watchAdSubtitleEasy", comment: "Subtitle for watch ad: 'Easily get coins'"))
+                            Text(NSLocalizedString("CoinView_watchAdSubtitleLimit", comment: "Subtitle for watch ad: '(Limited times within a period)'"))
+                            Text(NSLocalizedString("CoinView_watchAdBenefit", comment: "Benefit text for watch ad: 'Get some coins'"))
                                 .padding(.top, 20)
                                 .font(.title2)
                         }
@@ -166,14 +178,14 @@ struct CoinView: View {
                 } else {
                     VStack(alignment: .leading){
                         HStack{
-                            Text("觀看廣告")
+                            Text(NSLocalizedString("CoinView_watchAdTitle", comment: "Title for the watch ad to get coins card (also used when ad is unavailable)"))
                                 .font(.title)
                                 .bold()
                             Spacer()
                         }
-                        Text("輕鬆獲得代幣")
-                        Text("（在一段期間內有次數限制）")
-                        Text("不可用")
+                        Text(NSLocalizedString("CoinView_watchAdSubtitleEasy", comment: "Subtitle for watch ad: 'Easily get coins' (also used when ad is unavailable)"))
+                        Text(NSLocalizedString("CoinView_watchAdSubtitleLimit", comment: "Subtitle for watch ad: '(Limited times within a period)' (also used when ad is unavailable)"))
+                        Text(NSLocalizedString("CoinView_watchAdUnavailable", comment: "Status text when watch ad is unavailable"))
                             .padding(.top, 20)
                             .font(.title2)
                     }
@@ -207,20 +219,20 @@ struct CoinView: View {
                     .padding(.horizontal)
                 }
                 
-                Text("購買")
+                Text(NSLocalizedString("CoinView_sectionTitlePurchase", comment: "Section title for 'Purchase' options"))
                     .foregroundStyle(Color(.systemGray))
                     .padding(.horizontal)
                 
                 if (iap.hasSubscription){
                     VStack(alignment: .leading){
                         HStack{
-                            Text("月訂閱方案")
+                            Text(NSLocalizedString("CoinView_monthlySubscriptionTitle", comment: "Title for monthly subscription card"))
                                 .font(.title)
                                 .bold()
                             Spacer()
                         }
-                        Text("無限次模擬面試*")
-                        Text("訂閱中")
+                        Text(NSLocalizedString("CoinView_monthlySubscriptionBenefit", comment: "Benefit description for monthly subscription"))
+                        Text(NSLocalizedString("CoinView_monthlySubscriptionStatusSubscribed", comment: "Status text when user is subscribed"))
                             .padding(.top, 30)
                             .font(.title2)
                     }
@@ -262,13 +274,13 @@ struct CoinView: View {
                     } label: {
                         VStack(alignment: .leading){
                             HStack{
-                                Text("月訂閱方案")
+                                Text(NSLocalizedString("CoinView_monthlySubscriptionTitle", comment: "Title for monthly subscription card (also used when not subscribed)"))
                                     .font(.title)
                                     .bold()
                                 Spacer()
                             }
-                            Text("無限次模擬面試*")
-                            Text(IAPManager.shared.priceString(for: "com.huangyouci.AInterviewMock.subscription.monthly"))
+                            Text(NSLocalizedString("CoinView_monthlySubscriptionBenefit", comment: "Benefit description for monthly subscription (also used when not subscribed)"))
+                            Text(IAPManager.shared.priceString(for: "com.huangyouci.AInterviewMock.subscription.monthly")) // Dynamic price
                                 .padding(.top, 30)
                                 .font(.title2)
                         }
@@ -313,13 +325,13 @@ struct CoinView: View {
                     } label: {
                         VStack(alignment: .leading){
                             HStack{
-                                Text("100 代幣")
+                                Text(NSLocalizedString("CoinView_coinPack100Title", comment: "Title for the 100 coins pack"))
                                     .font(.title)
                                     .bold()
                                 Spacer()
                             }
-                            Text("單次獲得代幣")
-                            Text(IAPManager.shared.priceString(for: "com.huangyouci.AInterviewMock.iap.coinseta"))
+                            Text(NSLocalizedString("CoinView_coinPackSubtitle", comment: "Subtitle for coin packs: 'One-time coin acquisition'"))
+                            Text(IAPManager.shared.priceString(for: "com.huangyouci.AInterviewMock.iap.coinseta")) // Dynamic price
                                 .padding(.top, 30)
                                 .font(.title2)
                         }
@@ -361,13 +373,13 @@ struct CoinView: View {
                     } label: {
                         VStack(alignment: .leading){
                             HStack{
-                                Text("300 代幣")
+                                Text(NSLocalizedString("CoinView_coinPack300Title", comment: "Title for the 300 coins pack"))
                                     .font(.title)
                                     .bold()
                                 Spacer()
                             }
-                            Text("單次獲得代幣")
-                            Text(IAPManager.shared.priceString(for: "com.huangyouci.AInterviewMock.iap.coinsetb"))
+                            Text(NSLocalizedString("CoinView_coinPackSubtitle", comment: "Subtitle for coin packs: 'One-time coin acquisition' (reused)"))
+                            Text(IAPManager.shared.priceString(for: "com.huangyouci.AInterviewMock.iap.coinsetb")) // Dynamic price
                                 .padding(.top, 30)
                                 .font(.title2)
                         }
@@ -409,12 +421,12 @@ struct CoinView: View {
                 } label: {
                     VStack(alignment: .leading){
                         HStack{
-                            Text("還原購買")
+                            Text(NSLocalizedString("CoinView_restorePurchasesTitle", comment: "Title for restore purchases button/card"))
                                 .font(.title)
                                 .bold()
                             Spacer()
                         }
-                        Text("恢復訂閱狀態")
+                        Text(NSLocalizedString("CoinView_restorePurchasesSubtitle", comment: "Subtitle for restore purchases: 'Restore subscription status'"))
                     }
                     .foregroundStyle(Color(.white))
                     .padding()
@@ -432,16 +444,11 @@ struct CoinView: View {
                     .padding(.horizontal)
                 }
                 
-                Text("注意事項")
+                Text(NSLocalizedString("CoinView_sectionTitleNotes", comment: "Section title for 'Notes' or 'Important Information'"))
                     .foregroundStyle(Color(.systemGray))
                     .padding(.horizontal)
                 
-                Text("""
-                [1] 單次購買代幣後，若刪除程式，可能將導致代幣遺失。
-                [2] 購買訂閱方案，可在啟用期間每一小時領取一次 50 代幣（約可進行 3 次模擬面試）。
-                [3] 購買前請詳閱使用條款與隱私政策。
-                [4] 進行模擬面試次數係由一次約消耗 10 ~ 20 代幣計算，實際使用會有所差異。
-                """)
+                Text(NSLocalizedString("CoinView_notesBody", comment: "Body text for important notes regarding purchases and app usage"))
                     .foregroundStyle(Color(.systemGray))
                     .padding(.horizontal)
                     .font(.caption)
@@ -456,7 +463,7 @@ struct CoinView: View {
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(Color(.accent))
-                            Text("使用條款")
+                            Text(NSLocalizedString("CoinView_termsOfUseButton", comment: "Button text for 'Terms of Use'"))
                                 .bold()
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -487,7 +494,7 @@ struct CoinView: View {
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(Color(.accent))
-                            Text("隱私政策")
+                            Text(NSLocalizedString("CoinView_privacyPolicyButton", comment: "Button text for 'Privacy Policy'"))
                                 .bold()
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -516,7 +523,7 @@ struct CoinView: View {
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(Color(.accent))
-                            Text("聯絡開發者")
+                            Text(NSLocalizedString("CoinView_contactDeveloperButton", comment: "Button text for 'Contact Developer'"))
                                 .bold()
                             Spacer()
                             Image(systemName: "arrow.up.forward")
@@ -545,7 +552,7 @@ struct CoinView: View {
                                 .scaledToFit()
                                 .frame(width: 15, height: 15)
                                 .foregroundStyle(Color(.accent))
-                            Text("要求退款")
+                            Text(NSLocalizedString("CoinView_requestRefundButton", comment: "Button text for 'Request a Refund'"))
                                 .bold()
                             Spacer()
                             Image(systemName: "arrow.up.forward")

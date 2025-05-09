@@ -1,0 +1,2265 @@
+{
+  "sourceLanguage" : "zh-Hant",
+  "strings" : {
+    "%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "CoinView_coinPack100Title" : {
+      "comment" : "Title for the 100 coins pack",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 Coins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "100 代幣"
+          }
+        }
+      }
+    },
+    "CoinView_coinPack300Title" : {
+      "comment" : "Title for the 300 coins pack",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "300 Coins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "300 代幣"
+          }
+        }
+      }
+    },
+    "CoinView_coinPackSubtitle" : {
+      "comment" : "Subtitle for coin packs: 'One-time coin acquisition'\nSubtitle for coin packs: 'One-time coin acquisition' (reused)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get coins one-time"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "單次獲得代幣"
+          }
+        }
+      }
+    },
+    "CoinView_contactDeveloperButton" : {
+      "comment" : "Button text for 'Contact Developer'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact Developer"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "聯絡開發者"
+          }
+        }
+      }
+    },
+    "CoinView_cooldownStatus" : {
+      "comment" : "Status text when coin claim is on cooldown",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On Cooldown"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "冷卻中"
+          }
+        }
+      }
+    },
+    "CoinView_explanationBody" : {
+      "comment" : "Explanation text about what coins are and how to get them",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokens are required to start a mock interview. Each session typically consumes 10 to 20 tokens. Tokens can be obtained through one-time purchases or by subscribing to the unlimited access plan."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "代幣是啟用模擬面試的來源，需要一些代幣才能進行模擬面試。一次模擬面試需要約 10 到 20 枚代幣。代幣可透過單次購買或訂閱無限取用方案來獲得。"
+          }
+        }
+      }
+    },
+    "CoinView_explanationTitle" : {
+      "comment" : "Title for the coin explanation section",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "說明"
+          }
+        }
+      }
+    },
+    "CoinView_getCoinButton" : {
+      "comment" : "Button text to claim free coins for subscribers",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GET"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取得"
+          }
+        }
+      }
+    },
+    "CoinView_monthlySubscriptionBenefit" : {
+      "comment" : "Benefit description for monthly subscription\nBenefit description for monthly subscription (also used when not subscribed)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Infinity Mock Interviews"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無限次模擬面試*"
+          }
+        }
+      }
+    },
+    "CoinView_monthlySubscriptionStatusSubscribed" : {
+      "comment" : "Status text when user is subscribed",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscribing"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "訂閱中"
+          }
+        }
+      }
+    },
+    "CoinView_monthlySubscriptionTitle" : {
+      "comment" : "Title for monthly subscription card\nTitle for monthly subscription card (also used when not subscribed)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly Subscription"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "月訂閱方案"
+          }
+        }
+      }
+    },
+    "CoinView_notesBody" : {
+      "comment" : "Body text for important notes regarding purchases and app usage",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[1] If you delete the app after purchasing tokens, your tokens may be lost.\n[2] By subscribing, you can claim 50 tokens every hour during the active subscription period (enough for about 3 mock interviews).\n[3] Please read the Terms of Use and Privacy Policy carefully before making a purchase.\n[4] Each mock interview typically consumes about 10 to 20 tokens, but actual usage may vary."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[1] 單次購買代幣後，若刪除程式，可能將導致代幣遺失。\\n[2] 購買訂閱方案，可在啟用期間每一小時領取一次 50 代幣（約可進行 3 次模擬面試）。\\n[3] 購買前請詳閱使用條款與隱私政策。\\n[4] 進行模擬面試次數係由一次約消耗 10 ~ 20 代幣計算，實際使用會有所差異。"
+          }
+        }
+      }
+    },
+    "CoinView_privacyPolicyButton" : {
+      "comment" : "Button text for 'Privacy Policy'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隱私政策"
+          }
+        }
+      }
+    },
+    "CoinView_requestRefundButton" : {
+      "comment" : "Button text for 'Request a Refund'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request a Refund"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要求退款"
+          }
+        }
+      }
+    },
+    "CoinView_restorePurchasesSubtitle" : {
+      "comment" : "Subtitle for restore purchases: 'Restore subscription status'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore subscription status"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "恢復訂閱狀態"
+          }
+        }
+      }
+    },
+    "CoinView_restorePurchasesTitle" : {
+      "comment" : "Title for restore purchases button/card",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Purchase"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "還原購買"
+          }
+        }
+      }
+    },
+    "CoinView_sectionTitleCoins" : {
+      "comment" : "Section title for 'Coins' display area",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "COINS"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "代幣"
+          }
+        }
+      }
+    },
+    "CoinView_sectionTitleGetCoins" : {
+      "comment" : "Section title for 'Get Coins' options",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GET"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "獲得代幣"
+          }
+        }
+      }
+    },
+    "CoinView_sectionTitleNotes" : {
+      "comment" : "Section title for 'Notes' or 'Important Information'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NOTES"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注意事項"
+          }
+        }
+      }
+    },
+    "CoinView_sectionTitlePurchase" : {
+      "comment" : "Section title for 'Purchase' options",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PURCHASE"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "購買"
+          }
+        }
+      }
+    },
+    "CoinView_subscriberUserDescription" : {
+      "comment" : "Description for subscribed user benefits regarding coins",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your subscription is currently active. You can receive 50 tokens every hour (not cumulative). If your current token balance exceeds 50, it will remain unchanged."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前訂閱啟用中。每一小時可獲取 50 代幣（無法累計）。如果目前代幣大於 50，則不會進行更動。"
+          }
+        }
+      }
+    },
+    "CoinView_subscriberUserTitle" : {
+      "comment" : "Title for subscribed user section",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscribed User"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "訂閱用戶"
+          }
+        }
+      }
+    },
+    "CoinView_termsOfUseButton" : {
+      "comment" : "Button text for 'Terms of Use'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms of Use"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用條款"
+          }
+        }
+      }
+    },
+    "CoinView_watchAdBenefit" : {
+      "comment" : "Benefit text for watch ad: 'Get some coins'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get some coins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "獲得一些代幣"
+          }
+        }
+      }
+    },
+    "CoinView_watchAdSubtitleEasy" : {
+      "comment" : "Subtitle for watch ad: 'Easily get coins'\nSubtitle for watch ad: 'Easily get coins' (also used when ad is unavailable)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Easily get coins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輕鬆獲得代幣"
+          }
+        }
+      }
+    },
+    "CoinView_watchAdSubtitleLimit" : {
+      "comment" : "Subtitle for watch ad: '(Limited times within a period)'\nSubtitle for watch ad: '(Limited times within a period)' (also used when ad is unavailable)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(Limited times within a period)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "（在一段期間內有次數限制）"
+          }
+        }
+      }
+    },
+    "CoinView_watchAdTitle" : {
+      "comment" : "Title for the watch ad to get coins card\nTitle for the watch ad to get coins card (also used when ad is unavailable)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Watch AD"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "觀看廣告"
+          }
+        }
+      }
+    },
+    "CoinView_watchAdUnavailable" : {
+      "comment" : "Status text when watch ad is unavailable",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AD Unavailable"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "廣告不可用"
+          }
+        }
+      }
+    },
+    "HomeEntryView_coinsButton" : {
+      "comment" : "Button text to navigate to the coin/store view",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "代幣"
+          }
+        }
+      }
+    },
+    "HomeEntryView_coinViewTitle" : {
+      "comment" : "Title displayed at the top of the coin view/store screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AInterviewMock"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試"
+          }
+        }
+      }
+    },
+    "HomeEntryView_manageResultsButton" : {
+      "comment" : "Button text to navigate to manage interview results",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "管理結果"
+          }
+        }
+      }
+    },
+    "HomeEntryView_startMockInterviewButton" : {
+      "comment" : "Button text to start a mock interview",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Interview"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試"
+          }
+        }
+      }
+    },
+    "HomeListView_coinViewTitle" : {
+      "comment" : "Title displayed at the top of the coin list screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AInterviewMock"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試"
+          }
+        }
+      }
+    },
+    "HomeView_appTitle" : {
+      "comment" : "The main title of the application",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AInterviewMock"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試"
+          }
+        }
+      }
+    },
+    "HomeView_currentVersionLabel" : {
+      "comment" : "Label for current app version",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前版本"
+          }
+        }
+      }
+    },
+    "HomeView_latestVersionLabel" : {
+      "comment" : "Label for latest app version available",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新版本"
+          }
+        }
+      }
+    },
+    "HomeView_updateAppMessage" : {
+      "comment" : "Message instructing user to update from App Store",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A new version of this app is now available. Please update it on the App Stroe."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本程式已推出最新版本，請至 App Store 更新。"
+          }
+        }
+      }
+    },
+    "HomeView_updateAppTitle" : {
+      "comment" : "Title for the force update screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update App"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新程式"
+          }
+        }
+      }
+    },
+    "HomeView_updateNotesLabel" : {
+      "comment" : "Label for what's new/release notes section",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What’s new"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新內容"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_answersSectionTitle" : {
+      "comment" : "Section title for 'Answers' (per-question analysis)",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_answerSublabel" : {
+      "comment" : "Sublabel for 'Answer' within Q&A item",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回答"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_feedbackItemLabel" : {
+      "comment" : "Label for an individual feedback item/comment",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "評語"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_feedbackSectionTitle" : {
+      "comment" : "Section title for 'Feedback' (overall comments)",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "評語"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_feedbackSublabel" : {
+      "comment" : "Sublabel for 'Feedback' within Q&A item",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反饋"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_overallRatingLabel" : {
+      "comment" : "Label for 'Overall Rating' value",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "評分"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_overallRatingSectionTitle" : {
+      "comment" : "Section title for 'Overall Rating'",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "評分"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_qnaItemLabel" : {
+      "comment" : "Label for an individual question-answer item",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問答"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_questionSublabel" : {
+      "comment" : "Sublabel for 'Question' within Q&A item",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "題目"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_referenceScoreSublabel" : {
+      "comment" : "Sublabel for 'Reference Score' within Q&A item",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "參考評分"
+          }
+        }
+      }
+    },
+    "InterviewDoneView_noAnswerProvided" : {
+      "comment" : "Indicator text when no answer was provided for a pre-question",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No response"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無作答"
+          }
+        }
+      }
+    },
+    "InterviewDoneView_noDataProvided" : {
+      "comment" : "Indicator text when no files were provided",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No data"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無資料"
+          }
+        }
+      }
+    },
+    "InterviewDoneView_section1TitleInterviewType" : {
+      "comment" : "Section title for 'Interview Type' review",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All set?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "準備就緒"
+          }
+        }
+      }
+    },
+    "InterviewDoneView_section2TitleInterviewDetails" : {
+      "comment" : "Section title for 'Interview Details' (pre-questions) review",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review settings"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再檢查一下面試設定吧！"
+          }
+        }
+      }
+    },
+    "InterviewDoneView_section3TitleDataPreparation" : {
+      "comment" : "Section title for 'Data Preparation' (files) review",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Preparation"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "資料準備"
+          }
+        }
+      }
+    },
+    "InterviewDoneView_titleLine1" : {
+      "comment" : "First line of the title on the final review screen before starting interview",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interview Type"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面試類型"
+          }
+        }
+      }
+    },
+    "InterviewDoneView_titleLine2" : {
+      "comment" : "Second line of the title on the final review screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interview Detail"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面試細節"
+          }
+        }
+      }
+    },
+    "InterviewEntryView_titleLine1" : {
+      "comment" : "First line of the title on the interview type selection screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What kind of interview"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你想練習"
+          }
+        }
+      }
+    },
+    "InterviewEntryView_titleLine2" : {
+      "comment" : "Second line of the title on the interview type selection screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "do you want to practice?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "什麼面試呢？"
+          }
+        }
+      }
+    },
+    "InterviewFileView_addNewFileButton" : {
+      "comment" : "Button text to add a new file",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add File"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增檔案"
+          }
+        }
+      }
+    },
+    "InterviewFileView_clearAllFilesButton" : {
+      "comment" : "Button text to clear all selected files",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear All"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除所有檔案"
+          }
+        }
+      }
+    },
+    "InterviewFileView_fileSizeFormatMB" : {
+      "comment" : "Format string for file size in MB, e.g. '%.2f MB'. The %.2f will be replaced by the file size.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.2f MB"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.2f MB"
+          }
+        }
+      }
+    },
+    "InterviewFileView_fileTooLargeError" : {
+      "comment" : "Error message when a selected file is too large.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File is too big! Please reselect a file that under 4MB."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "檔案過大！請重新選擇小於 4MB 的檔案"
+          }
+        }
+      }
+    },
+    "InterviewFileView_titleLine1" : {
+      "comment" : "First line of the title on the file selection screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Is there any"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有檔案"
+          }
+        }
+      }
+    },
+    "InterviewFileView_titleLine2" : {
+      "comment" : "Second line of the title on the file selection screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "files to provide?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要提供嗎？"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_adjBit" : {
+      "comment" : "Adj Bit",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bit "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "偏"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_adjBitNot" : {
+      "comment" : "Adj Bit not",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bit not "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "偏不"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_adjExtremely" : {
+      "comment" : "Adj Extremely",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extremely "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "極為"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_adjExtremelyNot" : {
+      "comment" : "Adj Extremely Not",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extremely Not "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "極為不"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_adjNormal" : {
+      "comment" : "Adj Normal",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moderate "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_adjNot" : {
+      "comment" : "Adj Not",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_advancedAdjustmentsSectionTitle" : {
+      "comment" : "Section title for 'Advanced Adjustments'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MODIFIERS"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進階調整器"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_costSectionTitle" : {
+      "comment" : "Section title for 'Cost to start'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "COST"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟動花費"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_explanationBodyCost" : {
+      "comment" : "Explanation text about the cost of the interview. Contains one integer placeholder for the cost.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This mock interview requires %d tokens.\nIn the next step, the interview questions will be generated and the session will begin. Tokens will be deducted at this point—please do not exit the app!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此模擬面試需花費 %d 個代幣。下一步開始面試，將生成面試題目並開始回答，此時已扣除面試花費，請勿離開程式！"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_explanationBodyInsufficientCoins" : {
+      "comment" : "Explanation text for what to do if coins are insufficient.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not enough tokens? You can tap “Save”—all your current settings will be preserved, and you can resume the interview from your saved sessions later."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "代幣不足嗎？您可以點選「暫存」，本頁之前的設定都已保留，之後再從紀錄選取進行面試。"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_explanationTitle" : {
+      "comment" : "Title for the explanation section about cost and starting the interview",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "說明"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_formalityLevelAdj" : {
+      "comment" : "Adj for 'Formality Level'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formal"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正式"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_formalityLevelDescription" : {
+      "comment" : "Description for formality level slider.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the tone and atmosphere of the mock interview—casual or formal."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "決定模擬面試的語氣與氣氛，輕鬆或正式。"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_formalityLevelLabel" : {
+      "comment" : "Label for 'Formality Level'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formality Level"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正式程度"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_insufficientCoinsBody" : {
+      "comment" : "Warning message when user has insufficient coins. Contains two integer placeholders: required cost and current coins.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This mock interview requires %d tokens, but you only have %d tokens."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此模擬面試需花費 %d 個代幣，您只有 %d 個代幣。"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_insufficientCoinsSuggestion" : {
+      "comment" : "Suggestion when user has insufficient coins.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please save your progress first, then get more tokens before starting the interview."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請先「暫存」，並購買或獲得一些代幣再嘗試。"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_insufficientCoinsTitle" : {
+      "comment" : "Title for the insufficient coins warning section",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insufficient Coins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "代幣不足"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_questionCountButtonBasic" : {
+      "comment" : "Button text for basic number of questions (e.g., 5)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basic"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基礎"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_questionCountButtonExtensive" : {
+      "comment" : "Button text for extensive number of questions (e.g., 20)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Max"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大量"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_questionCountButtonFull" : {
+      "comment" : "Button text for full number of questions (e.g., 15)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Full"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完整"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_questionCountButtonModerate" : {
+      "comment" : "Button text for moderate number of questions (e.g., 10)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "適中"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_questionCountLabel" : {
+      "comment" : "Label for 'Number of Questions' display",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Numbers of Questions"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "題目數量"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_questionCountSectionTitle" : {
+      "comment" : "Section title for 'Number of Questions'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QUESTIONS"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "題目數量"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_questionCountUnit" : {
+      "comment" : "Unit for question count, e.g., 'questions' or 'items'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "題"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_resetToDefaultButton" : {
+      "comment" : "Button text to reset settings to default",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset to Default"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回復預設"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_strictnessLevelAdj" : {
+      "comment" : "Adj for 'Strictness Level'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strict"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "嚴格"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_strictnessLevelDescription" : {
+      "comment" : "Description for strictness level slider.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adjust the depth and difficulty of the questions to match your level of preparation."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制問題的深度與難度，根據你的準備程度來調整。"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_strictnessLevelLabel" : {
+      "comment" : "Label for 'Strictness Level'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Strictness Level"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "嚴格程度"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_titleLine1" : {
+      "comment" : "First line of the title on the interview modification/start screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interview"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面試"
+          }
+        }
+      }
+    },
+    "InterviewModifierView_titleLine2" : {
+      "comment" : "Second line of the title on the interview modification/start screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "is starting soon!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "準備開始！"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_preQuestion1_school" : {
+      "comment" : "Pre-interview question: Target school?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is your target school?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目標的學校是什麼？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_preQuestion2_department" : {
+      "comment" : "Pre-interview question: Target department?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is your target department?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目標的科系是什麼？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_preQuestion3_selfIntro" : {
+      "comment" : "Pre-interview question: Self-introduction requirements?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Does the department require a self-introduction? If so, are there any conditions?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "該科系有要求自我介紹嗎？有詳細的自我介紹要求嗎？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_preQuestion4_focusTopics" : {
+      "comment" : "Pre-interview question: Department's typical question focus?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "As far as you know, what kind of topics does the department tend to focus on for questions?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "該科系偏重詢問哪些方向的題目？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_preQuestion5_specialReqs" : {
+      "comment" : "Pre-interview question: Other special interview requirements?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Does the department have any other special requirements for the interview?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "該科系對於面試有什麼其他的特別要求嗎？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_templateDescription" : {
+      "comment" : "Description for the college interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prepare for college admission interviews."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "針對大學面試做準備"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_templateName" : {
+      "comment" : "Name of the college interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "College Interview"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "大學面試"
+          }
+        }
+      }
+    },
+    "InterviewProfile_college_templatePrompt" : {
+      "comment" : "Base prompt for AI for college interview template. This might be long and could also be a key if parts of it need to change by language, but for now, localizing the whole string.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are a university admissions interviewer. Based on the following information, please provide interview questions. Questions should not be repetitive or too similar and must meet the information requirements. In addition to the reference information and possible attachments, you can also search for data on the target school and department to formulate comprehensive questions:"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你是一間大學面試的面試官，請你依照以下資訊提供面試的題目，題目不可重複或過於相似且需符合資訊要求，除了參考資訊以及可能的附件之外，亦可搜尋目標校系的資料進行綜合出題："
+          }
+        }
+      }
+    },
+    "InterviewQuesView_answerTextFieldPlaceholder" : {
+      "comment" : "Placeholder text for the answer input field",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答案"
+          }
+        }
+      }
+    },
+    "InterviewQuesView_requiredFieldIndicator" : {
+      "comment" : "Indicator text for a required field, e.g., 'Required'",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Required"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必填"
+          }
+        }
+      }
+    },
+    "InterviewQuesView_titleLine1" : {
+      "comment" : "First line of the title on the pre-interview questions screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tell us the detail"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "告訴我們"
+          }
+        }
+      }
+    },
+    "InterviewQuesView_titleLine2" : {
+      "comment" : "Second line of the title on the pre-interview questions screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "of the interview!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面試的細節吧！"
+          }
+        }
+      }
+    },
+    "InterviewStartView_analyzingDescription" : {
+      "comment" : "Description during analysis: Program is generating results based on your answers.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分析中"
+          }
+        }
+      }
+    },
+    "InterviewStartView_analyzingTitle" : {
+      "comment" : "Title when interview results are being analyzed",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "程式正在依據回答來產生面試結果。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_buttonComplete" : {
+      "comment" : "Button text: Complete (after interview analysis is done)",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
+    "InterviewStartView_buttonFinish" : {
+      "comment" : "Button text: Finish (for last question)",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
+      }
+    },
+    "InterviewStartView_buttonNextQuestion" : {
+      "comment" : "Button text: Next Question",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一題"
+          }
+        }
+      }
+    },
+    "InterviewStartView_buttonStart" : {
+      "comment" : "Button text: Start (disabled state when no mic permission)\nButton text: Start (to begin interview setup)",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始"
+          }
+        }
+      }
+    },
+    "InterviewStartView_errorOccurredDuringMockInterview" : {
+      "comment" : "Error message: an error occurred during the mock interview.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試執行時發生錯誤。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_errorOccurredTitle" : {
+      "comment" : "Title for error message display",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "發生錯誤"
+          }
+        }
+      }
+    },
+    "InterviewStartView_errorSuggestionContactDeveloper" : {
+      "comment" : "Error suggestion: Please try again. If assistance is needed, contact the developer.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請再次嘗試。若需協助，請聯絡開發者。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_headerTitleMockInterview" : {
+      "comment" : "Header title for the mock interview screen",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試"
+          }
+        }
+      }
+    },
+    "InterviewStartView_instructionsLine1" : {
+      "comment" : "Instruction line 1: Entered mock interview, prepare on this screen...",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已進入模擬面試，請在本畫面進行準備，點選下一步後即刻開始進行模擬面試。模擬面試無法暫停、亦無法重新開始，請務必謹慎進行！"
+          }
+        }
+      }
+    },
+    "InterviewStartView_instructionsLine2Format" : {
+      "comment" : "Instruction line 2: After starting, program will ask %d questions... Each question requires voice recording... Click 'Next' to complete. Answer every question.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始後，程式將依序詢問 %d 個問題，每個問題都需語音錄製回答。在完成該題後，請點選「下一步」直至完成。每一題都需回答。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_instructionsLine3" : {
+      "comment" : "Instruction line 3: Keep program open and network connected... Coins will be deducted upon starting... Accidental exit will result in irreversible coin deduction.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試進行時請保持程式開啟且保持網路暢通。點選「開始」後代幣將扣除，此時意外的離開程式將導致不可逆的代幣扣款。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_loadingDescriptionGeneratingQuestions" : {
+      "comment" : "Description during loading: Program is generating questions...",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "程式正在依據面試設定與檔案資料生成面試問題。生成完畢之後，將即刻開始進行模擬面試！"
+          }
+        }
+      }
+    },
+    "InterviewStartView_loadingMockInterviewTitle" : {
+      "comment" : "Title when mock interview is loading questions",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試載入中"
+          }
+        }
+      }
+    },
+    "InterviewStartView_loadingWarningKeepOpen" : {
+      "comment" : "Warning during loading/analyzing: Do not close the app and keep network connected! (reused)\nWarning during loading: Do not close the app and keep network connected!",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請勿關閉程式並請保持網路暢通！"
+          }
+        }
+      }
+    },
+    "InterviewStartView_microphonePermissionDenied" : {
+      "comment" : "Microphone permission status: Denied. Instructs user to go to settings.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未獲得麥克風權限。本程式需要麥克風權限以執行，請前往設定開啟麥克風權限。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_microphonePermissionGranted" : {
+      "comment" : "Microphone permission status: Granted.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已獲得麥克風權限。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_microphonePermissionTitle" : {
+      "comment" : "Title for microphone permission status section\nTitle for microphone permission status section (reused for denied state)",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "麥克風權限"
+          }
+        }
+      }
+    },
+    "InterviewStartView_mockInterviewInstructionsTitle" : {
+      "comment" : "Title for mock interview instructions section",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試說明"
+          }
+        }
+      }
+    },
+    "InterviewStartView_questionLabel" : {
+      "comment" : "Label for the current interview question",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "題目"
+          }
+        }
+      }
+    },
+    "InterviewStartView_questionLabelWithNumberPrefix" : {
+      "comment" : "Prefix for question number display, e.g., 'Question'",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問題"
+          }
+        }
+      }
+    },
+    "InterviewStartView_recordingAnswerDescription" : {
+      "comment" : "Description: Currently recording your answer.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前正錄製您的回答。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_recordingAnswerTitle" : {
+      "comment" : "Title indicating that answer is being recorded",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問答錄製中"
+          }
+        }
+      }
+    },
+    "InterviewStartView_timeLimitDescriptionFormat" : {
+      "comment" : "Time limit description: The response time limit for this interview is %d minutes.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本面試的回答時間上限為 %d 分鐘。"
+          }
+        }
+      }
+    },
+    "InterviewStartView_timeLimitTitle" : {
+      "comment" : "Title for time limit information section\nTitle for time limit warning (reused)",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "時間限制"
+          }
+        }
+      }
+    },
+    "InterviewStartView_timeLimitWarningFormat" : {
+      "comment" : "Time limit warning: Approaching time limit... Remaining %d seconds.",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "即將超過時間限制。到達時間限制後，將直接結束面試，未回答的問題可能導致低分。剩餘 %d 秒。"
+          }
+        }
+      }
+    },
+    "InterviewView_nextButtonNextStep" : {
+      "comment" : "Button text: Next",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEXT"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一步"
+          }
+        }
+      }
+    },
+    "InterviewView_nextButtonStartInterview" : {
+      "comment" : "Button text: Start Interview",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "START"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開始面試"
+          }
+        }
+      }
+    },
+    "InterviewView_previousButtonCancel" : {
+      "comment" : "Button text: Cancel",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CANCEL"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
+    "InterviewView_previousButtonLeave" : {
+      "comment" : "Button text: Leave",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "QUIT"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "離開"
+          }
+        }
+      }
+    },
+    "InterviewView_previousButtonPreviousStep" : {
+      "comment" : "Button text: Previous Step",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PREVIOUS"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一步"
+          }
+        }
+      }
+    },
+    "InterviewView_previousButtonSaveChanges" : {
+      "comment" : "Button text: Save Changes / Save Draft",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SAVE & QUIT"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暫存"
+          }
+        }
+      }
+    },
+    "InterviewView_progressStep1InterviewType" : {
+      "comment" : "Progress step 1: Interview Type",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interview Type"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面試類型"
+          }
+        }
+      }
+    },
+    "InterviewView_progressStep2InterviewDetails" : {
+      "comment" : "Progress step 2: Interview Details",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interview Details"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面試細節"
+          }
+        }
+      }
+    },
+    "InterviewView_progressStep3DataPreparation" : {
+      "comment" : "Progress step 3: Data Preparation (Files)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Preparation"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "資料準備"
+          }
+        }
+      }
+    },
+    "InterviewView_progressStep4DataConfirmation" : {
+      "comment" : "Progress step 4: Data Confirmation",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Confirmation"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "資料確認"
+          }
+        }
+      }
+    },
+    "InterviewView_progressStep5ReadyToStart" : {
+      "comment" : "Progress step 5: Ready to Start",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ready to Start"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "準備開始"
+          }
+        }
+      }
+    },
+    "InterviewView_progressTitle" : {
+      "comment" : "Title for the progress steps list",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進度"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
