@@ -83,6 +83,52 @@ struct DefaultInterviewType {
                 overallRating: 0
             )
         }
+    static var jobGeneral: InterviewProfile {
+        return InterviewProfile(
+            id: UUID(),
+            templateName: NSLocalizedString("InterviewProfile_jobGeneral_templateName", comment: "Name of the general job interview template"),
+            templateDescription: NSLocalizedString("InterviewProfile_jobGeneral_templateDescription", comment: "Description for the general job interview template"),
+            templateImage: "briefcase.fill",
+            templatePrompt: NSLocalizedString("InterviewProfile_jobGeneral_templatePrompt", comment: "Base prompt for AI for general job interview template"),
+            preQuestions: [
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_jobGeneral_preQuestion1_company", comment: "Pre-interview question: Target company?"), answer: "", required: true),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_jobGeneral_preQuestion2_position", comment: "Pre-interview question: Target position/role?"), answer: "", required: true),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_jobGeneral_preQuestion3_jobDescription", comment: "Pre-interview question: Key requirements or responsibilities from the job description?"), answer: "", required: false),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_jobGeneral_preQuestion4_whyCompany", comment: "Pre-interview question: Why are you interested in this company?"), answer: "", required: false),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_jobGeneral_preQuestion5_whyPosition", comment: "Pre-interview question: Why are you suitable for this position?"), answer: "", required: false)
+            ],
+            filesPath: [],
+            questions: [],
+            questionNumbers: 10,
+            questionFormalStyle: 0.7,
+            questionStrictStyle: 0.6,
+            feedbacks: [],
+            overallRating: 0
+        )
+    }
+    static var internship: InterviewProfile {
+        return InterviewProfile(
+            id: UUID(),
+            templateName: NSLocalizedString("InterviewProfile_internship_templateName", comment: "Name of the internship interview template"),
+            templateDescription: NSLocalizedString("InterviewProfile_internship_templateDescription", comment: "Description for the internship interview template"),
+            templateImage: "studentdesk",
+            templatePrompt: NSLocalizedString("InterviewProfile_internship_templatePrompt", comment: "Base prompt for AI for internship interview template"),
+            preQuestions: [
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion1_field", comment: "Pre-interview question: What field is the internship in?"), answer: "", required: true),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion2_company", comment: "Pre-interview question: Name of the company offering the internship?"), answer: "", required: false),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion3_motivation", comment: "Pre-interview question: What motivates you to apply for this specific internship?"), answer: "", required: true),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion4_skills", comment: "Pre-interview question: What relevant skills or coursework do you have?"), answer: "", required: false),
+                InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion5_learningGoals", comment: "Pre-interview question: What do you hope to learn or achieve from this internship?"), answer: "", required: false)
+            ],
+            filesPath: [],
+            questions: [],
+            questionNumbers: 5,
+            questionFormalStyle: 0.5,
+            questionStrictStyle: 0.4,
+            feedbacks: [],
+            overallRating: 0
+        )
+    }
     // test
     static let test: InterviewProfile = InterviewProfile(
            id: UUID(uuidString: "E621E1F8-C36C-495A-93FC-0C247A3E6E29")!, // 固定 UUID 以便於測試

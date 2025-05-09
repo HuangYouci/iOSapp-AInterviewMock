@@ -683,6 +683,12 @@
     "InterviewAnalysisView_answersSectionTitle" : {
       "comment" : "Section title for 'Answers' (per-question analysis)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -694,6 +700,12 @@
     "InterviewAnalysisView_answerSublabel" : {
       "comment" : "Sublabel for 'Answer' within Q&A item",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Answer"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -705,6 +717,12 @@
     "InterviewAnalysisView_feedbackItemLabel" : {
       "comment" : "Label for an individual feedback item/comment",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -716,6 +734,12 @@
     "InterviewAnalysisView_feedbackSectionTitle" : {
       "comment" : "Section title for 'Feedback' (overall comments)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -727,6 +751,12 @@
     "InterviewAnalysisView_feedbackSublabel" : {
       "comment" : "Sublabel for 'Feedback' within Q&A item",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -738,6 +768,12 @@
     "InterviewAnalysisView_overallRatingLabel" : {
       "comment" : "Label for 'Overall Rating' value",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rating"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -749,6 +785,12 @@
     "InterviewAnalysisView_overallRatingSectionTitle" : {
       "comment" : "Section title for 'Overall Rating'",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rating"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -760,6 +802,12 @@
     "InterviewAnalysisView_qnaItemLabel" : {
       "comment" : "Label for an individual question-answer item",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -771,6 +819,12 @@
     "InterviewAnalysisView_questionSublabel" : {
       "comment" : "Sublabel for 'Question' within Q&A item",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -782,6 +836,12 @@
     "InterviewAnalysisView_referenceScoreSublabel" : {
       "comment" : "Sublabel for 'Reference Score' within Q&A item",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Score"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -830,13 +890,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All set?"
+            "value" : "Interview Type"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "準備就緒"
+            "value" : "面試類型"
           }
         }
       }
@@ -847,13 +907,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Review settings"
+            "value" : "Interview Detail"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再檢查一下面試設定吧！"
+            "value" : "面試細節"
           }
         }
       }
@@ -881,13 +941,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interview Type"
+            "value" : "All set?"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "面試類型"
+            "value" : "準備就緒"
           }
         }
       }
@@ -898,13 +958,30 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Interview Detail"
+            "value" : "Review settings"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "面試細節"
+            "value" : "再檢查一下面試設定吧！"
+          }
+        }
+      }
+    },
+    "InterviewEntryView_templateSectionTitle" : {
+      "comment" : "Section title for 'Templates' list",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TEMPLATE"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模板"
           }
         }
       }
@@ -939,6 +1016,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "什麼面試呢？"
+          }
+        }
+      }
+    },
+    "InterviewEntryView_unfinishedRecordsSectionTitle" : {
+      "comment" : "Section title for 'Unfinished Records' list",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UNFINISHED RECORDS"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未完成的紀錄"
           }
         }
       }
@@ -1391,7 +1485,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Medium"
+            "value" : "Med"
           }
         },
         "zh-Hant" : {
@@ -1691,6 +1785,278 @@
         }
       }
     },
+    "InterviewProfile_internship_preQuestion1_field" : {
+      "comment" : "Pre-interview question: What field is the internship in?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What field is the internship in?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這個實習是在哪個場域？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_internship_preQuestion2_company" : {
+      "comment" : "Pre-interview question: Name of the company offering the internship?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is the name of the company offering the internship?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提供實習的公司名稱是什麼？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_internship_preQuestion3_motivation" : {
+      "comment" : "Pre-interview question: What motivates you to apply for this specific internship?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What motivates you to apply for this specific internship?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你申請這個特定實習的動機是什麼？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_internship_preQuestion4_skills" : {
+      "comment" : "Pre-interview question: What relevant skills or coursework do you have?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What relevant skills or coursework do you have?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你有哪些相關的技能或修過的課程？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_internship_preQuestion5_learningGoals" : {
+      "comment" : "Pre-interview question: What do you hope to learn or achieve from this internship?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What do you hope to learn or achieve from this internship?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你希望從這次實習中學到或達成什麼目標？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_internship_templateDescription" : {
+      "comment" : "Description for the internship interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prepare for securing an internship opportunity."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "為獲得實習機會做準備"
+          }
+        }
+      }
+    },
+    "InterviewProfile_internship_templateName" : {
+      "comment" : "Name of the internship interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Internship Interview"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "實習面試"
+          }
+        }
+      }
+    },
+    "InterviewProfile_internship_templatePrompt" : {
+      "comment" : "Base prompt for AI for internship interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are interviewing a student or junior candidate applying for an internship. Please design questions to assess their motivation to learn, basic skills, passion for the field, and potential for teamwork."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你正在面試一位申請實習的學生或初級候選人。請設計問題來評估他們的學習動機、基礎技能、對該領域的熱情以及團隊合作潛力。"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_preQuestion1_company" : {
+      "comment" : "Pre-interview question: Target company?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is the name of the target company?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目標公司名稱是什麼？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_preQuestion2_position" : {
+      "comment" : "Pre-interview question: Target position/role?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What is the title of the position you are applying for?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "申請的職位名稱是什麼？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_preQuestion3_jobDescription" : {
+      "comment" : "Pre-interview question: Key requirements or responsibilities from the job description?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What do you consider the most important requirements or responsibilities from the job description?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "該職位描述中，你認為最重要的幾項要求或職責是什麼？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_preQuestion4_whyCompany" : {
+      "comment" : "Pre-interview question: Why are you interested in this company?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why are you interested in this company?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你為什麼對這間公司感興趣？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_preQuestion5_whyPosition" : {
+      "comment" : "Pre-interview question: Why are you suitable for this position?",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Why do you believe you are a good fit for this position?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你認為自己為什麼適合這個職位？"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_templateDescription" : {
+      "comment" : "Description for the general job interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prepare for a general job interview."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "準備一般性的工作面試"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_templateName" : {
+      "comment" : "Name of the general job interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Job Interview (General)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工作面試（通用）"
+          }
+        }
+      }
+    },
+    "InterviewProfile_jobGeneral_templatePrompt" : {
+      "comment" : "Base prompt for AI for general job interview template",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are a corporate HR interviewer or hiring manager. Based on the applicant's provided position and company information, as well as any potential attachments (like a resume), please design professional interview questions to assess their suitability for the role."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你是一位公司的人力資源面試官或部門主管，請根據以下應聘者提供的職位和公司信息，以及可能的附件（如履歷），設計專業的面試問題，以評估其是否適合該職位。"
+          }
+        }
+      }
+    },
     "InterviewQuesView_answerTextFieldPlaceholder" : {
       "comment" : "Placeholder text for the answer input field",
       "localizations" : {
@@ -1762,6 +2128,12 @@
     "InterviewStartView_analyzingDescription" : {
       "comment" : "Description during analysis: Program is generating results based on your answers.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyzing"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1773,6 +2145,12 @@
     "InterviewStartView_analyzingTitle" : {
       "comment" : "Title when interview results are being analyzed",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Analyzing"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1784,6 +2162,12 @@
     "InterviewStartView_buttonComplete" : {
       "comment" : "Button text: Complete (after interview analysis is done)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "COMPLETE"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1795,6 +2179,12 @@
     "InterviewStartView_buttonFinish" : {
       "comment" : "Button text: Finish (for last question)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FINISH"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1806,6 +2196,12 @@
     "InterviewStartView_buttonNextQuestion" : {
       "comment" : "Button text: Next Question",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEXT"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1817,6 +2213,12 @@
     "InterviewStartView_buttonStart" : {
       "comment" : "Button text: Start (disabled state when no mic permission)\nButton text: Start (to begin interview setup)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "START"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1828,6 +2230,12 @@
     "InterviewStartView_errorOccurredDuringMockInterview" : {
       "comment" : "Error message: an error occurred during the mock interview.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An error occurred during the interview."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1839,6 +2247,12 @@
     "InterviewStartView_errorOccurredTitle" : {
       "comment" : "Title for error message display",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error Occurred"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1850,6 +2264,12 @@
     "InterviewStartView_errorSuggestionContactDeveloper" : {
       "comment" : "Error suggestion: Please try again. If assistance is needed, contact the developer.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please try again. If assistance is needed, contact the develoepr."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1861,6 +2281,12 @@
     "InterviewStartView_headerTitleMockInterview" : {
       "comment" : "Header title for the mock interview screen",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AInterviewMock"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1872,6 +2298,12 @@
     "InterviewStartView_instructionsLine1" : {
       "comment" : "Instruction line 1: Entered mock interview, prepare on this screen...",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You have entered the mock interview. Please prepare on this screen. Once you click \"Next,\" the mock interview will begin immediately. The mock interview cannot be paused or restarted, so please proceed with caution!"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1883,6 +2315,12 @@
     "InterviewStartView_instructionsLine2Format" : {
       "comment" : "Instruction line 2: After starting, program will ask %d questions... Each question requires voice recording... Click 'Next' to complete. Answer every question.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Once it begins, the program will ask %d questions in sequence. You must record a voice response for each question. After answering, please click \"Next\" to proceed until completion. Every question must be answered."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1894,6 +2332,12 @@
     "InterviewStartView_instructionsLine3" : {
       "comment" : "Instruction line 3: Keep program open and network connected... Coins will be deducted upon starting... Accidental exit will result in irreversible coin deduction.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please keep the program open and maintain a stable internet connection during the mock interview. Tokens will be deducted once you click \"Start.\" Exiting the program unexpectedly at that point will result in an irreversible token deduction."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1905,6 +2349,12 @@
     "InterviewStartView_loadingDescriptionGeneratingQuestions" : {
       "comment" : "Description during loading: Program is generating questions...",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The program is generating interview questions based on the interview settings and file data. Once the generation is complete, the mock interview will begin immediately!"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1916,6 +2366,12 @@
     "InterviewStartView_loadingMockInterviewTitle" : {
       "comment" : "Title when mock interview is loading questions",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1927,6 +2383,12 @@
     "InterviewStartView_loadingWarningKeepOpen" : {
       "comment" : "Warning during loading/analyzing: Do not close the app and keep network connected! (reused)\nWarning during loading: Do not close the app and keep network connected!",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do not close the program and please maintain a stable internet connection!\n"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1938,6 +2400,12 @@
     "InterviewStartView_microphonePermissionDenied" : {
       "comment" : "Microphone permission status: Denied. Instructs user to go to settings.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone access not granted. This program requires microphone access to function. Please go to Settings and enable microphone permissions."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1949,6 +2417,12 @@
     "InterviewStartView_microphonePermissionGranted" : {
       "comment" : "Microphone permission status: Granted.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone access granted."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1960,6 +2434,12 @@
     "InterviewStartView_microphonePermissionTitle" : {
       "comment" : "Title for microphone permission status section\nTitle for microphone permission status section (reused for denied state)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone Permission"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1971,6 +2451,12 @@
     "InterviewStartView_mockInterviewInstructionsTitle" : {
       "comment" : "Title for mock interview instructions section",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1982,6 +2468,12 @@
     "InterviewStartView_questionLabel" : {
       "comment" : "Label for the current interview question",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1993,6 +2485,12 @@
     "InterviewStartView_questionLabelWithNumberPrefix" : {
       "comment" : "Prefix for question number display, e.g., 'Question'",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Q"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2004,6 +2502,12 @@
     "InterviewStartView_recordingAnswerDescription" : {
       "comment" : "Description: Currently recording your answer.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently recording your answer."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2015,6 +2519,12 @@
     "InterviewStartView_recordingAnswerTitle" : {
       "comment" : "Title indicating that answer is being recorded",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2026,6 +2536,12 @@
     "InterviewStartView_timeLimitDescriptionFormat" : {
       "comment" : "Time limit description: The response time limit for this interview is %d minutes.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The response time limit for this interview is %d minutes."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2037,6 +2553,12 @@
     "InterviewStartView_timeLimitTitle" : {
       "comment" : "Title for time limit information section\nTitle for time limit warning (reused)",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time Limit"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2048,6 +2570,12 @@
     "InterviewStartView_timeLimitWarningFormat" : {
       "comment" : "Time limit warning: Approaching time limit... Remaining %d seconds.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are about to exceed the time limit. Once the time limit is reached, the interview will end immediately. Unanswered questions may result in a low score. %d seconds remaining."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",

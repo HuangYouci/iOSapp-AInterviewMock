@@ -297,6 +297,9 @@ struct InterviewStartView: View {
                             .padding(.horizontal)
                         }
                     }
+                    
+                    Color.clear
+                        .frame(height: 50)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
             }
@@ -462,7 +465,7 @@ struct InterviewStartView: View {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             timerSeconds += 1
             if (timerSeconds > (selected!.questionNumbers*2*60)){
-                questionNum = -4
+                attemptToNext()
                 stopTimer()
             }
         }

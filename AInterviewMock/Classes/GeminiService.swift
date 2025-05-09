@@ -294,8 +294,8 @@ class GeminiService {
             }
         }
         textPromptString += """
-        *   **期望的正式程度:** \(interviewProfile.questionFormalStyle) (0.0 輕鬆, 0.5 一般, 1.0 正式)
-        *   **期望的嚴格程度:** \(interviewProfile.questionStrictStyle) (0.0 寬鬆, 0.5 一般, 1.0 嚴格)
+        *   **期望的正式程度:** \(interviewProfile.questionFormalStyle) (0.0 輕鬆, 0.5 一般, 1.0 正式；本項代表問題與回答應具備的正式或專業程度)
+        *   **期望的嚴格程度:** \(interviewProfile.questionStrictStyle) (0.0 寬鬆, 0.5 一般, 1.0 嚴格；本項代表評分時的嚴格程度，例如重大的面試嚴格度應較高，分數普遍會較低、反之簡單的面試嚴格度低分數應較高)
 
         """
 
@@ -330,7 +330,7 @@ class GeminiService {
         請嚴格依照以下指定的 JSON 格式提供您的評估報告。不要在 JSON 結構之外包含任何其他文字。
 
         **評估指南:**
-        *   針對每個問題 (question_evaluations)，請給出 `question_id` (用於對應原始問題的UUID)、`score` (0 到 100 分的分數) 以及 `feedback` (針對此問題回答的具體回饋，請考量內容的完整性、清晰度、相關性，並結合錄音分析回答者的語氣、自信度、流暢度、贅詞等。請提供建設性的意見。)。
+        *   針對每個問題 (question_evaluations)，請給出 `question_id` (用於對應原始問題的UUID)、`score` (0 到 10 分的分數) 以及 `feedback` (針對此問題回答的具體回饋，請考量內容的完整性、清晰度、相關性，並結合錄音分析回答者的語氣、自信度、流暢度、贅詞等。請提供建設性的意見。)。
         *   針對整體面試 (overall_interview_feedback)，請提供 2 到 10 個獨立的主題式回饋，每個包含 `content` (評論內容)、`positive` (是否正面 true/false) 以及 `suggestion` (改進建議或強化說明)。
         *   `overall_rating` 應為 0 到 100 分的綜合評分，代表基於本次模擬面試，應試者準備充分度以及成功錄取/通過的可能性，請務必嚴謹評估。
         *   請同時分析文字回答與錄音內容，以進行全面評估。特別注意錄音中的表達方式如何增強或削弱回答的效果。

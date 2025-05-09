@@ -10,6 +10,7 @@ import SwiftUI
 struct InterviewEntryView: View {
     
     @Binding var selected: InterviewProfile?
+    @State private var oldUnfinishedProfiles: [InterviewProfile] = []
     
     var body: some View {
         VStack(alignment: .leading){
@@ -21,13 +22,31 @@ struct InterviewEntryView: View {
             .bold()
             .padding(.horizontal)
             ScrollView{
-                Color.clear
-                    .frame(height: 5)
-                typeBuilder(of: DefaultInterviewType.college)
-                Color.clear
-                    .frame(height: 200)
+                VStack(alignment: .leading){
+                    Color.clear
+                        .frame(height: 5)
+                    Text(NSLocalizedString("InterviewEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
+                        .foregroundStyle(Color(.systemGray))
+                        .padding(.horizontal)
+                    typeBuilder(of: DefaultInterviewType.college)
+                    typeBuilder(of: DefaultInterviewType.jobGeneral)
+                    typeBuilder(of: DefaultInterviewType.internship)
+                    if (!oldUnfinishedProfiles.isEmpty){
+                        Text(NSLocalizedString("InterviewEntryView_unfinishedRecordsSectionTitle", comment: "Section title for 'Unfinished Records' list"))
+                            .foregroundStyle(Color(.systemGray))
+                            .padding(.horizontal)
+                        ForEach(oldUnfinishedProfiles) { item in
+                            typeBuilder(of: item)
+                        }
+                    }
+                    Color.clear
+                        .frame(height: 200)
+                }
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+        }
+        .onAppear {
+            oldUnfinishedProfiles = DataManager.shared.loadAllInterviewTypes().filter({$0.status == 1})
         }
     }
     

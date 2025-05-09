@@ -16,7 +16,7 @@ struct HomeListView: View {
         
         ScrollView {
             VStack(alignment: .leading){
-                ForEach(profiles){ item in
+                ForEach(profiles.filter({$0.status == 4})){ item in
                     VStack(alignment: .leading, spacing: 10){
                         HStack{
                             Text(item.templateName)
@@ -64,7 +64,6 @@ struct HomeListView: View {
             profiles = DataManager.shared.loadAllInterviewTypes()
         }
         .fullScreenCover(item: $displayItem) { item in
-            
             HStack{
                 Image("Logo")
                     .resizable()
@@ -93,7 +92,6 @@ struct HomeListView: View {
             
             InterviewAnalysisView(selected: .constant(item))
         }
-        
     }
 }
 
