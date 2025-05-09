@@ -10,7 +10,6 @@ import SwiftUI
 struct InterviewEntryView: View {
     
     @Binding var selected: InterviewProfile?
-    @State private var selectionID: UUID = UUID()
     
     var body: some View {
         VStack(alignment: .leading){
@@ -54,11 +53,10 @@ struct InterviewEntryView: View {
         .padding(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(selectionID == obj.id ? Color(.accent) : Color(.systemGray3), lineWidth: selectionID == obj.id ? 2 : 1)
+                .stroke(selected?.templateName == obj.templateName ? Color(.accent) : Color(.systemGray3), lineWidth: selected?.templateName == obj.templateName ? 2 : 1)
         )
         .contentShape(Rectangle())
         .onTapGesture {
-            selectionID = obj.id
             selected = obj
         }
         .padding(.horizontal)

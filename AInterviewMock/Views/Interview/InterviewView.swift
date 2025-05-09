@@ -67,7 +67,7 @@ struct InterviewView: View {
                                 )
                             )
                     case 6:
-                        InterviewStartView(selected: $interviewProfile)
+                        InterviewStartView(selected: $interviewProfile, running: $running)
                             .transition(
                                 .asymmetric(
                                     insertion: .move(edge: sessionIsForward ? .trailing : .leading),
@@ -80,124 +80,130 @@ struct InterviewView: View {
                 }
                 .animation(.easeInOut(duration: 0.2), value: session)
                 
-                // 底部控制 bar
+                // 底部控制 bar（只顯示於設置時，6 是特殊的）
                 VStack(spacing: 0){
-                    VStack(spacing: 0){
-                        VStack{
-                            Capsule()
-                                .fill(Color(.systemGray))
-                                .frame(width: 40, height: 6)
-                                .padding(8)
-                                .opacity(isBarDraging ? 1 : 0.3)
-                            Color.clear
-                                .frame(height: 10)
-                        }
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                    barHeight -= value.translation.height
-                                    barHeight = max(barHeight, 0)
-                                    barHeight = min(barHeight, 300)
-                                    
-                                    isBarDraging = true
+                    if (session < 6){
+                        VStack(spacing: 0){
+                            VStack(spacing: 0){
+                                VStack{
+                                    Capsule()
+                                        .fill(Color(.systemGray))
+                                        .frame(width: 40, height: 6)
+                                        .padding(8)
+                                        .opacity(isBarDraging ? 1 : 0.3)
+                                    Color.clear
+                                        .frame(height: 10)
                                 }
-                                .onEnded { value in
-                                    if (value.translation.height > 0){
-                                        withAnimation(.easeInOut(duration: 0.3)){
-                                            barHeight = 0
+                                .gesture(
+                                    DragGesture()
+                                        .onChanged { value in
+                                            barHeight -= value.translation.height
+                                            barHeight = max(barHeight, 0)
+                                            barHeight = min(barHeight, 300)
+                                            
+                                            isBarDraging = true
                                         }
-                                    }
-                                    if (value.translation.height < 0){
-                                        withAnimation(.easeInOut(duration: 0.3)){
-                                            barHeight = 150
+                                        .onEnded { value in
+                                            if (value.translation.height > 0){
+                                                withAnimation(.easeInOut(duration: 0.3)){
+                                                    barHeight = 0
+                                                }
+                                            }
+                                            if (value.translation.height < 0){
+                                                withAnimation(.easeInOut(duration: 0.3)){
+                                                    barHeight = 150
+                                                }
+                                            }
+                                            
+                                            withAnimation(.easeInOut(duration: 0.3)){
+                                                isBarDraging = false
+                                            }
                                         }
-                                    }
-                                    
-                                    withAnimation(.easeInOut(duration: 0.3)){
-                                        isBarDraging = false
-                                    }
-                                }
-                        )
-                        
-                        VStack{
-                            ScrollViewReader { proxy in
-                                ScrollView{
-                                    VStack(alignment: .leading, spacing: 10){
-                                        Text("進度")
-                                            .font(.title2)
-                                            .bold()
-                                        progressBuilder(s: 1, t: "面試類型")
-                                        progressBuilder(s: 2, t: "面試細節")
-                                        progressBuilder(s: 3, t: "資料準備")
-                                        progressBuilder(s: 4, t: "資料確認")
-                                        progressBuilder(s: 5, t: "準備開始")
-                                        Color.clear
-                                            .frame(height: 0)
-                                            .frame(maxWidth: .infinity)
-                                    }
-                                    .padding(.horizontal)
-                                }
-                                .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-                                .onChange(of: session){ _ in
-                                    proxy.scrollTo(session, anchor: .center)
-                                }
-                            }
-                        }
-                        .frame(height: barHeight)
-                        
-                        VStack{
-                            HStack(spacing: 20){
-                                if (isPerviousButtonAvailable()){
-                                    Button {
-                                        perviousButtonAction()
-                                    } label: {
-                                        HStack{
-                                            Text(perviousButtonText())
-                                                .font(.title3)
-                                        }
-                                    }
-                                    .foregroundStyle(Color(.systemGray))
-                                    .padding()
-                                }
+                                )
                                 
-                                Button {
-                                    nextButtonAction()
-                                } label: {
-                                    HStack{
-                                        Text(nextButtonText())
-                                            .font(.title3)
-                                        Image(systemName: "chevron.right")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
+                                VStack{
+                                    ScrollViewReader { proxy in
+                                        ScrollView{
+                                            VStack(alignment: .leading, spacing: 10){
+                                                Text("進度")
+                                                    .font(.title2)
+                                                    .bold()
+                                                progressBuilder(s: 1, t: "面試類型")
+                                                progressBuilder(s: 2, t: "面試細節")
+                                                progressBuilder(s: 3, t: "資料準備")
+                                                progressBuilder(s: 4, t: "資料確認")
+                                                progressBuilder(s: 5, t: "準備開始")
+                                                Color.clear
+                                                    .frame(height: 0)
+                                                    .frame(maxWidth: .infinity)
+                                            }
+                                            .padding(.horizontal)
+                                        }
+                                        .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+                                        .onChange(of: session){ _ in
+                                            proxy.scrollTo(session, anchor: .center)
+                                        }
                                     }
-                                    .frame(maxWidth: .infinity)
                                 }
-                                .foregroundStyle(isNextButtonAvailable() ? Color(.white) : Color(.systemGray))
-                                .padding()
-                                .background(isNextButtonAvailable() ? Color(.accent) : Color(.systemGray2))
-                                .clipShape(Capsule())
-                                .disabled(!isNextButtonAvailable())
+                                .frame(height: barHeight)
+                                
+                                VStack{
+                                    HStack(spacing: 20){
+                                        if (isPerviousButtonAvailable()){
+                                            Button {
+                                                perviousButtonAction()
+                                            } label: {
+                                                HStack{
+                                                    Text(perviousButtonText())
+                                                        .font(.title3)
+                                                }
+                                            }
+                                            .foregroundStyle(Color(.systemGray))
+                                            .padding()
+                                        }
+                                        
+                                        Button {
+                                            nextButtonAction()
+                                        } label: {
+                                            HStack{
+                                                Text(nextButtonText())
+                                                    .font(.title3)
+                                                Image(systemName: "chevron.right")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 15, height: 15)
+                                            }
+                                            .frame(maxWidth: .infinity)
+                                        }
+                                        .foregroundStyle(isNextButtonAvailable() ? Color(.white) : Color(.systemGray))
+                                        .padding()
+                                        .background(isNextButtonAvailable() ? Color(.accent) : Color(.systemGray2))
+                                        .clipShape(Capsule())
+                                        .disabled(!isNextButtonAvailable())
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.horizontal)
+                                .padding(.bottom)
                             }
+                            .background(.ultraThinMaterial)
+                            .clipShape(
+                                .rect(
+                                    topLeadingRadius: 20,
+                                    bottomLeadingRadius: 0,
+                                    bottomTrailingRadius: 0,
+                                    topTrailingRadius: 20
+                                )
+                            )
+                            .frame(maxHeight: .infinity, alignment: .bottom)
+                            Color.clear
+                                .background(.ultraThinMaterial)
+                                .frame(height: 0)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal)
-                        .padding(.bottom)
+                        .transition(.move(edge: .bottom))
                     }
-                    .background(.ultraThinMaterial)
-                    .clipShape(
-                        .rect(
-                            topLeadingRadius: 20,
-                            bottomLeadingRadius: 0,
-                            bottomTrailingRadius: 0,
-                            topTrailingRadius: 20
-                        )
-                    )
-                    .frame(maxHeight: .infinity, alignment: .bottom)
-                    Color.clear
-                        .background(.ultraThinMaterial)
-                        .frame(height: 0)
                 }
+                .animation(.easeInOut(duration: 0.2), value: session)
             }
         }
     }
@@ -273,6 +279,9 @@ struct InterviewView: View {
             return true
         case 5:
             // Step 5
+            if (interviewProfile!.cost > CoinManager.shared.coins){
+                return false
+            }
             return true
         default:
             return false
@@ -290,7 +299,6 @@ struct InterviewView: View {
     }
     private func nextButtonAction() {
         sessionIsForward = true
-        
         DispatchQueue.main.async {
             session += 1
             
@@ -301,12 +309,8 @@ struct InterviewView: View {
                     barHeight = 0
                 }
             case 5:
-                for (index, item) in interviewProfile!.filesPath.enumerated() {
-                    let newFilePath = DataManager.shared.saveInterviewTypeDocuments(from: URL(fileURLWithPath: item), fileName: UUID().uuidString)
-                    interviewProfile!.filesPath[index] = newFilePath!.path
-                }
+                DataManager.shared.saveInterviewTypeDocuments(interviewProfile: &interviewProfile!)
                 interviewProfile!.status = 1 // 1 回答完問題
-                DataManager.shared.saveInterviewTypeJSON(interviewProfile!, fileName: interviewProfile!.id.uuidString)
             default:
                 break
             }
@@ -340,6 +344,7 @@ struct InterviewView: View {
             interviewProfile = nil
             running = false
         case 5:
+            DataManager.shared.saveInterviewTypeJSON(interviewProfile!)
             running = false
         case 6:
             // 需要做 Confirmation

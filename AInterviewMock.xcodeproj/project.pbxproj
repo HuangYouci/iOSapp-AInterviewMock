@@ -10,15 +10,29 @@
 		731D45962DC772520006F044 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 731D45952DC772520006F044 /* FirebaseAnalytics */; };
 		731D45982DC772520006F044 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 731D45972DC772520006F044 /* FirebaseMessaging */; };
 		731D459A2DC772520006F044 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 731D45992DC772520006F044 /* FirebaseVertexAI */; };
+		73F0D5322DCDE8D800D83BD9 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		731D45812DC770C70006F044 /* AInterviewMock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AInterviewMock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		731D46112DCC8EFF0006F044 /* Exceptions for "AInterviewMock" folder in "AInterviewMock" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 731D45802DC770C70006F044 /* AInterviewMock */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		731D45832DC770C70006F044 /* AInterviewMock */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				731D46112DCC8EFF0006F044 /* Exceptions for "AInterviewMock" folder in "AInterviewMock" target */,
+			);
 			path = AInterviewMock;
 			sourceTree = "<group>";
 		};
@@ -29,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73F0D5322DCDE8D800D83BD9 /* GoogleMobileAds in Frameworks */,
 				731D45982DC772520006F044 /* FirebaseMessaging in Frameworks */,
 				731D459A2DC772520006F044 /* FirebaseVertexAI in Frameworks */,
 				731D45962DC772520006F044 /* FirebaseAnalytics in Frameworks */,
@@ -77,6 +92,7 @@
 				731D45952DC772520006F044 /* FirebaseAnalytics */,
 				731D45972DC772520006F044 /* FirebaseMessaging */,
 				731D45992DC772520006F044 /* FirebaseVertexAI */,
+				73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */,
 			);
 			productName = AInterviewMock;
 			productReference = 731D45812DC770C70006F044 /* AInterviewMock.app */;
@@ -98,16 +114,17 @@
 				};
 			};
 			buildConfigurationList = 731D457C2DC770C70006F044 /* Build configuration list for PBXProject "AInterviewMock" */;
-			developmentRegion = en;
+			developmentRegion = "zh-Hant";
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = 731D45782DC770C70006F044;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				73F0D5302DCDE8D800D83BD9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 731D45822DC770C70006F044 /* Products */;
@@ -265,12 +282,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"AInterviewMock/Preview Content\"";
 				DEVELOPMENT_TEAM = NSPJ9RY42B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = AInterviewMock/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "模擬面試";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能進行模擬面試";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -281,7 +301,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huangyouci.AInterviewMock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -296,12 +316,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"AInterviewMock/Preview Content\"";
 				DEVELOPMENT_TEAM = NSPJ9RY42B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "";
+				INFOPLIST_FILE = AInterviewMock/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "模擬面試";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能進行模擬面試";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -312,7 +335,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huangyouci.AInterviewMock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -353,6 +376,14 @@
 				minimumVersion = 11.12.0;
 			};
 		};
+		73F0D5302DCDE8D800D83BD9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.4.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -370,6 +401,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseVertexAI;
+		};
+		73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73F0D5302DCDE8D800D83BD9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

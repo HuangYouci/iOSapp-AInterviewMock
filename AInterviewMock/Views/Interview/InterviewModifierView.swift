@@ -76,6 +76,31 @@ struct InterviewModifierView: View {
                     )
                     .padding(.horizontal)
                     
+                    if (selected!.cost > CoinManager.shared.coins){
+                        VStack(alignment: .leading){
+                            HStack{
+                                Image(systemName: "exclamationmark.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 15, height: 15)
+                                    .foregroundStyle(Color(.red))
+                                Text("代幣不足")
+                                    .bold()
+                                Spacer()
+                            }
+                            Text("此模擬面試需花費 \(selected!.cost) 個代幣，您只有 \(CoinManager.shared.coins)) 個代幣。")
+                            Text("請先「暫存」，並購買或獲得一些代幣再嘗試。")
+                        }
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke( Color(.red),
+                                    lineWidth: 2
+                                )
+                        )
+                        .padding(.horizontal)
+                    }
+                    
                     
                     Text("題目數量")
                         .foregroundStyle(Color(.systemGray))
