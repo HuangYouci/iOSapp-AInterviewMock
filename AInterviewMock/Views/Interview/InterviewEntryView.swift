@@ -11,6 +11,7 @@ struct InterviewEntryView: View {
     
     @Binding var selected: InterviewProfile?
     @State private var oldUnfinishedProfiles: [InterviewProfile] = []
+    @State private var templates: [InterviewProfile] = []
     
     var body: some View {
         VStack(alignment: .leading){
@@ -28,13 +29,15 @@ struct InterviewEntryView: View {
                     Text(NSLocalizedString("InterviewEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
                         .foregroundStyle(Color(.systemGray))
                         .padding(.horizontal)
-                    typeBuilder(of: DefaultInterviewType.college)
-                    typeBuilder(of: DefaultInterviewType.jobGeneral)
-                    typeBuilder(of: DefaultInterviewType.internship)
+                        .padding(.vertical, 5)
+                    ForEach(templates) { template in
+                        typeBuilder(of: template)
+                    }
                     if (!oldUnfinishedProfiles.isEmpty){
                         Text(NSLocalizedString("InterviewEntryView_unfinishedRecordsSectionTitle", comment: "Section title for 'Unfinished Records' list"))
                             .foregroundStyle(Color(.systemGray))
                             .padding(.horizontal)
+                            .padding(.vertical, 5)
                         ForEach(oldUnfinishedProfiles) { item in
                             typeBuilder(of: item)
                         }
@@ -46,6 +49,11 @@ struct InterviewEntryView: View {
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
         }
         .onAppear {
+            templates = [
+                    DefaultInterviewType.college,
+                    DefaultInterviewType.jobGeneral,
+                    DefaultInterviewType.internship
+                ]
             oldUnfinishedProfiles = DataManager.shared.loadAllInterviewTypes().filter({$0.status == 1})
         }
     }
@@ -72,7 +80,7 @@ struct InterviewEntryView: View {
         .padding(10)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(selected?.templateName == obj.templateName ? Color(.accent) : Color(.systemGray3), lineWidth: selected?.templateName == obj.templateName ? 2 : 1)
+                .stroke(selected?.id == obj.id ? Color(.accent) : Color(.systemGray3), lineWidth: selected?.id == obj.id ? 2 : 1)
         )
         .contentShape(Rectangle())
         .onTapGesture {

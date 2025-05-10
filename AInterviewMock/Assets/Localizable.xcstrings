@@ -216,7 +216,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[1] 單次購買代幣後，若刪除程式，可能將導致代幣遺失。\\n[2] 購買訂閱方案，可在啟用期間每一小時領取一次 50 代幣（約可進行 3 次模擬面試）。\\n[3] 購買前請詳閱使用條款與隱私政策。\\n[4] 進行模擬面試次數係由一次約消耗 10 ~ 20 代幣計算，實際使用會有所差異。"
+            "value" : "[1] 單次購買代幣後，若刪除程式，可能將導致代幣遺失。\n[2] 購買訂閱方案，可在啟用期間每一小時領取一次 50 代幣（約可進行 3 次模擬面試）。\n[3] 購買前請詳閱使用條款與隱私政策。\n[4] 進行模擬面試次數係由一次約消耗 10 ~ 20 代幣計算，實際使用會有所差異。"
           }
         }
       }
@@ -635,7 +635,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A new version of this app is now available. Please update it on the App Stroe."
+            "value" : "A new version of this app is now available. Please update it on the App Store."
           }
         },
         "zh-Hant" : {
@@ -2131,13 +2131,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Analyzing"
+            "value" : "Program is generating results based on your answers."
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "分析中"
+            "value" : "程式正在依據回答來產生面試結果。"
           }
         }
       }
@@ -2154,7 +2154,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "程式正在依據回答來產生面試結果。"
+            "value" : "分析中"
           }
         }
       }

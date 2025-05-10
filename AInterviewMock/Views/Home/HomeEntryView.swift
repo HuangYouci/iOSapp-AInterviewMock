@@ -128,7 +128,7 @@ struct HomeEntryView: View {
                                     endPoint: .trailing
                                 )
                             )
-                            .offset(x: 100, y: 20)
+                            .offset(x: 160, y: 20)
                             .foregroundStyle(Color(.white))
                     )
                     .background(

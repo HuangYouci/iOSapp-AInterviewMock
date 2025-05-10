@@ -53,6 +53,8 @@ class GeminiService {
         var textPart = """
                 \(i.templatePrompt)
         
+        * 參考資訊
+        ** 以下是面試前詢問使用者的問題，請參考：
         """
         for item in i.preQuestions {
             if !(item.answer.isEmpty) {
@@ -64,13 +66,16 @@ class GeminiService {
             }
         }
         textPart.append("""
-            出 \(i.questionNumbers) 題面試問題，
-            而正式程度（題目的口氣與氣氛，0.5 一般，1.0 正式，0.0 輕鬆）為 \(i.questionFormalStyle)，
-            而嚴格程度（問題的深度與難度，0.5 一般，1.0 正式，0.0 輕鬆）為 \(i.questionStrictStyle)
+        ** 題目數量
+            出 \(i.questionNumbers) 題面試問題，不用新增題號。
+        ** 題目問題調整
+            - 正式程度（題目的口氣與氣氛，0.5 一般，1.0 正式，0.0 輕鬆）為 \(i.questionFormalStyle)，
+            - 嚴格程度（問題的深度與難度，0.5 一般，1.0 正式，0.0 輕鬆）為 \(i.questionStrictStyle)
         """)
         
         if (i.filesPath.count > 0){
             textPart.append("""
+            ** 附件
                 使用者提供了 \(i.filesPath.count) 個附件，這些是面試者的附件，請參考附件內容與之前所提的面試準則（請僅依據附件有的內容進行參考）。
             。
             """)
@@ -295,7 +300,7 @@ class GeminiService {
         }
         textPromptString += """
         *   **期望的正式程度:** \(interviewProfile.questionFormalStyle) (0.0 輕鬆, 0.5 一般, 1.0 正式；本項代表問題與回答應具備的正式或專業程度)
-        *   **期望的嚴格程度:** \(interviewProfile.questionStrictStyle) (0.0 寬鬆, 0.5 一般, 1.0 嚴格；本項代表評分時的嚴格程度，例如重大的面試嚴格度應較高，分數普遍會較低、反之簡單的面試嚴格度低分數應較高)
+        *   **期望的嚴格程度:** \(interviewProfile.questionStrictStyle) (0.0 寬鬆, 0.5 一般, 1.0 嚴格；本項代表評分時的嚴格程度，較嚴格的面試請給予較嚴苛的評分與評語，反之較寬鬆的面試請給與輕鬆簡單的標準與寬鬆的評分)
 
         """
 
@@ -333,7 +338,8 @@ class GeminiService {
         *   針對每個問題 (question_evaluations)，請給出 `question_id` (用於對應原始問題的UUID)、`score` (0 到 10 分的分數) 以及 `feedback` (針對此問題回答的具體回饋，請考量內容的完整性、清晰度、相關性，並結合錄音分析回答者的語氣、自信度、流暢度、贅詞等。請提供建設性的意見。)。
         *   針對整體面試 (overall_interview_feedback)，請提供 2 到 10 個獨立的主題式回饋，每個包含 `content` (評論內容)、`positive` (是否正面 true/false) 以及 `suggestion` (改進建議或強化說明)。
         *   `overall_rating` 應為 0 到 100 分的綜合評分，代表基於本次模擬面試，應試者準備充分度以及成功錄取/通過的可能性，請務必嚴謹評估。
-        *   請同時分析文字回答與錄音內容，以進行全面評估。特別注意錄音中的表達方式如何增強或削弱回答的效果。
+            這代表面試的錄取機率，如果使用者表現優異，應給予 80 分以上分數，只有在表現極差才給予 40 分以下的分數。
+        *   請分析文字回答與可能的檔案以進行全面評估。
         *   嚴格遵守定義的 JSON 輸出格式。
         """
 
