@@ -25,7 +25,7 @@ struct HomeListView: View {
         }
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
         .onAppear {
-            profiles = DataManager.shared.loadAllInterviewTypes()
+            profiles = DataManager.shared.loadAllInterviewProfiles()
         }
         
     }

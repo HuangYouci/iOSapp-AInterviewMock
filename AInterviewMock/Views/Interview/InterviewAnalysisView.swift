@@ -42,6 +42,7 @@ struct InterviewAnalysisView: View {
             .background(Color(.systemBackground).opacity(0.3))
             .background(.ultraThinMaterial)
             
+            // MARK: - 每個階段不同的顯示
             switch (selected.status){
             case 4: // 完成
                 VStack(alignment: .leading, spacing: 20){
@@ -207,10 +208,6 @@ struct InterviewAnalysisView: View {
                             .padding(.horizontal)
                         }
                     }
-                    
-                    // 空白
-                    Color.clear
-                        .frame(height: 300)
                 }
             case 1: // 草稿
                 VStack(alignment: .leading, spacing: 20){
@@ -298,14 +295,52 @@ struct InterviewAnalysisView: View {
                             .padding(.horizontal)
                         }
                     }
-                    
-                    // 空白
-                    Color.clear
-                        .frame(height: 300)
                 }
             default:
                 EmptyView()
             }
+            
+            // MARK: - 共用顯示
+            
+            Color.clear
+                .frame(height: 5)
+            
+            // 全部共用：刪除
+            VStack(alignment: .leading){
+                Text("刪除")
+                    .foregroundStyle(Color(.systemGray))
+                    .padding(.horizontal)
+                Button {
+                    DataManager.shared.deleteInterviewProfile(withId: selected.id.uuidString)
+                    ViewManager.shared.perviousPage()
+                } label: {
+                    VStack(alignment: .leading){
+                        HStack{
+                            Image(systemName: "trash.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 15, height: 15)
+                            Text("刪除紀錄")
+                                .bold()
+                            Spacer()
+                        }
+                        .foregroundStyle(Color(.red))
+                    }
+                    .padding()
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(
+                                Color(.red),
+                                lineWidth: 2
+                            )
+                    )
+                    .padding(.horizontal)
+                }
+            }
+            
+            // 空白
+            Color.clear
+                .frame(height: 300)
         }
         .background(Color(.systemBackground))
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
