@@ -10,7 +10,6 @@ import SwiftUI
 struct InterviewView: View {
     
     // 第一步
-    @Binding var running: Bool
     @State private var interviewProfile: InterviewProfile?
     
     // 拖曳爸元件
@@ -67,7 +66,7 @@ struct InterviewView: View {
                                 )
                             )
                     case 6:
-                        InterviewStartView(selected: $interviewProfile, running: $running)
+                        InterviewStartView(selected: $interviewProfile)
                             .transition(
                                 .asymmetric(
                                     insertion: .move(edge: sessionIsForward ? .trailing : .leading),
@@ -208,6 +207,9 @@ struct InterviewView: View {
         }
     }
     
+    // MARK: - 視覺元素
+    // 進度按鈕
+    
     private func progressBuilder(s: Int, t: String) -> some View { // t is now a String (already localized)
         HStack{
             if (session == s){
@@ -342,13 +344,13 @@ struct InterviewView: View {
         switch (session){
         case 1:
             interviewProfile = nil
-            running = false
+            ViewManager.shared.backHomePage()
         case 5:
             DataManager.shared.saveInterviewTypeJSON(interviewProfile!)
-            running = false
+            ViewManager.shared.backHomePage()
         case 6:
             // 需要做 Confirmation
-            running = false
+            ViewManager.shared.backHomePage()
         default:
             sessionIsForward = false
             DispatchQueue.main.async {
@@ -357,8 +359,10 @@ struct InterviewView: View {
         }
     }
     
+    // MARK: - 從舊有進度開始
+    
 }
 
 #Preview {
-    InterviewView(running: .constant(true))
+    InterviewView()
 }

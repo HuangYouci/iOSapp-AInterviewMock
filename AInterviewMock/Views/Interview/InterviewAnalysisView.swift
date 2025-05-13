@@ -7,12 +7,41 @@
 
 import SwiftUI
 
+/// Interview 結果頁
+/// 傳入 selected Binding 作為顯示資料的依據
+/// 如果 InterviewProfile 的 status 為 4 則顯示結果，為 1 則顯示未完成
 struct InterviewAnalysisView: View {
     
     @Binding var selected: InterviewProfile
     
     var body: some View {
         ScrollView{
+            HStack{
+                Image("Logo")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 25, height: 25)
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                Text(NSLocalizedString("HomeListView_coinViewTitle", comment: "Title displayed at the top of the coin list screen"))
+                    .font(.title2)
+                    .bold()
+                    .foregroundStyle(Color(.accent))
+                Spacer()
+                Button {
+                    ViewManager.shared.backHomePage()
+                } label: {
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15, height: 15)
+                        .foregroundStyle(Color(.systemGray))
+                }
+            }
+            .padding(.bottom)
+            .padding(.horizontal)
+            .background(Color(.systemBackground).opacity(0.3))
+            .background(.ultraThinMaterial)
+            
             VStack(alignment: .leading, spacing: 20){
                 // Header
                 VStack(alignment: .leading, spacing: 10){
@@ -179,9 +208,10 @@ struct InterviewAnalysisView: View {
                 
                 // 空白
                 Color.clear
-                    .frame(height: 50)
+                    .frame(height: 300)
             }
         }
+        .background(Color(.systemBackground))
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
     }
 }

@@ -130,8 +130,9 @@ struct InterviewFileView: View {
                     }
                     .padding(.horizontal)
                 }
+                
                 Color.clear
-                    .frame(height: 200)
+                    .frame(height: 300)
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
         }

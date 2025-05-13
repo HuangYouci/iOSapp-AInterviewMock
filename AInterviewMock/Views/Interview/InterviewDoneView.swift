@@ -109,7 +109,7 @@ struct InterviewDoneView: View {
                 .contentShape(Rectangle())
                 .padding(.horizontal)
                 Color.clear
-                    .frame(height: 200)
+                    .frame(height: 100)
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
         }

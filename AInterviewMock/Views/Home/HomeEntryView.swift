@@ -10,9 +10,6 @@ import SwiftUI
 struct HomeEntryView: View {
     
     @Binding var currentPage: Int
-    @State private var runningMockInterview: Bool = false
-    
-    @State private var displayCoinView: Bool = false
     
     var body: some View {
         
@@ -20,7 +17,7 @@ struct HomeEntryView: View {
             VStack(alignment: .leading){
                 HStack{
                     Button {
-                        runningMockInterview = true
+                        ViewManager.shared.addPage(view: InterviewView())
                     } label: {
                         VStack{
                             Text(NSLocalizedString("HomeEntryView_startMockInterviewButton", comment: "Button text to start a mock interview"))
@@ -103,7 +100,7 @@ struct HomeEntryView: View {
                 .padding(.horizontal)
                 
                 Button {
-                    displayCoinView = true
+                    ViewManager.shared.addPage(view: CoinView())
                 } label: {
                     VStack(alignment: .leading){
                         Text(NSLocalizedString("HomeEntryView_coinsButton", comment: "Button text to navigate to the coin/store view"))
@@ -147,39 +144,9 @@ struct HomeEntryView: View {
             }
         }
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-        .fullScreenCover(isPresented: $runningMockInterview){
-            InterviewView(running: $runningMockInterview)
-        }
-        .fullScreenCover(isPresented: $displayCoinView) {
-            HStack{
-                Image("Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 25, height: 25)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                Text(NSLocalizedString("HomeEntryView_coinViewTitle", comment: "Title displayed at the top of the coin view/store screen"))
-                    .font(.title2)
-                    .bold()
-                    .foregroundStyle(Color(.accent))
-                Spacer()
-                Button {
-                    displayCoinView = false
-                } label: {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 15, height: 15)
-                        .foregroundStyle(Color(.systemGray))
-                }
-            }
-            .padding(.bottom)
-            .padding(.horizontal)
-            .background(Color(.systemBackground).opacity(0.3))
-            .background(.ultraThinMaterial)
-            CoinView()
-        }
         
     }
+    
 }
 
 #Preview {

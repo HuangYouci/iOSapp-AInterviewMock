@@ -147,7 +147,6 @@ class CoinManager: ObservableObject {
         }
 
         DispatchQueue.main.async {
-            // 1. 恢復您原來的「最大 50」邏輯
             let currentCoinsValue = self.coins
             if currentCoinsValue < 50 {
                 if self.saveDataToKeychain(value: 50, forKey: self.coinKeychainKey) {
@@ -155,26 +154,23 @@ class CoinManager: ObservableObject {
                     print("CoinManager | ✅ Premium coin 已設為 50 (因原少於50)。")
                 } else {
                     print("CoinManager | ❌ Premium coin 設置失敗 (Keychain 儲存錯誤)")
-                    return // 如果儲存失敗，不更新領取時間和可用性
+                    return
                 }
             } else {
-                // 如果已 >= 50，根據您的原邏輯，不增加，但仍然算作一次 "領取"
-                // 這裡可以選擇是增加50還是保持不變。按您的原意，保持不變但更新領取時間。
-                // 如果是想在 >=50 時也增加，則應調用 self.addCoin(50)
                 print("CoinManager | 💰 硬幣數量 (\(currentCoinsValue)) 已達到或超過 50，本次領取不額外增加。")
             }
 
-            // 儲存當前領取時間到 Keychain
             if self.saveDataToKeychain(date: Date(), forKey: self.lastPremiumClaimKeychainKey) {
                 print("CoinManager | ✅ 已更新上次 Premium coin 領取時間到 Keychain。")
-                self.updatePremiumCoinAvailability() // 更新 @Published isPremiumCoinAvailable
+                self.updatePremiumCoinAvailability()
             } else {
                 print("CoinManager | ❌ 更新上次 Premium coin 領取時間到 Keychain 失敗。")
             }
+            
+            AnalyticsHolder.shared.premiumGetCoins(count: 5, afterTotal: self.coins)
         }
     }
 
-    // 此函數現在主要用於內部計算，UI 可以直接觀察 isPremiumCoinAvailable
     private func checkRawPremiumCoinAvailability() -> Bool {
         guard let lastClaimData = readDataFromKeychain(forKey: lastPremiumClaimKeychainKey),
               let lastClaimString = String(data: lastClaimData, encoding: .utf8),
@@ -186,10 +182,9 @@ class CoinManager: ObservableObject {
         return interval >= 3600 // 至少相隔一小時
     }
 
-    // 更新 @Published isPremiumCoinAvailable 的方法
     func updatePremiumCoinAvailability() {
         let available = checkRawPremiumCoinAvailability()
-        DispatchQueue.main.async { // 確保 @Published 的更新在主線程
+        DispatchQueue.main.async {
             if self.isPremiumCoinAvailable != available {
                 self.isPremiumCoinAvailable = available
                 if available {
@@ -211,13 +206,6 @@ class CoinManager: ObservableObject {
             }
         }
     }
-    
-    // 可能需要一個定時器來定期調用 updatePremiumCoinAvailability，
-    // 或者在 App 進入前台時調用，以確保 isPremiumCoinAvailable 狀態是最新的。
-    // 例如，在 App Delegate 或 Scene Delegate 中：
-    // func sceneWillEnterForeground(_ scene: UIScene) {
-    //     CoinManager.shared.updatePremiumCoinAvailability()
-    // }
 
     // 用於測試
     #if DEBUG

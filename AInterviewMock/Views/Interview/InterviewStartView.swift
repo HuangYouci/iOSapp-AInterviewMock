@@ -10,7 +10,6 @@ import SwiftUI
 struct InterviewStartView: View {
     
     @Binding var selected: InterviewProfile?
-    @Binding var running: Bool
     
     @StateObject private var recording = AudioRecorder()
     @State private var questionNum: Int = -2
@@ -299,7 +298,7 @@ struct InterviewStartView: View {
                     }
                     
                     Color.clear
-                        .frame(height: 50)
+                        .frame(height: 300)
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
             }
@@ -415,7 +414,7 @@ struct InterviewStartView: View {
                                 
                             } else if (questionNum == -5) {
                                 Button {
-                                    running = false
+                                    ViewManager.shared.backHomePage()
                                 } label: {
                                     HStack{
                                         Text(NSLocalizedString("InterviewStartView_buttonComplete", comment: "Button text: Complete (after interview analysis is done)"))
@@ -491,5 +490,5 @@ struct InterviewStartView: View {
 }
 
 #Preview{
-    InterviewStartView(selected: .constant(DefaultInterviewType.test), running: .constant(true))
+    InterviewStartView(selected: .constant(DefaultInterviewType.test))
 }

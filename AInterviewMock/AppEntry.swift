@@ -7,25 +7,25 @@
 
 import SwiftUI
 import FirebaseCore
-
-
-class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
-}
+import FirebaseAnalytics
 
 @main
 struct AInterviewMockApp: App {
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    init() {
+        #if DEBUG
+        UserDefaults.standard.set(true, forKey: "FIRDebugEnabled")
+        #endif
+        FirebaseApp.configure()
+        
+        Analytics.logEvent("debug_app_launched", parameters: [
+                    "launch_source": "app_init"
+                ])
+    }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
     }
-    
 }

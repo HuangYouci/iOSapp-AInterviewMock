@@ -67,7 +67,8 @@ class GeminiService {
         }
         textPart.append("""
         ** 題目數量
-            出 \(i.questionNumbers) 題面試問題，不用新增題號。
+            出 \(i.questionNumbers) 題面試問題。
+            請直接輸出題目，不需要其他說明，也不用新增題號。
         ** 題目問題調整
             - 正式程度（題目的口氣與氣氛，0.5 一般，1.0 正式，0.0 輕鬆）為 \(i.questionFormalStyle)，
             - 嚴格程度（問題的深度與難度，0.5 一般，1.0 正式，0.0 輕鬆）為 \(i.questionStrictStyle)
@@ -77,7 +78,6 @@ class GeminiService {
             textPart.append("""
             ** 附件
                 使用者提供了 \(i.filesPath.count) 個附件，這些是面試者的附件，請參考附件內容與之前所提的面試準則（請僅依據附件有的內容進行參考）。
-            。
             """)
         }
         
@@ -135,6 +135,9 @@ class GeminiService {
                          let responseCountTokensResponse = try await model.countTokens([responseContent])
                          print("GeminiService | Response Token Count: \(responseCountTokensResponse.totalTokens)")
                     }
+            
+            // 紀錄
+            AnalyticsHolder.shared.generatedQuestions(templateName: i.templateName, token: countTokensResponse.totalTokens, generatedNum: i.questionNumbers, filesNum: i.filesPath.count, modFormalLevel: Int(i.questionFormalStyle*100), modStrictLevel: Int(i.questionStrictStyle*100))
 
             return interviewQuestions
 
@@ -347,7 +350,6 @@ class GeminiService {
 
         let contentToGenerate: [ModelContent] = [ModelContent(role: "user", parts: promptParts)]
 
-        // (可選) 計算 Token 數量
         do {
             let countTokensResponse = try await feedbackGenerationModel.countTokens(contentToGenerate)
             print("GeminiService | 面試回饋 Prompt Token 總數: \(countTokensResponse.totalTokens)")
@@ -375,9 +377,6 @@ class GeminiService {
             print("GeminiService | Gemini 原始回應文字: \(response.text ?? "無回應文字")")
             return
         }
-
-        // (可選) 印出原始 JSON 以供調試
-        // print("GeminiService | 從 Gemini 收到的原始 JSON 回饋:\n\(jsonString)")
 
         let decoder = JSONDecoder()
         let decodedFeedback: GeminiFeedbackResponse
@@ -414,6 +413,9 @@ class GeminiService {
 
         interviewProfile.status = 4 // 假設 4 代表已完成並生成回饋
         print("GeminiService | 面試回饋已成功生成並更新到 InterviewProfile。狀態已更新為 4。")
+        
+        // 紀錄 Analytics
+        AnalyticsHolder.shared.generatedAnalysis(templateName: interviewProfile.templateName, generatedNum: interviewProfile.questionNumbers, filesNum: interviewProfile.filesPath.count, modFormalLevel: Int(interviewProfile.questionFormalStyle*100), modStrictLevel: Int(interviewProfile.questionStrictStyle*100), overallScore: interviewProfile.overallRating)
     }
     
 }

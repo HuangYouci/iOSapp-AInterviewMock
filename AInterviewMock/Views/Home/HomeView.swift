@@ -9,8 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var currentPage = 0
-    @State private var forceUpdate = false
+    @State private var currentPage: Int = 0
     @State private var whatsNew: String = "Error"
     @State private var newestVersion: String = "E"
     
@@ -61,11 +60,15 @@ struct HomeView: View {
                 .padding()
             }
         }
-        .fullScreenCover(isPresented: $forceUpdate) {
-            HomeForceUpdateView(whatsNew: $whatsNew, newestVersion: $newestVersion)
-        }
+        .background(Color(.systemBackground))
         .onAppear {
+            // 讀取頁面狀態
+            currentPage = ViewManager.shared.getState(state: "HomeViewCurrentPage") as? Int ?? 0
+            // 確認版本更新
             checkAppStoreVersion()
+        }
+        .onChange(of: currentPage){ _ in
+            ViewManager.shared.setState(state: "HomeViewCurrentPage", value: currentPage)
         }
     }
     
@@ -158,7 +161,8 @@ struct HomeView: View {
                         print("HomeView | Update available! New version: \(appStoreVersion), Release Notes: \(releaseNotes)")
                         whatsNew = releaseNotes
                         newestVersion = appStoreVersion
-                        forceUpdate = true
+                        
+                        ViewManager.shared.addPage(view: HomeForceUpdateView(whatsNew: $whatsNew, newestVersion: $newestVersion))
                     }
                 } else {
                     print("HomeView | App is up to date. Current: \(currentVersionString), AppStore: \(appStoreVersion)")

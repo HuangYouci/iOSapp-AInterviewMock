@@ -19,6 +19,32 @@ struct CoinView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15){
                 
+                HStack{
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                    Text(NSLocalizedString("HomeEntryView_coinViewTitle", comment: "Title displayed at the top of the coin view/store screen"))
+                        .font(.title2)
+                        .bold()
+                        .foregroundStyle(Color(.accent))
+                    Spacer()
+                    Button {
+                        ViewManager.shared.backHomePage()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                            .foregroundStyle(Color(.systemGray))
+                    }
+                }
+                .padding(.bottom)
+                .padding(.horizontal)
+                .background(Color(.systemBackground).opacity(0.3))
+                .background(.ultraThinMaterial)
+                
                 Text(NSLocalizedString("CoinView_sectionTitleCoins", comment: "Section title for 'Coins' display area"))
                     .foregroundStyle(Color(.systemGray))
                     .padding(.horizontal)
@@ -126,6 +152,7 @@ struct CoinView: View {
                                 // 如果沒有正在 present 的畫面，再顯示廣告
                                 if topVC.presentedViewController == nil {
                                     adViewModel.showAd(from: topVC) {
+                                        AnalyticsHolder.shared.watchAd()
                                         cm.addCoin(5)
                                     }
                                 } else {
@@ -577,6 +604,7 @@ struct CoinView: View {
         .sheet(item: $safariItem) { item in
                     SafariView(url: item.url)
                 }
+        .background(Color(.systemBackground))
     }
 }
 
