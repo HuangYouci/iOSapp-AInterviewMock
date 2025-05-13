@@ -20,6 +20,11 @@ struct InterviewView: View {
     @State private var session: Int = 1
     @State private var sessionIsForward: Bool = true
     
+    init(){}
+    init(interviewProfile: InterviewProfile){
+        self._interviewProfile = State(initialValue: interviewProfile)
+    }
+    
     var body: some View {
         VStack(alignment: .leading){
             ZStack{
@@ -344,13 +349,13 @@ struct InterviewView: View {
         switch (session){
         case 1:
             interviewProfile = nil
-            ViewManager.shared.backHomePage()
+            ViewManager.shared.perviousPage()
         case 5:
             DataManager.shared.saveInterviewTypeJSON(interviewProfile!)
-            ViewManager.shared.backHomePage()
+            ViewManager.shared.perviousPage()
         case 6:
             // 需要做 Confirmation
-            ViewManager.shared.backHomePage()
+            ViewManager.shared.perviousPage()
         default:
             sessionIsForward = false
             DispatchQueue.main.async {
@@ -358,8 +363,6 @@ struct InterviewView: View {
             }
         }
     }
-    
-    // MARK: - 從舊有進度開始
     
 }
 

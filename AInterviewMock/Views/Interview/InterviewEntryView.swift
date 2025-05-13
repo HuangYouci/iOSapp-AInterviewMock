@@ -11,6 +11,7 @@ struct InterviewEntryView: View {
     
     @Binding var selected: InterviewProfile?
     @State private var templates: [InterviewProfile] = []
+    @State private var alreadyHaveData: Bool = false
     
     var body: some View {
         VStack(alignment: .leading){
@@ -25,12 +26,22 @@ struct InterviewEntryView: View {
                 VStack(alignment: .leading){
                     Color.clear
                         .frame(height: 5)
-                    Text(NSLocalizedString("InterviewEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
-                        .foregroundStyle(Color(.systemGray))
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                    ForEach(templates) { template in
-                        typeBuilder(of: template)
+                    if (alreadyHaveData){
+                        Text("草稿")
+                            .foregroundStyle(Color(.systemGray))
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                        if let selected = selected {
+                            typeBuilder(of: selected)
+                        }
+                    } else {
+                        Text(NSLocalizedString("InterviewEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
+                            .foregroundStyle(Color(.systemGray))
+                            .padding(.horizontal)
+                            .padding(.vertical, 5)
+                        ForEach(templates) { template in
+                            typeBuilder(of: template)
+                        }
                     }
                     Color.clear
                         .frame(height: 300)
@@ -44,6 +55,11 @@ struct InterviewEntryView: View {
                     DefaultInterviewType.jobGeneral,
                     DefaultInterviewType.internship
                 ]
+            
+            if selected != nil {
+                // 外部傳入
+                alreadyHaveData = true
+            }
         }
     }
     

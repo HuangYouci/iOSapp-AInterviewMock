@@ -139,6 +139,29 @@ struct InterviewFileView: View {
         .onAppear {
             if let selected = selected {
                 selectionFiles = selected.filesPath
+                
+                for index in selectionFiles.indices {
+                    if let url = URL(string: selectionFiles[index]) {
+                        
+                        filesName[index] = url.lastPathComponent
+                        
+                        var fileSize: Int = 0
+                        do {
+                            let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
+                            fileSize = attrs[.size] as? Int ?? 0
+                        } catch {
+                            fileSize = 0
+                            print("無法取得檔案大小：\(error)")
+                        }
+                        let sizeKB = Double(fileSize) / 1024.0
+                        let sizeMB = sizeKB / 1024.0
+                        filesSize[index] = sizeMB
+                        
+                        if (sizeMB > 4){
+                            selectionFiles[index] = ""
+                        }
+                    }
+                }
             }
         }
         .onChange(of: selectionFiles){ _ in

@@ -31,7 +31,7 @@ struct CoinView: View {
                         .foregroundStyle(Color(.accent))
                     Spacer()
                     Button {
-                        ViewManager.shared.backHomePage()
+                        ViewManager.shared.perviousPage()
                     } label: {
                         Image(systemName: "xmark")
                             .resizable()
