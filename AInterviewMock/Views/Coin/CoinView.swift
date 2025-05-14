@@ -99,7 +99,7 @@ struct CoinView: View {
                         .padding(.horizontal)
                     
                     
-                    if (!iap.hasSubscription){
+                    if (iap.hasSubscription){
                         VStack(alignment: .leading){
                             HStack{
                                 Image(systemName: "checkmark.diamond.fill")
