@@ -27,7 +27,7 @@ struct InterviewEntryView: View {
                     Color.clear
                         .frame(height: 5)
                     if (alreadyHaveData){
-                        Text("草稿")
+                        Text(NSLocalizedString("InterviewAnalysisView_draftSectionTitle", comment: "Section Title for Draft"))
                             .foregroundStyle(Color(.systemGray))
                             .padding(.horizontal)
                             .padding(.vertical, 5)

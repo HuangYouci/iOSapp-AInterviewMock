@@ -351,6 +351,7 @@ struct InterviewView: View {
             interviewProfile = nil
             ViewManager.shared.perviousPage()
         case 5:
+            DataManager.shared.saveInterviewTypeDocuments(interviewProfile: &interviewProfile!)
             DataManager.shared.saveInterviewTypeJSON(interviewProfile!)
             ViewManager.shared.perviousPage()
         case 6:

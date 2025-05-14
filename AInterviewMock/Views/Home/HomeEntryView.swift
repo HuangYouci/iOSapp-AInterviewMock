@@ -15,6 +15,8 @@ struct HomeEntryView: View {
         
         ScrollView {
             VStack(alignment: .leading){
+                Color.clear
+                    .frame(height: 10)
                 HStack{
                     Button {
                         ViewManager.shared.addPage(view: InterviewView())

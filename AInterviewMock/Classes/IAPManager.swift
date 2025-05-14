@@ -74,7 +74,7 @@ class IAPManager: ObservableObject {
                         } else if transaction.productType == .autoRenewable {
                             await checkSubscriptionStatus()
                         }
-                    AnalyticsHolder.shared.purchaseItem(productId: product.id)
+                    AnalyticsLogger.shared.purchaseItem(productId: product.id)
                     return true
                 }
             case .userCancelled:

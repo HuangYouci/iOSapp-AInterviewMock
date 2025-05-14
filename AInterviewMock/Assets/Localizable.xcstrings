@@ -578,6 +578,23 @@
         }
       }
     },
+    "HomeListView_draftLabel" : {
+      "comment" : "Label for Draft",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DRAFT"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "草稿"
+          }
+        }
+      }
+    },
     "HomeView_appTitle" : {
       "comment" : "The main title of the application",
       "localizations" : {
@@ -591,91 +608,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模擬面試"
-          }
-        }
-      }
-    },
-    "HomeView_currentVersionLabel" : {
-      "comment" : "Label for current app version",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目前版本"
-          }
-        }
-      }
-    },
-    "HomeView_latestVersionLabel" : {
-      "comment" : "Label for latest app version available",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Latest"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "最新版本"
-          }
-        }
-      }
-    },
-    "HomeView_updateAppMessage" : {
-      "comment" : "Message instructing user to update from App Store",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A new version of this app is now available. Please update it on the App Store."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "本程式已推出最新版本，請至 App Store 更新。"
-          }
-        }
-      }
-    },
-    "HomeView_updateAppTitle" : {
-      "comment" : "Title for the force update screen",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Update App"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更新程式"
-          }
-        }
-      }
-    },
-    "HomeView_updateNotesLabel" : {
-      "comment" : "Label for what's new/release notes section",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "What’s new"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更新內容"
           }
         }
       }
@@ -710,6 +642,91 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "回答"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_deleteRecordSublabel" : {
+      "comment" : "Sublabel for 'Delete Record' within delete item",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Record"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刪除紀錄"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_deleteSectionTitle" : {
+      "comment" : "Section for Delete",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DELETE"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刪除"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_draftLabel" : {
+      "comment" : "Label for Draft",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DRAFT"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "草稿"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_draftReturnSubLabel" : {
+      "comment" : "Sub Label for Return Draft",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Draft"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "還原草稿"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_draftSectionTitle" : {
+      "comment" : "Section Title for Draft",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DRAFT"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "草稿"
           }
         }
       }
@@ -1016,24 +1033,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "什麼面試呢？"
-          }
-        }
-      }
-    },
-    "InterviewEntryView_unfinishedRecordsSectionTitle" : {
-      "comment" : "Section title for 'Unfinished Records' list",
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "UNFINISHED RECORDS"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未完成的紀錄"
           }
         }
       }
@@ -2789,17 +2788,90 @@
         }
       }
     },
-    "刪除" : {
-
+    "UpdateCheckerView_currentVersionLabel" : {
+      "comment" : "Label for current app version",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前版本"
+          }
+        }
+      }
     },
-    "刪除紀錄" : {
-
+    "UpdateCheckerView_latestVersionLabel" : {
+      "comment" : "Label for latest app version available",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最新版本"
+          }
+        }
+      }
     },
-    "草稿" : {
-
+    "UpdateCheckerView_updateAppMessage" : {
+      "comment" : "Message instructing user to update from App Store",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A new version of this app is now available. Please update it on the App Store."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本程式已推出最新版本，請至 App Store 更新。"
+          }
+        }
+      }
     },
-    "還原草稿" : {
-
+    "UpdateCheckerView_updateAppTitle" : {
+      "comment" : "Title for the force update screen",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Update App"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新程式"
+          }
+        }
+      }
+    },
+    "UpdateCheckerView_updateNotesLabel" : {
+      "comment" : "Label for what's new/release notes section",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What’s New"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新內容"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

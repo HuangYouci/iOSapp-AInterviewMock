@@ -167,7 +167,7 @@ class CoinManager: ObservableObject {
                 print("CoinManager | ❌ 更新上次 Premium coin 領取時間到 Keychain 失敗。")
             }
             
-            AnalyticsHolder.shared.premiumGetCoins(count: 5, afterTotal: self.coins)
+            AnalyticsLogger.shared.premiumGetCoins(count: 5, afterTotal: self.coins)
         }
     }
 

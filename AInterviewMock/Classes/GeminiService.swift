@@ -137,7 +137,7 @@ class GeminiService {
                     }
             
             // 紀錄
-            AnalyticsHolder.shared.generatedQuestions(templateName: i.templateName, token: countTokensResponse.totalTokens, generatedNum: i.questionNumbers, filesNum: i.filesPath.count, modFormalLevel: Int(i.questionFormalStyle*100), modStrictLevel: Int(i.questionStrictStyle*100))
+            AnalyticsLogger.shared.generatedQuestions(templateName: i.templateName, token: countTokensResponse.totalTokens, generatedNum: i.questionNumbers, filesNum: i.filesPath.count, modFormalLevel: Int(i.questionFormalStyle*100), modStrictLevel: Int(i.questionStrictStyle*100))
 
             return interviewQuestions
 
@@ -415,7 +415,7 @@ class GeminiService {
         print("GeminiService | 面試回饋已成功生成並更新到 InterviewProfile。狀態已更新為 4。")
         
         // 紀錄 Analytics
-        AnalyticsHolder.shared.generatedAnalysis(templateName: interviewProfile.templateName, generatedNum: interviewProfile.questionNumbers, filesNum: interviewProfile.filesPath.count, modFormalLevel: Int(interviewProfile.questionFormalStyle*100), modStrictLevel: Int(interviewProfile.questionStrictStyle*100), overallScore: interviewProfile.overallRating)
+        AnalyticsLogger.shared.generatedAnalysis(templateName: interviewProfile.templateName, generatedNum: interviewProfile.questionNumbers, filesNum: interviewProfile.filesPath.count, modFormalLevel: Int(interviewProfile.questionFormalStyle*100), modStrictLevel: Int(interviewProfile.questionStrictStyle*100), overallScore: interviewProfile.overallRating)
     }
     
 }

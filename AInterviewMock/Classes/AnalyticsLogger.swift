@@ -8,9 +8,9 @@
 import FirebaseAnalytics
 import Foundation
 
-class AnalyticsHolder {
+class AnalyticsLogger {
     
-    static let shared = AnalyticsHolder()
+    static let shared = AnalyticsLogger()
     
     private func logEvent(name: String, parameters: [String: Any]?) {
         #if DEBUG

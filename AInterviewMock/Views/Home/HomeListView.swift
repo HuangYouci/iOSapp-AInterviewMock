@@ -15,6 +15,8 @@ struct HomeListView: View {
         
         ScrollView {
             VStack(alignment: .leading){
+                Color.clear
+                    .frame(height: 10)
                 ForEach(profiles){ item in
                     profileCard(i: item)
                     .onTapGesture {
@@ -91,7 +93,7 @@ struct HomeListView: View {
     private func profileCardDraft(i: InterviewProfile) -> some View {
         VStack(alignment: .leading, spacing: 10){
             HStack{
-                Text("草稿")
+                Text(NSLocalizedString("HomeListView_draftLabel", comment: "Label for Draft"))
                     .padding(3)
                     .overlay(
                         RoundedRectangle(cornerRadius: 5)
