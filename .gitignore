@@ -1,0 +1,51 @@
+# === macOS 系統檔案 ===
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# === Xcode ===
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xcscmblueprint
+*.xcuserstate
+
+# === iOS Framework & 編譯暫存 ===
+*.xcworkspace
+Pods/
+Carthage/
+Fastlane/report.xml
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# === Firebase/Google 秘密檔案 ===
+GoogleService-Info.plist
+
+# === Swift Package Manager ===
+.build/
+Packages/
+.swiftpm/xcode/package.xcworkspace/
+
+# === 其他暫存檔案 ===
+*.swp
+*.lock
+*.log
+*.tmp
+
+# === 單元測試生成檔 ===
+TestResults/
+
+# === Git 檔案衝突殘留 ===
+*.orig
+
+# === Xcode Preview cache ===
+.swiftpm/
