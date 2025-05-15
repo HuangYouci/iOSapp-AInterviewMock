@@ -59,7 +59,6 @@ struct HomeView: View {
                 .padding()
             }
         }
-        .background(Color(.systemBackground))
         .onAppear {
             // 讀取頁面狀態
             currentPage = ViewManager.shared.getState(state: "HomeViewCurrentPage") as? Int ?? 0
