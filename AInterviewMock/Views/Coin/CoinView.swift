@@ -608,7 +608,6 @@ struct CoinView: View {
         .sheet(item: $safariItem) { item in
                     SafariView(url: item.url)
                 }
-        .background(Color(.systemBackground))
     }
 }
 

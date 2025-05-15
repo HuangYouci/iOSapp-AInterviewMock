@@ -346,7 +346,6 @@ struct InterviewAnalysisView: View {
                 Color.clear
                     .frame(height: 300)
             }
-            .background(Color(.systemBackground))
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
         }
     }

@@ -15,16 +15,17 @@ struct ContentView: View {
     var body: some View {
         ZStack{
             vm.viewStack.last!
+                .background(Color(.systemBackground))
                 .id(vm.viewStack.count)
                 .transition(
                     vm.leaving ?
                         .asymmetric(
                             insertion: .scale(scale: 0.95).combined(with: .opacity),
-                            removal: .opacity
+                            removal: .scale(scale: 0.85, anchor: .center).combined(with: .opacity)
                         ) :
                         .asymmetric(
                             insertion: .move(edge: .trailing),
-                            removal: .scale(scale: 0.85, anchor: .center).combined(with: .opacity)
+                            removal: .opacity
                         )
                  )
         }
