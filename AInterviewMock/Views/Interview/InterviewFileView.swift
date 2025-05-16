@@ -200,5 +200,5 @@ struct InterviewFileView: View {
 }
 
 #Preview{
-    InterviewFileView(selected: .constant(DefaultInterviewType.college))
+    InterviewFileView(selected: .constant(DefaultInterviewProfile.college))
 }

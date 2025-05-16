@@ -13,7 +13,7 @@ struct InterviewStartView: View {
     
     @StateObject private var recording = AudioRecorder()
     @State private var questionNum: Int = -2
-    // 0 以上開始，-1 錯誤，-2 準備，-3 準備開始，-4 分析中，-5 分析完畢
+    // 0 以上開始，-1 錯誤，-2 準備，-3 準備開始，-4 分析中
     @State private var timerSeconds: Int = 0
     @State private var timer: Timer? = nil
     
@@ -218,19 +218,19 @@ struct InterviewStartView: View {
                         }
                         .onAppear {
                             Task {
-                                DataManager.shared.saveInterviewTypeAudios(interviewProfile: &selected!)
+                                DataManager.shared.saveInterviewProfileAudios(interviewProfile: &selected!)
                                 for index in selected!.questions.indices {
                                     selected!.questions[index].answer = await GeminiService.shared.generateAudioText(source: selected!.questions[index].answerAudioPath)
                                 }
                                 var selectedTemp = selected!
                                 await GeminiService.shared.generateInterviewFeedback(interviewProfile: &selectedTemp)
                                 selected! = selectedTemp
-                                DataManager.shared.saveInterviewTypeJSON(selected!)
-                                questionNum = -5
+                                DataManager.shared.saveInterviewProfileJSON(selected!)
+                                
+                                ViewManager.shared.backHomePage()
+                                ViewManager.shared.addPage(view: InterviewAnalysisView(selected: .constant(selected!)))
                             }
                         }
-                    case -5:
-                        InterviewAnalysisView(selected: .constant(selected!))
                     default:
                         VStack(alignment: .leading){
                             HStack{
@@ -412,24 +412,6 @@ struct InterviewStartView: View {
                                     .clipShape(Capsule())
                                 }
                                 
-                            } else if (questionNum == -5) {
-                                Button {
-                                    ViewManager.shared.backHomePage()
-                                } label: {
-                                    HStack{
-                                        Text(NSLocalizedString("InterviewStartView_buttonComplete", comment: "Button text: Complete (after interview analysis is done)"))
-                                            .font(.title3)
-                                        Image(systemName: "checkmark")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                }
-                                .foregroundStyle(Color(.white))
-                                .padding()
-                                .background(Color(.accent))
-                                .clipShape(Capsule())
                             }
                         }
                     }
@@ -490,5 +472,5 @@ struct InterviewStartView: View {
 }
 
 #Preview{
-    InterviewStartView(selected: .constant(DefaultInterviewType.test))
+    InterviewStartView(selected: .constant(DefaultInterviewProfile.test))
 }

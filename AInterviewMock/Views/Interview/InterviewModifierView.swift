@@ -348,5 +348,5 @@ struct InterviewModifierView: View {
 }
 
 #Preview{
-    InterviewModifierView(selected: .constant(DefaultInterviewType.college))
+    InterviewModifierView(selected: .constant(DefaultInterviewProfile.college))
 }

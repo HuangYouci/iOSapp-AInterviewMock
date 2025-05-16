@@ -33,6 +33,10 @@ class CoinManager: ObservableObject {
         }
         // 初始化 isPremiumCoinAvailable 狀態
         updatePremiumCoinAvailability()
+        // 測試用 給他代幣
+        #if DEBUG
+        addCoin(100)
+        #endif
     }
 
     // MARK: - Public Coin Management Methods

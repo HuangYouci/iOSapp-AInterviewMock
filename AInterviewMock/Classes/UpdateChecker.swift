@@ -11,10 +11,11 @@ class UpdateChecker: ObservableObject {
     
     static let shared = UpdateChecker()
     
-    @Published var haveUpdate: Bool = false
-    @Published var newestVersion: String = ""
-    @Published var thisVersion: String = ""
-    @Published var whatsNew: String = ""
+    @Published var haveUpdate: Bool = false     // 低於 app store 版本
+    @Published var isTestVersion: Bool = false  // 高於 app store 版本
+    @Published var newestVersion: String = ""   // app store 版本
+    @Published var thisVersion: String = ""     // 本版本
+    @Published var whatsNew: String = ""        // app store 更新信息
     
     private init(){
         checkAppStoreVersion()
@@ -86,13 +87,28 @@ class UpdateChecker: ObservableObject {
                 // 逐個比較版本組件
                 // 例如: "1.2.3" vs "1.3.0"
                 if currentVersionComponents.lexicographicallyPrecedes(appStoreVersionComponents, by: <) {
+                    
+                    // 版本小於商店版本：舊版
+                    
                     DispatchQueue.main.async {
                         print("UpdateChecker | Update available! New version: \(appStoreVersion), Release Notes: \(releaseNotes)")
                         self.whatsNew = releaseNotes
                         self.newestVersion = appStoreVersion
                         self.thisVersion = currentVersionString
+                        self.haveUpdate = true
+                    }
+                } else if currentVersionComponents.lexicographicallyPrecedes(appStoreVersionComponents, by: >) {
+                    
+                    // 版本大於商店版本：測試版
+                    
+                    DispatchQueue.main.async {
+                        print("UpdateChecker | You are running test version! App Store version: \(appStoreVersion), Your Version: \(currentVersionString)")
+                        self.isTestVersion = true
                     }
                 } else {
+                    
+                    // 版本等於商店版本：正式版
+                    
                     print("UpdateChecker | App is up to date. Current: \(currentVersionString), AppStore: \(appStoreVersion)")
                 }
                 
@@ -115,9 +131,17 @@ struct UpdateCheckerView: View {
             Spacer()
             Link(destination: URL(string: "https://apps.apple.com/tw/app/id6745684106")!){
                 VStack(alignment: .leading){
-                    Text(NSLocalizedString("UpdateCheckerView_updateAppTitle", comment: "Title for the force update screen"))
-                        .font(.title)
-                        .bold()
+                    HStack{
+                        Text(NSLocalizedString("UpdateCheckerView_updateAppTitle", comment: "Title for the force update screen"))
+                            .font(.title)
+                            .bold()
+                        Spacer()
+                        Image(systemName: "arrow.up.right.square")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .foregroundStyle(Color(.systemGray))
+                    }
                     Text(NSLocalizedString("UpdateCheckerView_updateAppMessage", comment: "Message instructing user to update from App Store"))
                         .multilineTextAlignment(.leading)
                     Color.clear
@@ -136,9 +160,9 @@ struct UpdateCheckerView: View {
                     }
                     Color.clear
                         .frame(height: 10)
+                    Text(NSLocalizedString("UpdateCheckerView_updateNotesLabel", comment: "Label for what's new/release notes section"))
                     ScrollView {
                         VStack(alignment: .leading){
-                            Text(NSLocalizedString("UpdateCheckerView_updateNotesLabel", comment: "Label for what's new/release notes section"))
                             Text(uc.whatsNew)
                                 .multilineTextAlignment(.leading)
                         }
@@ -165,4 +189,8 @@ struct UpdateCheckerView: View {
         )
         .ignoresSafeArea()
     }
+}
+
+#Preview {
+    UpdateCheckerView()
 }

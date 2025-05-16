@@ -1,5 +1,5 @@
 //
-//  InterviewType.swift
+//  InterviewProfile.swift
 //  AInterviewMock
 //
 //  Created by 黃宥琦 on 2025/5/5.
@@ -58,7 +58,7 @@ struct InterviewProfileFeedbacks: Identifiable, Codable {
 
 // Constants
 
-struct DefaultInterviewType {
+struct DefaultInterviewProfile {
     // template
     static var college: InterviewProfile {
             return InterviewProfile(
