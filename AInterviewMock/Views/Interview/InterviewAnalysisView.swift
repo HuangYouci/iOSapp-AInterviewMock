@@ -352,5 +352,5 @@ struct InterviewAnalysisView: View {
 }
 
 #Preview {
-    InterviewAnalysisView(selected: .constant(DefaultInterviewType.test))
+    InterviewAnalysisView(selected: .constant(DefaultInterviewProfile.test))
 }

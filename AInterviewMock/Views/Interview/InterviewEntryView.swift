@@ -51,12 +51,12 @@ struct InterviewEntryView: View {
         }
         .onAppear {
             templates = [
-                    DefaultInterviewType.college,
-                    DefaultInterviewType.jobGeneral,
-                    DefaultInterviewType.internship
+                    DefaultInterviewProfile.college,
+                    DefaultInterviewProfile.jobGeneral,
+                    DefaultInterviewProfile.internship
                 ]
             
-            if selected != nil {
+            if selected?.status == 1 {
                 // 外部傳入
                 alreadyHaveData = true
             }

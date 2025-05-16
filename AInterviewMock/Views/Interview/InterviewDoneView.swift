@@ -117,5 +117,5 @@ struct InterviewDoneView: View {
 }
 
 #Preview {
-    InterviewDoneView(selected: .constant(DefaultInterviewType.college))
+    InterviewDoneView(selected: .constant(DefaultInterviewProfile.college))
 }

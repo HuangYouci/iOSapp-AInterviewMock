@@ -1774,13 +1774,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You are a university admissions interviewer. Based on the following information, please provide interview questions. Questions should not be repetitive or too similar and must meet the information requirements. In addition to the reference information and possible attachments, you can also search for data on the target school and department to formulate comprehensive questions:"
+            "value" : "You are a university admissions interviewer. Based on the following information, please provide interview questions. Questions should not be repetitive or too similar and must meet the information requirements. In addition to the reference information and possible attachments, you can also search for data on the target school and department to formulate comprehensive questions."
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你是一間大學面試的面試官，請你依照以下資訊提供面試的題目，題目不可重複或過於相似且需符合資訊要求，除了參考資訊以及可能的附件之外，亦可搜尋目標校系的資料進行綜合出題："
+            "value" : "你是一間大學面試的面試官，請你依照以下資訊提供面試的題目，題目不可重複或過於相似且需符合資訊要求，除了參考資訊以及可能的附件之外，亦可搜尋目標校系的資料進行綜合出題。"
           }
         }
       }
@@ -2161,6 +2161,7 @@
     },
     "InterviewStartView_buttonComplete" : {
       "comment" : "Button text: Complete (after interview analysis is done)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

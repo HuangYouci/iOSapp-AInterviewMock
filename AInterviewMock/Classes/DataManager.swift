@@ -13,7 +13,7 @@ class DataManager: ObservableObject {
     
     // MARK: - Write
     // Save Document
-    func saveInterviewTypeDocuments(interviewProfile: inout InterviewProfile) {
+    func saveInterviewProfileDocuments(interviewProfile: inout InterviewProfile) {
             let fileManager = FileManager.default
 
             // ~/documents/
@@ -85,7 +85,7 @@ class DataManager: ObservableObject {
             print("DataManager | 所有文件處理完畢。interviewProfile.filesPath 已更新（針對成功複製的文件）。")
         }
     // Save Audio (from Temporary)
-    func saveInterviewTypeAudios(interviewProfile: inout InterviewProfile) {
+    func saveInterviewProfileAudios(interviewProfile: inout InterviewProfile) {
            let fileManager = FileManager.default
 
            // 1. 取得 Documents 目錄路徑
@@ -151,7 +151,7 @@ class DataManager: ObservableObject {
            print("DataManager | 所有音訊處理完畢。interviewProfile 已更新。")
        }
     // Update JSON
-    func saveInterviewTypeJSON(_ interview: InterviewProfile) {
+    func saveInterviewProfileJSON(_ interview: InterviewProfile) {
         let encoder = JSONEncoder()
         if let data = try? encoder.encode(interview) {
             let url = FileManager.default

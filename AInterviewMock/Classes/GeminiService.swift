@@ -11,12 +11,7 @@ import FirebaseVertexAI
 class GeminiService {
     static let shared = GeminiService()
     
-    let vertex = VertexAI.vertexAI()
-    let model: GenerativeModel
-    
-    private init(){
-        self.model = vertex.generativeModel(modelName: "gemini-2.0-flash-lite-001")
-    }
+    let model = VertexAI.vertexAI().generativeModel(modelName: "gemini-2.0-flash-lite-001")
     
     func generateText(from prompt: String) async -> String? {
         do {
@@ -33,6 +28,8 @@ class GeminiService {
             return nil
         }
     }
+    
+    // MARK: - 模擬面試
     
     // 生成面試題目
     
@@ -51,10 +48,16 @@ class GeminiService {
         
         // 文字題詞設計
         var textPart = """
-                \(i.templatePrompt)
+        你是一個專門生成面試問題的模擬面試考官。
+        你的唯一任務是根據以下提供的資訊，生成指定數量的面試問題。
+        輸出格式要求：你必須嚴格地只輸出一個 JSON 陣列，其中每個元素都是一個字串（一個面試問題）。
+        絕對不要包含任何 JSON 陣列以外的文字、開頭問候語、解釋、說明或題號。
         
         * 參考資訊
-        ** 以下是面試前詢問使用者的問題，請參考：
+        ** 以下是你的身份設定
+        \(i.templatePrompt)
+        
+        ** 以下是面試前詢問使用者的問題，請參考「問」以及「答」來設計題目，且不要被錯誤的使用者答帶跑。
         """
         for item in i.preQuestions {
             if !(item.answer.isEmpty) {
@@ -77,7 +80,7 @@ class GeminiService {
         if (i.filesPath.count > 0){
             textPart.append("""
             ** 附件
-                使用者提供了 \(i.filesPath.count) 個附件，這些是面試者的附件，請參考附件內容與之前所提的面試準則（請僅依據附件有的內容進行參考）。
+                使用者提供了 \(i.filesPath.count) 個附件，這些是面試者的附件，請參考附件內容與之前所提的面試準則（請僅依據附件有且實際需要的內容進行參考）。
             """)
         }
         
