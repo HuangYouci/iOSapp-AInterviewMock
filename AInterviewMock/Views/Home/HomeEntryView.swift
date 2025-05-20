@@ -9,31 +9,33 @@ import SwiftUI
 
 struct HomeEntryView: View {
     
-    @Binding var currentPage: Int
-    
     var body: some View {
         
         ScrollView {
             VStack(alignment: .leading){
                 Color.clear
                     .frame(height: 10)
+                
                 HStack{
                     Button {
                         ViewManager.shared.addPage(view: InterviewView())
                     } label: {
-                        VStack{
+                        VStack(alignment: .leading){
                             Text(NSLocalizedString("HomeEntryView_startMockInterviewButton", comment: "Button text to start a mock interview"))
                                 .font(.title)
                                 .bold()
                                 .foregroundStyle(Color(.white))
+                            HStack{
+                                Spacer()
+                            }
                         }
                         .padding()
-                        .frame(width: 250, height: 200, alignment: .topLeading)
+                        .frame(height: 200, alignment: .topLeading)
                         .background(
-                            Image("appasset01") // 請換成你的圖片資源名稱
+                            Image("HomeEntryView_interviewIllu")
                                 .resizable()
-                                .scaledToFit()
-                                .frame(width: 300, height: 300)
+                                .scaledToFill()
+                                .frame(width: 400, height: 200)
                                 .mask(
                                     LinearGradient(
                                         gradient: Gradient(colors: [.clear, .white]),
@@ -41,7 +43,7 @@ struct HomeEntryView: View {
                                         endPoint: .trailing
                                     )
                                 )
-                                .offset(x: 50, y: 20)
+                                .offset(x: 50)
                         )
                         .background(
                             LinearGradient(
@@ -55,14 +57,15 @@ struct HomeEntryView: View {
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    
+                }
+                .padding(.horizontal)
+                
+                HStack{
                     Button {
-                        withAnimation(.easeInOut(duration: 0.3)){
-                            currentPage = 1
-                        }
+                        ViewManager.shared.addPage(view: SpeechView())
                     } label: {
                         VStack(alignment: .leading){
-                            Text(NSLocalizedString("HomeEntryView_manageResultsButton", comment: "Button text to navigate to manage interview results"))
+                            Text(NSLocalizedString("HomeEntryView_startMockSpeechButton", comment: "Button text to start a mock speech"))
                                 .font(.title)
                                 .bold()
                                 .foregroundStyle(Color(.white))
@@ -73,10 +76,10 @@ struct HomeEntryView: View {
                         .padding()
                         .frame(height: 200, alignment: .topLeading)
                         .background(
-                            Image(systemName: "list.bullet.rectangle.portrait.fill")
+                            Image("HomeEntryView_speechIllu")
                                 .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
+                                .scaledToFill()
+                                .frame(width: 400, height: 200)
                                 .mask(
                                     LinearGradient(
                                         gradient: Gradient(colors: [.clear, .white]),
@@ -84,13 +87,13 @@ struct HomeEntryView: View {
                                         endPoint: .trailing
                                     )
                                 )
-                                .offset(x: 30, y: 50)
+                                .offset(x: 50)
                         )
                         .background(
                             LinearGradient(
                                 gradient: Gradient(colors: [
-                                    Color(red: 72 / 255, green: 70 / 255, blue: 157 / 255),   // 更深的紫藍
-                                    Color(red: 52 / 255, green: 50 / 255, blue: 137 / 255)    // 更深的藍紫
+                                    Color(red: 122 / 255, green: 121 / 255, blue: 217 / 255),
+                                    Color(red: 88 / 255, green: 86 / 255, blue: 207 / 255)
                                 ]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
@@ -101,48 +104,6 @@ struct HomeEntryView: View {
                 }
                 .padding(.horizontal)
                 
-                Button {
-                    ViewManager.shared.addPage(view: CoinView())
-                } label: {
-                    VStack(alignment: .leading){
-                        Text(NSLocalizedString("HomeEntryView_coinsButton", comment: "Button text to navigate to the coin/store view"))
-                            .font(.title)
-                            .bold()
-                            .foregroundStyle(Color(.white))
-                        HStack{
-                            Spacer()
-                        }
-                    }
-                    .padding()
-                    .frame(height: 100, alignment: .topLeading)
-                    .background(
-                        Image(systemName: "hockey.puck.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .mask(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [.clear, .white]),
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .offset(x: 160, y: 20)
-                            .foregroundStyle(Color(.white))
-                    )
-                    .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [
-                                Color(red: 252 / 255, green: 101 / 255, blue: 7 / 255),
-                                Color(red: 255 / 255, green: 95 / 255, blue: 207 / 255)
-                            ]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                }
-                .padding(.horizontal)
             }
         }
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
@@ -156,5 +117,5 @@ struct HomeEntryView: View {
 }
 
 #Preview{
-    HomeEntryView(currentPage: .constant(1))
+    HomeEntryView()
 }

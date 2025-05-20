@@ -1,23 +1,22 @@
 //
-//  InterviewEntryView.swift
+//  SpeechEntryView.swift
 //  AInterviewMock
 //
-//  Created by 黃宥琦 on 2025/5/4.
+//  Created by 黃宥琦 on 2025/5/16.
 //
 
 import SwiftUI
 
-struct InterviewEntryView: View {
-    
-    @Binding var selected: InterviewProfile?
-    @State private var templates: [InterviewProfile] = []
+struct SpeechEntryView: View {
+    @Binding var selected: SpeechProfile?
+    @State private var templates: [SpeechProfile] = []
     @State private var alreadyHaveData: Bool = false
     
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading){
-                Text(NSLocalizedString("InterviewEntryView_titleLine1", comment: "First line of the title on the interview type selection screen"))
-                Text(NSLocalizedString("InterviewEntryView_titleLine2", comment: "Second line of the title on the interview type selection screen"))
+                Text(NSLocalizedString("SpeechEntryView_titleLine1", comment: "First line of the title on the interview type selection screen"))
+                Text(NSLocalizedString("SpeechEntryView_titleLine2", comment: "Second line of the title on the interview type selection screen"))
             }
             .font(.largeTitle)
             .bold()
@@ -27,7 +26,7 @@ struct InterviewEntryView: View {
                     Color.clear
                         .frame(height: 5)
                     if (alreadyHaveData){
-                        Text(NSLocalizedString("InterviewEntryView_draftSectionTitle", comment: "Section Title for Draft"))
+                        Text(NSLocalizedString("SpeechEntryView_draftSectionTitle", comment: "Section Title for Draft"))
                             .foregroundStyle(Color(.systemGray))
                             .padding(.horizontal)
                             .padding(.vertical, 5)
@@ -35,7 +34,7 @@ struct InterviewEntryView: View {
                             typeBuilder(of: selected)
                         }
                     } else {
-                        Text(NSLocalizedString("InterviewEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
+                        Text(NSLocalizedString("SpeechEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
                             .foregroundStyle(Color(.systemGray))
                             .padding(.horizontal)
                             .padding(.vertical, 5)
@@ -51,32 +50,37 @@ struct InterviewEntryView: View {
         }
         .onAppear {
             templates = [
-                    DefaultInterviewProfile.college,
-                    DefaultInterviewProfile.jobGeneral,
-                    DefaultInterviewProfile.internship
+                DefaultSpeechProfile.general,
+                DefaultSpeechProfile.academic,
+                DefaultSpeechProfile.selfIntro,
+                DefaultSpeechProfile.inspirational,
+                DefaultSpeechProfile.instructional,
+                DefaultSpeechProfile.persuasive,
+                DefaultSpeechProfile.ceremonial,
+                DefaultSpeechProfile.demonstrative
                 ]
             
-            if selected?.status == 1 {
+            if selected?.status == .prepared {
                 // 外部傳入
                 alreadyHaveData = true
             }
         }
     }
     
-    private func typeBuilder(of obj: InterviewProfile) -> some View {
+    private func typeBuilder(of obj: SpeechProfile) -> some View {
         VStack{
             HStack(spacing: 5){
-                Image(systemName: "\(obj.templateImage)") // This is dynamic from obj
+                Image(systemName: "\(obj.templateImage)")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 30, height: 30)
                     .foregroundStyle(Color(.accent))
                     .padding()
                 VStack(alignment: .leading){
-                    Text(obj.templateName) // Assumed to be already localized string from InterviewProfile
+                    Text(obj.templateName)
                         .font(.title2)
                         .bold()
-                    Text(obj.templateDescription) // Assumed to be already localized string from InterviewProfile
+                    Text(obj.templateDescription)
                         .foregroundStyle(Color(.systemGray))
                 }
                 Spacer()
@@ -95,6 +99,7 @@ struct InterviewEntryView: View {
     }
 }
 
-#Preview{
-    InterviewEntryView(selected: .constant(nil))
+
+#Preview {
+    SpeechEntryView(selected: .constant(DefaultSpeechProfile.test))
 }

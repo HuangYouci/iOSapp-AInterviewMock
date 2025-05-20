@@ -113,14 +113,12 @@ struct BottomSlidingBar: View {
                     }
                     .padding(.horizontal)
                     .padding(.bottom)
+                    Color.clear
+                        .frame(height: 50)
                 }
                 .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                 .frame(maxHeight: .infinity, alignment: .bottom)
-
-                Color.clear
-                    .frame(height: 0)
-                    .background(.ultraThinMaterial)
             }
             .transition(.move(edge: .bottom))
         }

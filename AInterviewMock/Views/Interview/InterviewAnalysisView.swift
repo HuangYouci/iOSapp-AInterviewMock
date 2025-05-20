@@ -23,7 +23,7 @@ struct InterviewAnalysisView: View {
                     .scaledToFit()
                     .frame(width: 25, height: 25)
                     .clipShape(RoundedRectangle(cornerRadius: 5))
-                Text(NSLocalizedString("HomeListView_coinViewTitle", comment: "Title displayed at the top of the coin list screen"))
+                Text(NSLocalizedString("InterviewAnalysisView_Title", comment: "Title displayed at the top of the coin list screen"))
                     .font(.title2)
                     .bold()
                     .foregroundStyle(Color(.accent))

@@ -17,31 +17,6 @@ struct CoinView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack{
-                Image("Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 25, height: 25)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                Text(NSLocalizedString("HomeEntryView_coinViewTitle", comment: "Title displayed at the top of the coin view/store screen"))
-                    .font(.title2)
-                    .bold()
-                    .foregroundStyle(Color(.accent))
-                Spacer()
-                Button {
-                    ViewManager.shared.perviousPage()
-                } label: {
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 15, height: 15)
-                        .foregroundStyle(Color(.systemGray))
-                }
-            }
-            .padding(.bottom)
-            .padding(.horizontal)
-            .background(Color(.systemBackground).opacity(0.3))
-            .background(.ultraThinMaterial)
             ScrollView {
                 Color.clear
                     .frame(height: 5)
@@ -69,29 +44,6 @@ struct CoinView: View {
                         }
                     }
                     .padding()
-                    .padding(.horizontal)
-                    
-                    VStack(alignment: .leading){
-                        HStack{
-                            Image(systemName: "info.circle.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 15, height: 15)
-                                .foregroundStyle(Color(.accent))
-                            Text(NSLocalizedString("CoinView_explanationTitle", comment: "Title for the coin explanation section"))
-                                .bold()
-                            Spacer()
-                        }
-                        Text(NSLocalizedString("CoinView_explanationBody", comment: "Explanation text about what coins are and how to get them"))
-                    }
-                    .padding()
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(
-                                Color.accentColor,
-                                lineWidth: 2
-                            )
-                    )
                     .padding(.horizontal)
                     
                     Text(NSLocalizedString("CoinView_sectionTitleGetCoins", comment: "Section title for 'Get Coins' options"))
