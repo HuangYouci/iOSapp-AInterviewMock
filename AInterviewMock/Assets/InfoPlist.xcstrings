@@ -7,13 +7,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AInterviewMock"
+            "value" : "AI Mock"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模擬面試"
+            "value" : "AI 模擬"
           }
         }
       }
@@ -43,13 +43,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Need microphone access to start a interview"
+            "value" : "Need your microphone permit to continue."
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "需要存取麥克風，才能進行模擬面試"
+            "value" : "需要存取麥克風，才能使用程式功能"
           }
         }
       }

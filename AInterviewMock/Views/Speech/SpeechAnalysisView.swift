@@ -1,0 +1,291 @@
+//
+//  SpeechAnalysisView.swift
+//  ASpeechMock
+//
+//  Created by 黃宥琦 on 2025/5/16.
+//
+
+import SwiftUI
+
+/// Speech 結果頁
+/// 傳入 selected Binding 作為顯示資料的依據
+/// 如果 SpeechProfile 的 status 為 4 則顯示結果，為 1 則顯示未完成
+struct SpeechAnalysisView: View {
+    
+    enum SpeechAnalysisViewPage: Equatable {
+        case rating
+        case review
+        case method
+    }
+    
+    @Binding var selected: SpeechProfile
+    
+    @State private var currentPage: SpeechAnalysisViewPage = .rating
+    
+    @State private var scoringBarWidth: CGFloat = 100
+    
+    var body: some View {
+        ZStack{
+            ScrollView{
+                LazyVStack(alignment: .leading, spacing: 15, pinnedViews: .sectionHeaders){
+                    Section {
+                        Image("SpeechProfile_\(selected.templateImage)")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: 250)
+                            .clipped()
+                        
+                        VStack(alignment: .leading){
+                            HStack{
+                                Text(selected.templateName)
+                                    .font(.title)
+                                    .bold()
+                                Spacer()
+                            }
+                            Text(selected.templateDescription)
+                                .foregroundStyle(Color(.systemGray))
+                            HStack{
+                                Spacer()
+                                Text({
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "yyyy/MM/dd HH:mm"
+                                    return formatter.string(from: selected.date)
+                                }())
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    
+                    Section {
+                        switch (currentPage){
+                        case .rating:
+                            VStack(alignment: .leading, spacing: 20){
+                                VStack(alignment: .leading){
+                                    Text(overallScoreToText(selected.overallRating))
+                                        .font(.title3)
+                                    Text("\(selected.overallRating)")
+                                        .font(.largeTitle)
+                                        .bold()
+                                    HStack(spacing: 0){
+                                        Rectangle()
+                                            .fill(Color(.accent))
+                                            .frame(width: (scoringBarWidth/100 * CGFloat(selected.overallRating)))
+                                        Rectangle()
+                                            .fill(Color(.systemGray))
+                                    }
+                                    .frame(height: 5)
+                                    .clipShape(Capsule())
+                                    .padding(.top, -10)
+                                    .background(GeometryReader { proxy in
+                                        Color.clear
+                                            .onAppear {
+                                                self.scoringBarWidth = proxy.size.width
+                                            }
+                                            .onChange(of: proxy.size){ t in
+                                                self.scoringBarWidth = t.width
+                                            }
+                                    })
+                                }
+                                VStack(alignment: .leading, spacing: 5){
+                                    Text(NSLocalizedString("SpeechAnalysisView_ratingFeedbackSectionTitle", comment: "ratingFeedbackSectionTitle (General)"))
+                                        .bold()
+                                    Text(selected.feedback)
+                                }
+                                if(selected.feedbacks.count > 0){
+                                    VStack(alignment: .leading, spacing: 5){
+                                        Text(NSLocalizedString("SpeechAnalysisView_ratingFeedbacksSectionTitle", comment: "ratingFeedbacksSectionTitle (Sub)"))
+                                            .bold()
+                                        ForEach(selected.feedbacks){ i in
+                                            VStack(alignment: .leading){
+                                                Text(i.content)
+                                            }
+                                            .padding(10)
+                                            .background(Color(.secondarySystemBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        }
+                                    }
+                                }
+                                if(selected.askedQuestions.count > 0){
+                                    VStack(alignment: .leading, spacing: 5){
+                                        Text(NSLocalizedString("SpeechAnalysisView_ratingAskedQuestionsFeedbackSectionTitle", comment: "Rating feedback for asked questions"))
+                                            .bold()
+                                        ForEach(selected.askedQuestions){ i in
+                                            VStack(alignment: .leading){
+                                                Text(i.question)
+                                                    .padding(10)
+                                                    .background(Color(.systemBackground))
+                                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                    .padding(.trailing)
+                                                HStack{
+                                                    Text(i.answer)
+                                                    Spacer()
+                                                }
+                                                .padding(10)
+                                                .background(Color(.systemBackground))
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                .padding(.leading)
+                                                Divider()
+                                                HStack{
+                                                    Text("\(i.score)")
+                                                        .bold()
+                                                        .font(.title3)
+                                                    Text(subScoreToText(i.score))
+                                                }
+                                                .padding(.bottom, 3)
+                                                Text(i.feedback)
+                                            }
+                                            .padding(10)
+                                            .background(Color(.secondarySystemBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        case .review:
+                            VStack(alignment: .leading, spacing: 20){
+                                VStack(alignment: .leading, spacing: 5){
+                                    Text(NSLocalizedString("SpeechAnalysisView_reviewSpeechContentSectionTitle", comment: "Section title of speech content transcipt"))
+                                        .bold()
+                                    Text(selected.speechContent)
+                                }
+                                if(selected.askedQuestions.count > 0){
+                                    VStack(alignment: .leading, spacing: 5){
+                                        Text(NSLocalizedString("SpeechAnalysisView_reviewAskedQuestionsQandASectionTitle", comment: "Section title of asked questions and answers"))
+                                            .bold()
+                                        ForEach(selected.askedQuestions){ i in
+                                            VStack(alignment: .leading){
+                                                Text(i.question)
+                                                    .padding(10)
+                                                    .background(Color(.systemBackground))
+                                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                    .padding(.trailing)
+                                                HStack{
+                                                    Text(i.answer)
+                                                    Spacer()
+                                                }
+                                                .padding(10)
+                                                .background(Color(.systemBackground))
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                .padding(.leading)
+                                            }
+                                            .padding(10)
+                                            .background(Color(.secondarySystemBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        case .method:
+                            EmptyView()
+                        }
+                    } header: {
+                        VStack(alignment: .leading){
+                            HStack(spacing: 10){
+                                pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarRating", comment: "Tab bar Rating"), page: .rating)
+                                pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarReview", comment: "Tab bar Review"), page: .review)
+                                pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarMethod", comment: "Tab bar Method"), page: .method)
+                            }
+                            .padding(.horizontal)
+                            .padding(.top, 45)
+                            Divider()
+                        }
+                        .background(Color(.systemBackground))
+                    }
+                }
+            }
+            .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+            .ignoresSafeArea(edges: .top)
+            
+            VStack{
+                HStack{
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                    Text(NSLocalizedString("SpeechAnalysisView_Title", comment: "Title displayed at the top of the coin list screen"))
+                        .font(.title2)
+                        .bold()
+                        .foregroundStyle(Color(.accent))
+                    Spacer()
+                    Button {
+                        ViewManager.shared.backHomePage()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                            .foregroundStyle(Color(.systemGray))
+                    }
+                }
+                .padding(.bottom)
+                .padding(.horizontal)
+                .background(Color(.systemBackground).opacity(0.3))
+                .background(.ultraThinMaterial)
+                Spacer()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func pageTab(title: String, page: SpeechAnalysisViewPage) -> some View {
+        VStack{
+            Text(title)
+                .padding(.horizontal, 10)
+                .background(
+                    Rectangle()
+                        .fill(Color(currentPage == page ? .accent : .clear))
+                        .frame(height: 5)
+                        .offset(y: 20)
+                )
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.3)){
+                currentPage = page
+            }
+        }
+    }
+    
+    private func overallScoreToText(_ i: Int) -> String {
+        if (i >= 90){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_A", comment: "Score to text A")
+        } else if (i >= 80){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_B", comment: "Score to text B")
+        } else if (i >= 70){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_C", comment: "Score to text C")
+        } else if (i >= 60){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_D", comment: "Score to text D")
+        } else if (i >= 50){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_E", comment: "Score to text E")
+        } else if (i >= 40){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_F", comment: "Score to text F")
+        } else {
+            return NSLocalizedString("SpeechAnalysisView_scoreText_G", comment: "Score to text G")
+        }
+    }
+    
+    private func subScoreToText(_ i: Int) -> String {
+        if (i >= 9){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_A", comment: "Score to text A")
+        } else if (i >= 8){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_B", comment: "Score to text B")
+        } else if (i >= 7){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_C", comment: "Score to text C")
+        } else if (i >= 6){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_D", comment: "Score to text D")
+        } else if (i >= 5){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_E", comment: "Score to text E")
+        } else if (i >= 4){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_F", comment: "Score to text F")
+        } else {
+            return NSLocalizedString("SpeechAnalysisView_scoreText_G", comment: "Score to text G")
+        }
+    }
+}
+
+#Preview {
+    SpeechAnalysisView(selected: .constant(DefaultSpeechProfile.test))
+}

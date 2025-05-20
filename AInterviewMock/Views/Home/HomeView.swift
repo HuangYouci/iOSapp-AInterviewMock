@@ -16,14 +16,15 @@ struct HomeView: View {
     var body: some View {
         ZStack{
             VStack(spacing: 0){
+                
                 HStack{
                     Image("Logo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 35, height: 35)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .frame(width: 25, height: 25)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
                     Text(NSLocalizedString("HomeView_appTitle", comment: "The main title of the application"))
-                        .font(.largeTitle)
+                        .font(.title2)
                         .bold()
                         .foregroundStyle(Color(.accent))
                     Spacer()
@@ -32,31 +33,27 @@ struct HomeView: View {
                 }
                 .padding(.bottom)
                 .padding(.horizontal)
-                .background(Color(.systemBackground).opacity(0.3))
-                .background(.ultraThinMaterial)
                 
                 switch(currentPage){
                 case 0:
-                    HomeEntryView(currentPage: $currentPage)
+                    HomeEntryView()
                 case 1:
-                    HomeListView()
+                    ListView()
+                case 2:
+                    CoinView()
                 default:
                     Color.clear
                 }
-            }
-            VStack{
-                Spacer()
+                
+                Divider()
                 HStack(spacing: 30){
+                    Spacer()
+                    barBuilder(page: 2, icon: "hockey.puck")
                     barBuilder(page: 0, icon: "house")
                     barBuilder(page: 1, icon: "list.bullet")
+                    Spacer()
                 }
-                .padding()
-                .padding(.horizontal)
-                .background(Color(.black).opacity(0.3))
-                .background(.ultraThinMaterial)
-                .clipShape(Capsule())
-                .shadow(radius: 5)
-                .padding()
+                .padding(20)
             }
         }
         .onAppear {
@@ -78,13 +75,9 @@ struct HomeView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 30, height: 30)
-                .foregroundStyle(Color(.white))
-                .shadow(radius: 1)
             if (currentPage == page){
                 Circle()
                     .frame(width: 5, height: 5)
-                    .foregroundStyle(Color(.white))
-                    .shadow(radius: 1)
             }
         }
         .contentShape(Rectangle())

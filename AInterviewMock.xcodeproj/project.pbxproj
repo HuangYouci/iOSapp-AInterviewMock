@@ -293,7 +293,7 @@
 				INFOPLIST_FILE = AInterviewMock/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "模擬面試";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能進行模擬面試";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能使用程式功能";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -327,7 +327,7 @@
 				INFOPLIST_FILE = AInterviewMock/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "模擬面試";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能進行模擬面試";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能使用程式功能";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -183,7 +183,7 @@ struct UpdateCheckerView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
-            Image("updatebg")
+            Image("UpdateCheckerView_illu")
                 .resizable()
                 .scaledToFill()
         )

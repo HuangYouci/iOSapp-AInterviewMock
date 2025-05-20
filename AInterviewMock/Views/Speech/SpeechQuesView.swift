@@ -1,27 +1,27 @@
 //
-//  InterviewQuesView.swift
+//  SpeechQuesView.swift
 //  AInterviewMock
 //
-//  Created by 黃宥琦 on 2025/5/5.
+//  Created by 黃宥琦 on 2025/5/16.
 //
 
 import SwiftUI
 
-struct InterviewQuesView: View {
+struct SpeechQuesView: View {
     
     enum FocusedField: Hashable {
         case question(index: Int)
     }
     
-    @Binding var selected: InterviewProfile?
-    @State private var selectionQuestions: [InterviewProfilePreQuestions] = []
+    @Binding var selected: SpeechProfile?
+    @State private var selectionQuestions: [SpeechProfilePreQuestions] = []
     @FocusState private var focusedField: FocusedField?
     
     var body: some View {
         VStack(alignment: .leading){
             VStack(alignment: .leading){
-                Text(NSLocalizedString("InterviewQuesView_titleLine1", comment: "First line of the title on the pre-interview questions screen"))
-                Text(NSLocalizedString("InterviewQuesView_titleLine2", comment: "Second line of the title on the pre-interview questions screen"))
+                Text(NSLocalizedString("SpeechQuesView_titleLine1", comment: "First line of the title on the pre-speech questions screen"))
+                Text(NSLocalizedString("SpeechQuesView_titleLine2", comment: "Second line of the title on the pre-speech questions screen"))
             }
             .font(.largeTitle)
             .bold()
@@ -40,11 +40,11 @@ struct InterviewQuesView: View {
                                 Text(selectionQuestions[index].question)
                                 if (selectionQuestions[index].required){
                                     Spacer()
-                                    Text(NSLocalizedString("InterviewQuesView_requiredFieldIndicator", comment: "Indicator text for a required field, e.g., 'Required'"))
+                                    Text(NSLocalizedString("SpeechQuesView_requiredFieldIndicator", comment: "Indicator text for a required field, e.g., 'Required'"))
                                         .foregroundStyle(Color(.red))
                                 }
                             }
-                            TextField(NSLocalizedString("InterviewQuesView_answerTextFieldPlaceholder", comment: "Placeholder text for the answer input field"), text: $selectionQuestions[index].answer)
+                            TextField(NSLocalizedString("SpeechQuesView_answerTextFieldPlaceholder", comment: "Placeholder text for the answer input field"), text: $selectionQuestions[index].answer)
                                 .focused($focusedField, equals: .question(index: index))
                         }
                         .padding()
@@ -80,5 +80,6 @@ struct InterviewQuesView: View {
 }
 
 #Preview{
-    InterviewQuesView(selected: .constant(DefaultInterviewProfile.college))
+    SpeechQuesView(selected: .constant(DefaultSpeechProfile.test))
 }
+
