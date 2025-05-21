@@ -234,7 +234,7 @@ struct DefaultSpeechProfile {
     static let test = SpeechProfile(
         templateName: "學術演講",
         templateDescription: "模擬大學課堂中進行的研究簡報，包含背景、方法、結果與結論。",
-        templateImage: "academic_presentation", // 對應 Image Asset 名稱
+        templateImage: "graduationcap.fill", // 對應 Image Asset 名稱
         templatePrompt: "你現在是一位學生，正在進行一場學術簡報，請根據提供的資訊開始模擬。",
         preQuestions: [
             SpeechProfilePreQuestions(

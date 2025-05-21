@@ -179,7 +179,7 @@ struct InterviewStartView: View {
                                 selected!.questions = await GeminiService.shared.generateInterviewQuestions(from: selected!)
                                 if (selected!.questions.count) > 0 {
                                     questionNum = 0
-                                    CoinManager.shared.removeCoin(selected!.cost)
+                                    CoinManager.shared.addCoin(-selected!.cost)
                                     recording.startRecording()
                                     startTimer()
                                 } else {

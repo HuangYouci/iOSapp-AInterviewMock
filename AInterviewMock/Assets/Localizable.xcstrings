@@ -17,6 +17,23 @@
         }
       }
     },
+    "CoinManagerView_coinBalance" : {
+      "comment" : "Show coins balance",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Left"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "餘額"
+          }
+        }
+      }
+    },
     "CoinView_coinPack100Title" : {
       "comment" : "Title for the 100 coins pack",
       "localizations" : {
@@ -2703,19 +2720,70 @@
         }
       }
     },
+    "SpeechAnalysisView_deleteRecordSublabel" : {
+      "comment" : "Sublabel for 'Delete Record' within delete item",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Record"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刪除紀錄"
+          }
+        }
+      }
+    },
+    "SpeechAnalysisView_deleteSpeechProfileSectionDescription" : {
+      "comment" : "Section description of delete this speech profile",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After tapping delete, this record will be deleted and cannot be undone! Tokens that cost cannot be returned."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "點擊刪除紀錄後將刪除本筆模擬演講紀錄，且不能復原，也不退還消耗之模擬代幣！"
+          }
+        }
+      }
+    },
+    "SpeechAnalysisView_deleteSpeechProfileSectionTitle" : {
+      "comment" : "Section title of delete this speech profile",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刪除"
+          }
+        }
+      }
+    },
     "SpeechAnalysisView_ratingAskedQuestionsFeedbackSectionTitle" : {
       "comment" : "Rating feedback for asked questions",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Audience Feedback"
+            "value" : "Audience Asks Feedback"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "提問者回饋"
+            "value" : "問答回饋"
           }
         }
       }
@@ -2760,7 +2828,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Q&A"
+            "value" : "Audience Asks"
           }
         },
         "zh-Hant" : {
@@ -2777,7 +2845,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "TRANSCIPT"
+            "value" : "Transcipt"
           }
         },
         "zh-Hant" : {
@@ -4404,10 +4472,38 @@
       }
     },
     "SpeechStartView_microphonePermissionDenied" : {
-      "comment" : "Microphone permission status: Denied. Instructs user to go to settings."
+      "comment" : "Microphone permission status: Denied. Instructs user to go to settings.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone Permission"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "麥克風權限"
+          }
+        }
+      }
     },
     "SpeechStartView_microphonePermissionTitle" : {
-      "comment" : "Title for microphone permission status section (reused for denied state)"
+      "comment" : "Title for microphone permission status section (reused for denied state)",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Need your microphone permits to start mock speech."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需獲取麥克風權限，才能開始模擬演講"
+          }
+        }
+      }
     },
     "SpeechStartView_numberOfQuestionsFormat" : {
       "comment" : "Format string for displaying the number of questions. Expects one integer argument for the count. e.g., '%d questions' or '%d items'",
@@ -4446,6 +4542,12 @@
     "SpeechStartView_preparationDisclaimer" : {
       "comment" : "Disclaimer text on the preparation screen advising caution as the mock speech cannot be paused or restarted.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mock speech is starting soon!"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4457,6 +4559,12 @@
     "SpeechStartView_presentingInstruction" : {
       "comment" : "Instruction: Start your speech and press 'Finish' when done.",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please start your speech, and tap ‘Finish’ when you completed it."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",

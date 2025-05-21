@@ -155,6 +155,7 @@ struct ListView: View {
                         .lineLimit(1)
                 }
                 .padding()
+                .contentShape(Rectangle())
                 .onTapGesture {
                     ViewManager.shared.addPage(view: SpeechAnalysisView(selected: .constant(i)))
                 }
