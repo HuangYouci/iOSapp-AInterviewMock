@@ -14,6 +14,9 @@ class CoinManager: ObservableObject {
     // MARK: - Published Properties
     @Published var coins: Int = 0
     @Published var isPremiumCoinAvailable: Bool = false
+    // Notification UI
+    @Published var showCoinNotification = false
+    @Published var lastCoinChange: Int = 0
 
     // MARK: - Keychain Keys
     private let coinKeychainKey = "com.huangyouci.AInterviewMock.key.coin"
@@ -33,39 +36,21 @@ class CoinManager: ObservableObject {
         }
         // 初始化 isPremiumCoinAvailable 狀態
         updatePremiumCoinAvailability()
-        // 測試用 給他代幣
-        #if DEBUG
-        addCoin(100)
-        #endif
     }
 
     // MARK: - Public Coin Management Methods
-    func getCoinValue() -> Int { // 雖然 View 可以直接用 cm.coins，但保留此方法以保持 API 一致性
-        return self.coins
-    }
 
     func addCoin(_ amount: Int) {
-        guard amount > 0 else { return }
+        self.showCoinNotification = false
         DispatchQueue.main.async {
             let newTotal = self.coins + amount
             if self.saveDataToKeychain(value: newTotal, forKey: self.coinKeychainKey) {
                 self.coins = newTotal
-                print("CoinManager | ✅ 已增加 \(amount) 代幣。新總數: \(self.coins)")
+                print("CoinManager | 已增加 \(amount) 代幣。新總數: \(self.coins)")
+                self.lastCoinChange = amount
+                self.showCoinNotification = true
             } else {
-                print("CoinManager | ❌ 增加代幣失敗 (Keychain 儲存錯誤)")
-            }
-        }
-    }
-
-    func removeCoin(_ amount: Int) {
-        guard amount > 0 else { return }
-        DispatchQueue.main.async {
-            let newTotal = max(0, self.coins - amount)
-            if self.saveDataToKeychain(value: newTotal, forKey: self.coinKeychainKey) {
-                self.coins = newTotal
-                print("CoinManager | ✅ 已移除 \(amount) 代幣。剩餘: \(self.coins)")
-            } else {
-                print("CoinManager | ❌ 移除代幣失敗 (Keychain 儲存錯誤)")
+                print("CoinManager | 增加代幣失敗 (Keychain 儲存錯誤)")
             }
         }
     }
@@ -224,4 +209,74 @@ class CoinManager: ObservableObject {
         print("CoinManager | ✅ Keychain 數據已重置。")
     }
     #endif
+}
+
+#Preview{
+    CoinManagerView(amountChanged: -50, finalAmount: 1225000)
+}
+
+struct CoinManagerView: View {
+    
+    let amountChanged: Int
+    let finalAmount: Int
+    
+    @State private var time: Int = 0
+    @State private var timer: Timer? = nil
+    
+    var body: some View {
+        VStack{
+            HStack(spacing: 15){
+                Image(systemName: "hockey.puck.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 30, height: 30)
+                    .foregroundStyle(Color("AppGold"))
+                ZStack{
+                    Text("\(amountChanged)")
+                        .bold()
+                        .opacity(time < 18 ? 1 : 0)
+                    VStack(spacing: 0){
+                        Text(beautyAmount(amount: finalAmount))
+                            .bold()
+                        Text(NSLocalizedString("CoinManagerView_coinBalance", comment: "Show coins balance"))
+                            .font(.caption)
+                    }
+                    .opacity(time < 20 ? 0 : 1)
+                }
+            }
+            .lineLimit(1)
+            .frame(width: time < 5 ? 50 : 100)
+            .padding()
+            .background(Color(.systemBackground).opacity(0.5))
+            .background(.ultraThinMaterial)
+            .clipShape(Capsule())
+            .offset(y: ((time < 2)||(time > 45)) ? -150 : 0)
+            Spacer()
+        }
+        .onAppear {
+            time = 0
+            timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                withAnimation(.easeInOut(duration: 0.3)){
+                    time += 1
+                }
+                if (time > 50) {
+                    timer?.invalidate()
+                    CoinManager.shared.showCoinNotification = false
+                }
+            }
+        }
+        .onDisappear {
+            timer?.invalidate()
+        }
+    }
+    
+    private func beautyAmount(amount: Int) -> String {
+        if(amount > 1000000){
+            return "\(amount/1000000).\((amount-((amount/1000000)*1000000))/100000)M"
+        } else if (amount > 1000) {
+            return "\(amount/1000).\((amount-((amount/1000)*1000))/100)K"
+        } else {
+            return "\(amount)"
+        }
+    }
 }

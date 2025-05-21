@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-/// Speech 結果頁
-/// 傳入 selected Binding 作為顯示資料的依據
-/// 如果 SpeechProfile 的 status 為 4 則顯示結果，為 1 則顯示未完成
 struct SpeechAnalysisView: View {
     
     enum SpeechAnalysisViewPage: Equatable {
@@ -25,14 +22,39 @@ struct SpeechAnalysisView: View {
     @State private var scoringBarWidth: CGFloat = 100
     
     var body: some View {
-        ZStack{
+        VStack(spacing: 0){
+            VStack{
+                HStack{
+                    Image("Logo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                    Text(NSLocalizedString("SpeechAnalysisView_Title", comment: "Title displayed at the top of the coin list screen"))
+                        .font(.title2)
+                        .bold()
+                        .foregroundStyle(Color(.accent))
+                    Spacer()
+                    Button {
+                        ViewManager.shared.backHomePage()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                            .foregroundStyle(Color(.systemGray))
+                    }
+                }
+                .padding(.bottom)
+                .padding(.horizontal)
+            }
             ScrollView{
                 LazyVStack(alignment: .leading, spacing: 15, pinnedViews: .sectionHeaders){
                     Section {
                         Image("SpeechProfile_\(selected.templateImage)")
                             .resizable()
                             .scaledToFill()
-                            .frame(height: 250)
+                            .frame(height: 250, alignment: .bottom)
                             .clipped()
                         
                         VStack(alignment: .leading){
@@ -178,7 +200,43 @@ struct SpeechAnalysisView: View {
                             }
                             .padding(.horizontal)
                         case .method:
-                            EmptyView()
+                            VStack(alignment: .leading, spacing: 20){
+                                VStack(alignment: .leading, spacing: 5){
+                                    Text(NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionTitle", comment: "Section title of delete this speech profile"))
+                                        .bold()
+                                    
+                                    Button {
+                                        DataManager.shared.deleteSpeechProfile(withId: selected.id.uuidString)
+                                        ViewManager.shared.perviousPage()
+                                    } label: {
+                                        VStack(alignment: .leading){
+                                            HStack{
+                                                Image(systemName: "trash.fill")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 15, height: 15)
+                                                Text(NSLocalizedString("SpeechAnalysisView_deleteRecordSublabel", comment: "Sublabel for 'Delete Record' within delete item"))
+                                                    .bold()
+                                                Spacer()
+                                            }
+                                            .foregroundStyle(Color(.red))
+                                        }
+                                        .padding()
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(
+                                                    Color(.red),
+                                                    lineWidth: 1
+                                                )
+                                        )
+                                    }
+                                    
+                                    Text(NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionDescription", comment: "Section description of delete this speech profile"))
+                                        .font(.caption)
+                                        .foregroundStyle(Color(.systemGray))
+                                }
+                            }
+                            .padding(.horizontal)
                         }
                     } header: {
                         VStack(alignment: .leading){
@@ -188,7 +246,6 @@ struct SpeechAnalysisView: View {
                                 pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarMethod", comment: "Tab bar Method"), page: .method)
                             }
                             .padding(.horizontal)
-                            .padding(.top, 45)
                             Divider()
                         }
                         .background(Color(.systemBackground))
@@ -196,36 +253,6 @@ struct SpeechAnalysisView: View {
                 }
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-            .ignoresSafeArea(edges: .top)
-            
-            VStack{
-                HStack{
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                    Text(NSLocalizedString("SpeechAnalysisView_Title", comment: "Title displayed at the top of the coin list screen"))
-                        .font(.title2)
-                        .bold()
-                        .foregroundStyle(Color(.accent))
-                    Spacer()
-                    Button {
-                        ViewManager.shared.backHomePage()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 15, height: 15)
-                            .foregroundStyle(Color(.systemGray))
-                    }
-                }
-                .padding(.bottom)
-                .padding(.horizontal)
-                .background(Color(.systemBackground).opacity(0.3))
-                .background(.ultraThinMaterial)
-                Spacer()
-            }
         }
     }
     

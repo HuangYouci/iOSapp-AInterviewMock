@@ -164,8 +164,7 @@ struct SpeechStartView: View {
                         .shadow(radius: 2)
                         .padding(.horizontal)
                         .background(
-                            Image("SpeechStartView_analyzingPresent")
-                                .resizable()
+                            LoopingVideoBackground(videoName: "SpeechStartView_analyzingPresent", fileExtension: "mp4")
                                 .scaledToFill()
                                 .ignoresSafeArea(.all)
                         )
@@ -188,7 +187,7 @@ struct SpeechStartView: View {
                             Spacer()
                             VStack(alignment: .leading, spacing: 10){
                                 HStack{
-                                    Text(String(format: NSLocalizedString("SpeechStartView_statusAskingQuestion", comment: "Status text: Asking question"), current))
+                                    Text(String(format: NSLocalizedString("SpeechStartView_statusAskingQuestion", comment: "Status text: Asking question"), current+1))
                                     Spacer()
                                 }
                                 Text(selected!.askedQuestions[current].question)
@@ -229,8 +228,7 @@ struct SpeechStartView: View {
                         .shadow(radius: 2)
                         .padding(.horizontal)
                         .background(
-                            Image("SpeechStartView_analyzingAsk")
-                                .resizable()
+                            LoopingVideoBackground(videoName: "SpeechStartView_analyzingPresent", fileExtension: "mp4")
                                 .scaledToFill()
                                 .ignoresSafeArea(.all)
                         )
@@ -248,6 +246,8 @@ struct SpeechStartView: View {
                             
                             ViewManager.shared.backHomePage()
                             ViewManager.shared.addPage(view: SpeechAnalysisView(selected: .constant(selected!)))
+                            
+                            CoinManager.shared.addCoin(-selected!.cost)
                         }
                     }
                 }

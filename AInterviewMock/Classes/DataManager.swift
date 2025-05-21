@@ -495,5 +495,36 @@ class DataManager: ObservableObject {
             return
         }
     }
+    
+    func deleteSpeechProfile(withId id: String) {
+        let fileManager = FileManager.default
+
+        // 1. 取得 Documents 目錄路徑
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("DataManager | 無法取得 Documents 路徑。")
+            return
+        }
+
+        // 2. 構造目標資料夾的路徑: ~/documents/SpeechProfileDocuments/<id.uuidString>/
+        let folderURLToDelete = documentsURL
+            .appendingPathComponent("SpeechProfileDocuments")
+            .appendingPathComponent(id)
+
+        // 3. 檢查資料夾是否存在
+        guard fileManager.fileExists(atPath: folderURLToDelete.path) else {
+            print("DataManager | 要刪除的資料夾不存在：\(folderURLToDelete.path)")
+            return
+        }
+
+        // 4. 刪除資料夾及其所有內容
+        do {
+            try fileManager.removeItem(at: folderURLToDelete)
+            print("DataManager | 成功刪除資料夾及其內容：\(folderURLToDelete.path)")
+            return
+        } catch {
+            print("DataManager | 刪除資料夾失敗：\(error) (路徑: \(folderURLToDelete.path))")
+            return
+        }
+    }
 
 }

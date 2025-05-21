@@ -11,9 +11,11 @@ import FirebaseAnalytics
 struct ContentView: View {
     
     @ObservedObject var vm = ViewManager.shared
+    @ObservedObject var co = CoinManager.shared
     
     var body: some View {
         ZStack{
+            // VM STACK
             vm.viewStack.last!
                 .background(Color(.systemBackground))
                 .id(vm.viewStack.count)
@@ -28,6 +30,11 @@ struct ContentView: View {
                             removal: .opacity
                         )
                  )
+            
+            // CO NOTIF
+            if (co.showCoinNotification){
+                CoinManagerView(amountChanged: co.lastCoinChange, finalAmount: co.coins)
+            }
         }
     }
 }
