@@ -83,24 +83,25 @@ class GeminiService {
             let audioPart = InlineDataPart(data: audioData, mimeType: mimeType)
             
             // A very direct prompt asking only for transcription.
-            let transcriptionPrompt = "Transcribe the following audio to text. Provide only the raw transcription of the spoken words. Do not add any additional comments, summaries, or explanations. If the audio is silent or unintelligible, indicate that appropriately or return an empty string for the transcription. (If content is Chinese, please response as traditional chinese.)"
+            let transcriptionPrompt = "Transcribe the following audio to text. Provide only the raw transcription of the spoken words. Do not add any additional comments, summaries, or explanations. If the audio is silent or unintelligible, indicate that appropriately or return an empty string for the transcription. (If the content is Chinese, please output as Traditional chinese.)"
             let textPart = TextPart(transcriptionPrompt)
 
             // The order of parts can sometimes matter. Instruction then data is common.
             let content: [ModelContent] = [ModelContent(role: "user", parts: [textPart, audioPart])]
-            // Or, for some multimodal models, just sending the audio part with a general model might infer transcription.
-            // However, an explicit prompt is safer for your specific "don't change content" requirement.
 
             // 5. Send to Gemini and process response
             do {
-                let response = try await self.model.generateContent(content) // Using self.model
+                let response = try await self.model.generateContent(content)
+                
+                // Analytics
+                AnalyticsLogger.shared.logEvent(name: "audioTranscribed", parameters: ["date":Date(),"promptTokenCount":response.usageMetadata?.promptTokenCount ?? 0,"responseTokenCount":response.usageMetadata?.totalTokenCount ?? 0])
 
                 if let transcribedText = response.text, !transcribedText.isEmpty {
                     print("GeminiService | Audio transcribed successfully. Length: \(transcribedText.count)")
                     return transcribedText
                 } else if response.text != nil && response.text!.isEmpty {
                     print("GeminiService | Gemini returned an empty transcription (possibly silent or unintelligible audio).")
-                    return "" // Or "No answer" / "Audio silent or unintelligible" if you prefer
+                    return ""
                 }
                 else {
                     print("GeminiService | Gemini response did not contain usable text for transcription.")
@@ -224,7 +225,7 @@ class GeminiService {
                     }
             
             // 紀錄
-            AnalyticsLogger.shared.generatedQuestions(templateName: i.templateName, token: countTokensResponse.totalTokens, generatedNum: i.questionNumbers, filesNum: i.filesPath.count, modFormalLevel: Int(i.questionFormalStyle*100), modStrictLevel: Int(i.questionStrictStyle*100))
+            AnalyticsLogger.shared.logEvent(name: "interviewGenerateQuestions", parameters: ["date": Date(), "template": i.templateName, "promptTokenCount": response.usageMetadata?.promptTokenCount ?? 0, "totalTokenCount": response.usageMetadata?.totalTokenCount ?? 0, "filesCount": i.filesPath.count, "questionsCount": i.questionNumbers, "modifierFormal": Int(i.questionFormalStyle*100), "modifierStrictLevel": Int(i.questionStrictStyle*100), "logVersion": 2])
 
             return interviewQuestions
 
@@ -421,7 +422,8 @@ class GeminiService {
         print("GeminiService | 面試回饋已成功生成並更新到 InterviewProfile。狀態已更新為 4。")
         
         // 紀錄 Analytics
-        AnalyticsLogger.shared.generatedAnalysis(templateName: interviewProfile.templateName, generatedNum: interviewProfile.questionNumbers, filesNum: interviewProfile.filesPath.count, modFormalLevel: Int(interviewProfile.questionFormalStyle*100), modStrictLevel: Int(interviewProfile.questionStrictStyle*100), overallScore: interviewProfile.overallRating)
+        
+        AnalyticsLogger.shared.logEvent(name: "interviewGeneratedFeedback", parameters: ["date": Date(), "template": interviewProfile.templateName, "promptTokenCount": response.usageMetadata?.promptTokenCount ?? 0, "totalTokenCount": response.usageMetadata?.totalTokenCount ?? 0, "filesCount": interviewProfile.filesPath.count, "questionsCount": interviewProfile.questionNumbers, "modifierFormal": Int(interviewProfile.questionFormalStyle*100), "modifierStrictLevel": Int(interviewProfile.questionStrictStyle*100), "overallScore": interviewProfile.overallRating, "logVersion": 2])
     }
     
     // MARK: - 模擬演講
@@ -538,7 +540,7 @@ class GeminiService {
                     }
             
             // 紀錄
-            /// 尚未實作
+            AnalyticsLogger.shared.logEvent(name: "speechGenerateQuestions", parameters: ["date": Date(), "template": i.templateName, "promptTokenCount": response.usageMetadata?.promptTokenCount ?? 0, "totalTokenCount": response.usageMetadata?.totalTokenCount ?? 0, "filesCount": i.filesPath.count, "askedQuestionsCount": i.askedQuestionNumbers, "logVersion": 1])
 
             return speechAskedQuestions
 
@@ -741,7 +743,7 @@ class GeminiService {
         print("GeminiService | 面試回饋已成功生成並更新到 SpeechProfile。狀態已更新為 4。")
         
         // 紀錄 Analytics
-//        AnalyticsLogger.shared.generatedAnalysis(templateName: interviewProfile.templateName, generatedNum: interviewProfile.questionNumbers, filesNum: interviewProfile.filesPath.count, modFormalLevel: Int(interviewProfile.questionFormalStyle*100), modStrictLevel: Int(interviewProfile.questionStrictStyle*100), overallScore: interviewProfile.overallRating)
+        AnalyticsLogger.shared.logEvent(name: "speechGeneratedFeedback", parameters: ["date": Date(), "template": target.templateName, "promptTokenCount": response.usageMetadata?.promptTokenCount ?? 0, "totalTokenCount": response.usageMetadata?.totalTokenCount ?? 0, "filesCount": target.filesPath.count, "askedQuestionsCount": target.askedQuestionNumbers, "overallScore": target.overallRating, "logVersion": 1])
     }
     
 }

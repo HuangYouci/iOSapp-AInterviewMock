@@ -15,6 +15,7 @@ struct ContentView: View {
     
     var body: some View {
         ZStack{
+            // MARK: - Views
             // VM STACK
             vm.viewStack.last!
                 .background(Color(.systemBackground))
@@ -31,6 +32,10 @@ struct ContentView: View {
                         )
                  )
             
+            vm.topView
+                .id("topViewIdentifier")
+                .transition(.opacity)
+            // MARK: - Global Notification
             // CO NOTIF
             if (co.showCoinNotification){
                 CoinManagerView(amountChanged: co.lastCoinChange, finalAmount: co.coins)

@@ -96,6 +96,8 @@ class UpdateChecker: ObservableObject {
                         self.newestVersion = appStoreVersion
                         self.thisVersion = currentVersionString
                         self.haveUpdate = true
+                        
+                        AnalyticsLogger.shared.logEvent(name: "updateChecker", parameters: ["date": Date(), "status": "OLD", "currentVersion": currentVersionString, "newestVersion": appStoreVersion, "logVersion": 1])
                     }
                 } else if currentVersionComponents.lexicographicallyPrecedes(appStoreVersionComponents, by: >) {
                     
@@ -104,12 +106,16 @@ class UpdateChecker: ObservableObject {
                     DispatchQueue.main.async {
                         print("UpdateChecker | You are running test version! App Store version: \(appStoreVersion), Your Version: \(currentVersionString)")
                         self.isTestVersion = true
+                        
+                        AnalyticsLogger.shared.logEvent(name: "updateChecker", parameters: ["date": Date(), "status": "TEST", "currentVersion": currentVersionString, "newestVersion": appStoreVersion, "logVersion": 1])
                     }
                 } else {
                     
                     // 版本等於商店版本：正式版
                     
                     print("UpdateChecker | App is up to date. Current: \(currentVersionString), AppStore: \(appStoreVersion)")
+                    
+                    AnalyticsLogger.shared.logEvent(name: "updateChecker", parameters: ["date": Date(), "status": "NEWEST", "currentVersion": currentVersionString, "newestVersion": appStoreVersion, "logVersion": 1])
                 }
                 
             } catch {

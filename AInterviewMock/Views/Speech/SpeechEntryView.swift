@@ -25,22 +25,12 @@ struct SpeechEntryView: View {
                 VStack(alignment: .leading){
                     Color.clear
                         .frame(height: 5)
-                    if (alreadyHaveData){
-                        Text(NSLocalizedString("SpeechEntryView_draftSectionTitle", comment: "Section Title for Draft"))
-                            .foregroundStyle(Color(.systemGray))
-                            .padding(.horizontal)
-                            .padding(.vertical, 5)
-                        if let selected = selected {
-                            typeBuilder(of: selected)
-                        }
-                    } else {
-                        Text(NSLocalizedString("SpeechEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
-                            .foregroundStyle(Color(.systemGray))
-                            .padding(.horizontal)
-                            .padding(.vertical, 5)
-                        ForEach(templates) { template in
-                            typeBuilder(of: template)
-                        }
+                    Text(NSLocalizedString("SpeechEntryView_templateSectionTitle", comment: "Section title for 'Templates' list"))
+                        .foregroundStyle(Color(.systemGray))
+                        .padding(.horizontal)
+                        .padding(.vertical, 5)
+                    ForEach(templates) { template in
+                        typeBuilder(of: template)
                     }
                     Color.clear
                         .frame(height: 300)
@@ -59,11 +49,6 @@ struct SpeechEntryView: View {
                 DefaultSpeechProfile.ceremonial,
                 DefaultSpeechProfile.demonstrative
                 ]
-            
-            if selected?.status == .prepared {
-                // 外部傳入
-                alreadyHaveData = true
-            }
         }
     }
     
