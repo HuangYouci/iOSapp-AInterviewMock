@@ -16,9 +16,7 @@ struct SpeechAnalysisView: View {
     }
     
     @Binding var selected: SpeechProfile
-    
     @State private var currentPage: SpeechAnalysisViewPage = .rating
-    
     @State private var scoringBarWidth: CGFloat = 100
     
     var body: some View {
@@ -202,12 +200,71 @@ struct SpeechAnalysisView: View {
                         case .method:
                             VStack(alignment: .leading, spacing: 20){
                                 VStack(alignment: .leading, spacing: 5){
-                                    Text(NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionTitle", comment: "Section title of delete this speech profile"))
-                                        .bold()
-                                    
+                                    if selected.status == .completed {
+                                        Button {
+                                            var reuse = selected
+                                            reuse.id = UUID()
+                                            ViewManager.shared.addPage(view: SpeechView(SpeechProfile: reuse))
+                                        } label: {
+                                            VStack(alignment: .leading){
+                                                HStack{
+                                                    Image(systemName: "arrow.uturn.down.circle")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 15, height: 15)
+                                                    Text(NSLocalizedString("SpeechAnalysisView_reuseSublabel", comment: "Sublabel for 'Reuse Template' within delete item"))
+                                                        .bold()
+                                                    Spacer()
+                                                }
+                                                .foregroundStyle(Color(.accent))
+                                            }
+                                            .padding()
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(
+                                                        Color(.accent),
+                                                        lineWidth: 1
+                                                    )
+                                            )
+                                        }
+                                    } else {
+                                        Button {
+                                            ViewManager.shared.addPage(view: SpeechView(SpeechProfile: selected))
+                                        } label: {
+                                            VStack(alignment: .leading){
+                                                HStack{
+                                                    Image(systemName: "arrow.uturn.down.circle")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 15, height: 15)
+                                                    Text(NSLocalizedString("SpeechAnalysisView_useDraftSublabel", comment: "Sublabel for 'Use Draft' within method page"))
+                                                        .bold()
+                                                    Spacer()
+                                                }
+                                                .foregroundStyle(Color(.accent))
+                                            }
+                                            .padding()
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(
+                                                        Color(.accent),
+                                                        lineWidth: 1
+                                                    )
+                                            )
+                                        }
+                                    }
                                     Button {
-                                        DataManager.shared.deleteSpeechProfile(withId: selected.id.uuidString)
-                                        ViewManager.shared.perviousPage()
+                                        ViewManager.shared.setTopView(view:
+                                            ConfirmationDialog(
+                                                title: NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionTitle", comment: "Section title of delete this speech profile"),
+                                                message: NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionDescription", comment: "Section description of delete this speech profile"),
+                                                onConfirm: {
+                                                    ViewManager.shared.perviousPage()
+                                                    DataManager.shared.deleteSpeechProfile(withId: selected.id.uuidString)
+                                                },
+                                                onCancel: {}
+                                            )
+                                        )
                                     } label: {
                                         VStack(alignment: .leading){
                                             HStack{
@@ -230,10 +287,6 @@ struct SpeechAnalysisView: View {
                                                 )
                                         )
                                     }
-                                    
-                                    Text(NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionDescription", comment: "Section description of delete this speech profile"))
-                                        .font(.caption)
-                                        .foregroundStyle(Color(.systemGray))
                                 }
                             }
                             .padding(.horizontal)
@@ -241,8 +294,10 @@ struct SpeechAnalysisView: View {
                     } header: {
                         VStack(alignment: .leading){
                             HStack(spacing: 10){
-                                pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarRating", comment: "Tab bar Rating"), page: .rating)
-                                pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarReview", comment: "Tab bar Review"), page: .review)
+                                if (selected.status == .completed){
+                                    pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarRating", comment: "Tab bar Rating"), page: .rating)
+                                    pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarReview", comment: "Tab bar Review"), page: .review)
+                                }
                                 pageTab(title: NSLocalizedString("SpeechAnalysisView_tabBarMethod", comment: "Tab bar Method"), page: .method)
                             }
                             .padding(.horizontal)
@@ -253,6 +308,9 @@ struct SpeechAnalysisView: View {
                 }
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+        }
+        .onAppear {
+            if (selected.status != .completed) { currentPage = .method }
         }
     }
     

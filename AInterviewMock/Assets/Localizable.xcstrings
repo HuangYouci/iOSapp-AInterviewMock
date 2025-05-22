@@ -476,6 +476,40 @@
         }
       }
     },
+    "ConfirmationDialog_Cancel" : {
+      "comment" : "Cancel",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
+      }
+    },
+    "ConfirmationDialog_Confirm" : {
+      "comment" : "Confirm",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "確認"
+          }
+        }
+      }
+    },
     "HomeEntryView_startMockInterviewButton" : {
       "comment" : "Button text to start a mock interview",
       "localizations" : {
@@ -2822,6 +2856,23 @@
         }
       }
     },
+    "SpeechAnalysisView_reuseSublabel" : {
+      "comment" : "Sublabel for 'Reuse Template' within delete item",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy and Reuse"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "複製並重用"
+          }
+        }
+      }
+    },
     "SpeechAnalysisView_reviewAskedQuestionsQandASectionTitle" : {
       "comment" : "Section title of asked questions and answers",
       "localizations" : {
@@ -3043,6 +3094,23 @@
         }
       }
     },
+    "SpeechAnalysisView_useDraftSublabel" : {
+      "comment" : "Sublabel for 'Use Draft' within method page",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Draft"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原草稿"
+          }
+        }
+      }
+    },
     "SpeechDoneView_noAnswerProvided" : {
       "comment" : "Indicator text when no answer was provided for a pre-question",
       "localizations" : {
@@ -3158,23 +3226,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "再檢查一下演講設定吧！"
-          }
-        }
-      }
-    },
-    "SpeechEntryView_draftSectionTitle" : {
-      "comment" : "Section Title for Draft",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DRAFT"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "草稿"
           }
         }
       }

@@ -49,6 +49,8 @@ class CoinManager: ObservableObject {
                 print("CoinManager | 已增加 \(amount) 代幣。新總數: \(self.coins)")
                 self.lastCoinChange = amount
                 self.showCoinNotification = true
+                
+                AnalyticsLogger.shared.logEvent(name: "coinManagerBalance", parameters: ["date": Date(), "amount": amount, "before": newTotal-amount, "after": newTotal, "logVersion": 1])
             } else {
                 print("CoinManager | 增加代幣失敗 (Keychain 儲存錯誤)")
             }
@@ -156,7 +158,7 @@ class CoinManager: ObservableObject {
                 print("CoinManager | ❌ 更新上次 Premium coin 領取時間到 Keychain 失敗。")
             }
             
-            AnalyticsLogger.shared.premiumGetCoins(count: 5, afterTotal: self.coins)
+            AnalyticsLogger.shared.logEvent(name: "coinManagerPremiumGet", parameters: ["date": Date(), "after": self.coins, "logVersion": "1"])
         }
     }
 

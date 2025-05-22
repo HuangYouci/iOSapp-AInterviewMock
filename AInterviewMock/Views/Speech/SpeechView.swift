@@ -19,6 +19,7 @@ struct SpeechView: View {
     init(){}
     init(SpeechProfile: SpeechProfile){
         self._target = State(initialValue: SpeechProfile)
+        self._session = State(initialValue: 5)
     }
     
     var body: some View {
