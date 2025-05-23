@@ -114,6 +114,8 @@ struct SpeechStartView: View {
                                     recording.requestMicrophonePermissionOnly()
                                 }
                             }
+                            
+                            Color.clear.frame(height: 100)
                         }
                         .onAppear {
                             recording.requestMicrophonePermissionOnly()
@@ -360,7 +362,6 @@ struct SpeechStartView: View {
                                 .background(Color(.accent))
                                 .clipShape(Capsule())
                             }
-                            EmptyView()
                         case .analysingPresent:
                             EmptyView()
                         case .asking(current: let current):

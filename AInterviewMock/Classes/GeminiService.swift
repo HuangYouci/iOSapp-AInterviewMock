@@ -83,7 +83,12 @@ class GeminiService {
             let audioPart = InlineDataPart(data: audioData, mimeType: mimeType)
             
             // A very direct prompt asking only for transcription.
-            let transcriptionPrompt = "Transcribe the following audio to text. Provide only the raw transcription of the spoken words. Do not add any additional comments, summaries, or explanations. If the audio is silent or unintelligible, indicate that appropriately or return an empty string for the transcription. (If the content is Chinese, please output as Traditional chinese.)"
+            let transcriptionPrompt = """
+            Transcribe the following audio to text. Output **only** the spoken words, with no commentary.
+            If the language is Chinese, use Traditional Chinese characters (繁體字), not Simplified.
+            If the audio is empty or unclear, return an empty string.
+            Do not add empty line at finish.
+            """
             let textPart = TextPart(transcriptionPrompt)
 
             // The order of parts can sometimes matter. Instruction then data is common.
@@ -237,12 +242,13 @@ class GeminiService {
         
     }
 
-    func generateInterviewFeedback(interviewProfile: inout InterviewProfile) async {
+    func generateInterviewFeedback(target: inout InterviewProfile) async {
         
         struct GeminiFeedbackResponse: Codable {
             let question_evaluations: [GeminiQuestionEvaluation]
             let overall_interview_feedback: [GeminiOverallFeedbackItem]
             let overall_rating: Int
+            let overall_feedback: String
         }
 
         struct GeminiQuestionEvaluation: Codable {
@@ -276,7 +282,8 @@ class GeminiService {
                         "suggestion": .string(description: "針對此主題的改進建議或強化說明")
                     ]), description: "針對整體面試表現的主題式回饋列表"
                 ),
-                "overall_rating": .integer(description: "整體面試評分 (本項目評分 0 到 100分)，代表成功機率")
+                "overall_rating": .integer(description: "整體面試評分 (本項目評分 0 到 100分)，代表成功機率"),
+                "overall_feedback": .string(description: "整體評語，代表對於該演講的總結與感想回饋")
             ]
         )
 
@@ -299,24 +306,24 @@ class GeminiService {
         請依照使用者「答」以及「備審資料」的主要語言，判斷應由何種語言生成回應。
 
         ** 身份設定
-        \(interviewProfile.templatePrompt)
+        \(target.templatePrompt)
         
         ** 背景問題問答
         """
-        for item in interviewProfile.preQuestions {
+        for item in target.preQuestions {
             if !item.answer.isEmpty {
                 textPromptString += "    - 問題: \(item.question)\n    - 使用者回答: \(item.answer)\n"
             }
         }
         textPromptString += """
-        *   **期望的正式程度:** \(interviewProfile.questionFormalStyle) (0.0 輕鬆, 0.5 一般, 1.0 正式；本項代表問題與回答應具備的正式或專業程度)
-        *   **期望的嚴格程度:** \(interviewProfile.questionStrictStyle) (0.0 寬鬆, 0.5 一般, 1.0 嚴格；本項代表評分時的嚴格程度，較嚴格的面試請給予較嚴苛的評分與評語，反之較寬鬆的面試請給與輕鬆簡單的標準與寬鬆的評分)
+        *   **期望的正式程度:** \(target.questionFormalStyle) (0.0 輕鬆, 0.5 一般, 1.0 正式；本項代表問題與回答應具備的正式或專業程度)
+        *   **期望的嚴格程度:** \(target.questionStrictStyle) (0.0 寬鬆, 0.5 一般, 1.0 嚴格；本項代表評分時的嚴格程度，較嚴格的面試請給予較嚴苛的評分與評語，反之較寬鬆的面試請給與輕鬆簡單的標準與寬鬆的評分)
 
         """
 
-        if !interviewProfile.filesPath.isEmpty {
+        if !target.filesPath.isEmpty {
             textPromptString += "*   **使用者提供的參考文件:** 在評估可能與文件內容相關的回答時，請務必參考附件的內容。\n\n"
-            for filePath in interviewProfile.filesPath {
+            for filePath in target.filesPath {
                 let fileURL = URL(fileURLWithPath: filePath)
                 if let fileData = try? Data(contentsOf: fileURL) {
                     promptParts.append(InlineDataPart(data: fileData, mimeType: "application/pdf"))
@@ -329,7 +336,7 @@ class GeminiService {
 
         textPromptString += "**面試問題與使用者回答:**\n"
         var questionIndexForPrompt = 0
-        for questionData in interviewProfile.questions {
+        for questionData in target.questions {
             questionIndexForPrompt += 1
             textPromptString += """
             ---
@@ -398,9 +405,9 @@ class GeminiService {
         // 6. 更新 InterviewProfile 物件
         // 更新每個問題的評分和回饋
         for evalItem in decodedFeedback.question_evaluations {
-            if let questionIndex = interviewProfile.questions.firstIndex(where: { $0.id.uuidString == evalItem.question_id }) {
-                interviewProfile.questions[questionIndex].score = evalItem.score
-                interviewProfile.questions[questionIndex].feedback = evalItem.feedback
+            if let questionIndex = target.questions.firstIndex(where: { $0.id.uuidString == evalItem.question_id }) {
+                target.questions[questionIndex].score = evalItem.score
+                target.questions[questionIndex].feedback = evalItem.feedback
                 print("GeminiService | 已更新問題 (ID: \(evalItem.question_id)) 的分數: \(evalItem.score), 回饋: \(evalItem.feedback.prefix(50))...")
             } else {
                 print("GeminiService | 警告: 在 InterviewProfile 中找不到對應的問題 ID: \(evalItem.question_id)")
@@ -408,22 +415,20 @@ class GeminiService {
         }
 
         // 更新整體回饋 (需要確認 InterviewProfile.feedbacks 的類型已修改為 [InterviewProfileFeedbacks])
-        interviewProfile.feedbacks = decodedFeedback.overall_interview_feedback.map { item in
+        target.feedbacks = decodedFeedback.overall_interview_feedback.map { item in
             InterviewProfileFeedbacks(content: item.content, positive: item.positive, suggestion: item.suggestion)
         }
-        print("GeminiService | 已更新 \(interviewProfile.feedbacks.count) 項整體回饋。")
-
+        print("GeminiService | 已更新 \(target.feedbacks.count) 項整體回饋。")
 
         // 更新整體評分
-        interviewProfile.overallRating = decodedFeedback.overall_rating
-        print("GeminiService | 已更新整體評分: \(interviewProfile.overallRating)")
-
-        interviewProfile.status = 4 // 假設 4 代表已完成並生成回饋
-        print("GeminiService | 面試回饋已成功生成並更新到 InterviewProfile。狀態已更新為 4。")
+        target.overallRating = decodedFeedback.overall_rating
+        target.feedback = decodedFeedback.overall_feedback
+        target.status = .completed
+        print("GeminiService | 面試回饋已成功生成並更新到 InterviewProfile。")
         
         // 紀錄 Analytics
         
-        AnalyticsLogger.shared.logEvent(name: "interviewGeneratedFeedback", parameters: ["date": Date(), "template": interviewProfile.templateName, "promptTokenCount": response.usageMetadata?.promptTokenCount ?? 0, "totalTokenCount": response.usageMetadata?.totalTokenCount ?? 0, "filesCount": interviewProfile.filesPath.count, "questionsCount": interviewProfile.questionNumbers, "modifierFormal": Int(interviewProfile.questionFormalStyle*100), "modifierStrictLevel": Int(interviewProfile.questionStrictStyle*100), "overallScore": interviewProfile.overallRating, "logVersion": 2])
+        AnalyticsLogger.shared.logEvent(name: "interviewGeneratedFeedback", parameters: ["date": Date(), "template": target.templateName, "promptTokenCount": response.usageMetadata?.promptTokenCount ?? 0, "totalTokenCount": response.usageMetadata?.totalTokenCount ?? 0, "filesCount": target.filesPath.count, "questionsCount": target.questionNumbers, "modifierFormal": Int(target.questionFormalStyle*100), "modifierStrictLevel": Int(target.questionStrictStyle*100), "overallScore": target.overallRating, "logVersion": 2])
     }
     
     // MARK: - 模擬演講

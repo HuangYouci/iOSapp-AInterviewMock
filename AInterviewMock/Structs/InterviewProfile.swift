@@ -7,27 +7,35 @@
 
 import Foundation
 
+enum InterviewProfileStatus: Int, Codable, Equatable {
+    case notStarted = 0
+    case prepared = 1
+    case inProgress = 2
+    case analyzing = 3
+    case completed = 4
+}
+
 struct InterviewProfile: Identifiable, Codable {
     // 面試類型（在初始設置時有預設模板）
-    var id = UUID()                                     // ID
-    var templateName: String                            // 檔案名稱
-    var templateDescription: String                     // 檔案敘述
-    var templateImage: String                           // 檔案圖示
-    var templatePrompt: String                          // 檔案題詞（模板題詞）
-    var preQuestions: [InterviewProfilePreQuestions]    // 類型細節問題
-    var filesPath: [String]                             // 參考資料路徑
+    var id = UUID()                                       // ID
+    var templateName: String                              // 檔案名稱
+    var templateDescription: String                       // 檔案敘述
+    var templateImage: String                             // 檔案圖示
+    var templatePrompt: String                            // 檔案題詞（模板題詞）
+    var preQuestions: [InterviewProfilePreQuestions] = [] // 類型細節問題
+    var filesPath: [String] = []                          // 參考資料路徑
     // 面試問題
-    var questions: [InterviewProfileQuestions]          // 面試當中的問題
-    var questionNumbers: Int                            // 面試問題數量
-    var questionFormalStyle: Double                     // 正式程度
-    var questionStrictStyle: Double                     // 嚴格程度
+    var questions: [InterviewProfileQuestions] = []     // 面試當中的問題
+    var questionNumbers: Int = 5                        // 面試問題數量
+    var questionFormalStyle: Double = 0.5               // 正式程度
+    var questionStrictStyle: Double = 0.5               // 嚴格程度
     // 面試資料
-    var cost: Int = 0                                   // 花費
-    var status: Int = 0                                 // 0 剛開始設置／1 回答完面試類型問題
-                                                        // 2 生成完問題，開始作答／3 全部作答完畢等待生成／4 完成
-    var date: Date = Date()                             // 建立日期
-    var feedbacks: [InterviewProfileFeedbacks] = []     // 回饋（ＡＩ）
-    var overallRating: Int                              // 總體評價（ＡＩ）
+    var cost: Int = 0
+    var status: InterviewProfileStatus = .notStarted
+    var date: Date = Date()
+    var feedback: String = ""
+    var feedbacks: [InterviewProfileFeedbacks] = []
+    var overallRating: Int = 0
 }
 
 struct InterviewProfilePreQuestions: Identifiable, Equatable, Codable {
@@ -73,14 +81,7 @@ struct DefaultInterviewProfile {
                     InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion3_selfIntro", comment: "Pre-interview question: Self-introduction requirements?"), answer: "", required: false),
                     InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion4_focusTopics", comment: "Pre-interview question: Department's typical question focus?"), answer: "", required: false),
                     InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_college_preQuestion5_specialReqs", comment: "Pre-interview question: Other special interview requirements?"), answer: "", required: false)
-                ],
-                filesPath: [],
-                questions: [],
-                questionNumbers: 5,
-                questionFormalStyle: 0.5,
-                questionStrictStyle: 0.5,
-                feedbacks: [],
-                overallRating: 0
+                ]
             )
         }
     static var jobGeneral: InterviewProfile {
@@ -119,14 +120,7 @@ struct DefaultInterviewProfile {
                 InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion3_motivation", comment: "Pre-interview question: What motivates you to apply for this specific internship?"), answer: "", required: true),
                 InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion4_skills", comment: "Pre-interview question: What relevant skills or coursework do you have?"), answer: "", required: false),
                 InterviewProfilePreQuestions(question: NSLocalizedString("InterviewProfile_internship_preQuestion5_learningGoals", comment: "Pre-interview question: What do you hope to learn or achieve from this internship?"), answer: "", required: false)
-            ],
-            filesPath: [],
-            questions: [],
-            questionNumbers: 5,
-            questionFormalStyle: 0.5,
-            questionStrictStyle: 0.4,
-            feedbacks: [],
-            overallRating: 0
+            ]
         )
     }
     // test
@@ -218,7 +212,7 @@ struct DefaultInterviewProfile {
            questionFormalStyle: 0.6,
            questionStrictStyle: 0.7,
            cost: 1500, // 假設生成回饋產生了一些花費 (例如 Token 數)
-           status: 4, // 4: 完成 (AI 已生成回饋)
+           status: .completed, // 4: 完成 (AI 已生成回饋)
            date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!, // 假設是昨天完成的
            feedbacks: [ // 模擬 AI 生成的整體主題式回饋
                InterviewProfileFeedbacks(

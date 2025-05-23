@@ -561,40 +561,6 @@
         }
       }
     },
-    "InterviewAnalysisView_answersSectionTitle" : {
-      "comment" : "Section title for 'Answers' (per-question analysis)",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Answer"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "回答"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_answerSublabel" : {
-      "comment" : "Sublabel for 'Answer' within Q&A item",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Answer"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "回答"
-          }
-        }
-      }
-    },
     "InterviewAnalysisView_deleteRecordSublabel" : {
       "comment" : "Sublabel for 'Delete Record' within delete item",
       "localizations" : {
@@ -612,76 +578,25 @@
         }
       }
     },
-    "InterviewAnalysisView_deleteSectionTitle" : {
-      "comment" : "Section for Delete",
+    "InterviewAnalysisView_ratingFeedbackSectionTitle" : {
+      "comment" : "ratingFeedbackSectionTitle (General)",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DELETE"
+            "value" : "Summary"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "刪除"
+            "value" : "總覽"
           }
         }
       }
     },
-    "InterviewAnalysisView_draftLabel" : {
-      "comment" : "Label for Draft",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DRAFT"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "草稿"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_draftReturnSubLabel" : {
-      "comment" : "Sub Label for Return Draft",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restore Draft"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "還原草稿"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_draftSectionTitle" : {
-      "comment" : "Section Title for Draft",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DRAFT"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "草稿"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_feedbackItemLabel" : {
-      "comment" : "Label for an individual feedback item/comment",
+    "InterviewAnalysisView_ratingFeedbacksSectionTitle" : {
+      "comment" : "ratingFeedbacksSectionTitle (Sub)",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -697,76 +612,8 @@
         }
       }
     },
-    "InterviewAnalysisView_feedbackSectionTitle" : {
-      "comment" : "Section title for 'Feedback' (overall comments)",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Feedback"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "評語"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_feedbackSublabel" : {
-      "comment" : "Sublabel for 'Feedback' within Q&A item",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Feedback"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "反饋"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_overallRatingLabel" : {
-      "comment" : "Label for 'Overall Rating' value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rating"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "評分"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_overallRatingSectionTitle" : {
-      "comment" : "Section title for 'Overall Rating'",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rating"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "評分"
-          }
-        }
-      }
-    },
-    "InterviewAnalysisView_qnaItemLabel" : {
-      "comment" : "Label for an individual question-answer item",
+    "InterviewAnalysisView_ratingQuestionsFeedbackSectionTitle" : {
+      "comment" : "Rating feedback for questions",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -777,41 +624,194 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "問答"
+            "value" : "問題回饋"
           }
         }
       }
     },
-    "InterviewAnalysisView_questionSublabel" : {
-      "comment" : "Sublabel for 'Question' within Q&A item",
+    "InterviewAnalysisView_reuseSublabel" : {
+      "comment" : "Sublabel for 'Reuse Template' within delete item",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Question"
+            "value" : "Copy and Reuse"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "題目"
+            "value" : "複製並重用"
           }
         }
       }
     },
-    "InterviewAnalysisView_referenceScoreSublabel" : {
-      "comment" : "Sublabel for 'Reference Score' within Q&A item",
+    "InterviewAnalysisView_scoreText_A" : {
+      "comment" : "Score to text A",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Score"
+            "value" : "Excellent"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "參考評分"
+            "value" : "極佳"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_scoreText_B" : {
+      "comment" : "Score to text B",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Great"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "很好"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_scoreText_C" : {
+      "comment" : "Score to text C",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Good"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不錯"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_scoreText_D" : {
+      "comment" : "Score to text D",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normal"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普通"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_scoreText_E" : {
+      "comment" : "Score to text E",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "So-so"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_scoreText_F" : {
+      "comment" : "Score to text F",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bad"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待加強"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_scoreText_G" : {
+      "comment" : "Score to text G",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terrible"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不佳"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_tabBarMethod" : {
+      "comment" : "Tab bar Method",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Method"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_tabBarRating" : {
+      "comment" : "Tab bar Rating",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rating"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "評價"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_tabBarReview" : {
+      "comment" : "Tab bar Review",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回顧"
           }
         }
       }
@@ -829,6 +829,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模擬面試"
+          }
+        }
+      }
+    },
+    "InterviewAnalysisView_useDraftSublabel" : {
+      "comment" : "Sublabel for 'Use Draft' within method page",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Draft"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "復原草稿"
           }
         }
       }
@@ -948,23 +965,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "再檢查一下面試設定吧！"
-          }
-        }
-      }
-    },
-    "InterviewEntryView_draftSectionTitle" : {
-      "comment" : "Section Title for Draft",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "DRAFT"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "草稿"
           }
         }
       }
@@ -2108,40 +2108,6 @@
         }
       }
     },
-    "InterviewStartView_analyzingDescription" : {
-      "comment" : "Description during analysis: Program is generating results based on your answers.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program is generating results based on your answers."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "程式正在依據回答來產生面試結果。"
-          }
-        }
-      }
-    },
-    "InterviewStartView_analyzingTitle" : {
-      "comment" : "Title when interview results are being analyzed",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Analyzing"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "分析中"
-          }
-        }
-      }
-    },
     "InterviewStartView_buttonFinish" : {
       "comment" : "Button text: Finish (for last question)",
       "localizations" : {
@@ -2177,7 +2143,7 @@
       }
     },
     "InterviewStartView_buttonStart" : {
-      "comment" : "Button text: Start (disabled state when no mic permission)\nButton text: Start (to begin interview setup)",
+      "comment" : "Button text: Start",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2193,172 +2159,19 @@
         }
       }
     },
-    "InterviewStartView_errorOccurredDuringMockInterview" : {
-      "comment" : "Error message: an error occurred during the mock interview.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "An error occurred during the interview."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模擬面試執行時發生錯誤。"
-          }
-        }
-      }
-    },
-    "InterviewStartView_errorOccurredTitle" : {
-      "comment" : "Title for error message display",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error Occurred"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "發生錯誤"
-          }
-        }
-      }
-    },
-    "InterviewStartView_errorSuggestionContactDeveloper" : {
-      "comment" : "Error suggestion: Please try again. If assistance is needed, contact the developer.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please try again. If assistance is needed, contact the develoepr."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "請再次嘗試。若需協助，請聯絡開發者。"
-          }
-        }
-      }
-    },
     "InterviewStartView_headerTitleMockInterview" : {
-      "comment" : "Header title for the mock interview screen",
+      "comment" : "Header title for the mock Interview screen",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AInterviewMock"
+            "value" : "Mock Interview"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "模擬面試"
-          }
-        }
-      }
-    },
-    "InterviewStartView_instructionsLine1" : {
-      "comment" : "Instruction line 1: Entered mock interview, prepare on this screen...",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You have entered the mock interview. Please prepare on this screen. Once you click \"Next,\" the mock interview will begin immediately. The mock interview cannot be paused or restarted, so please proceed with caution!"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已進入模擬面試，請在本畫面進行準備，點選下一步後即刻開始進行模擬面試。模擬面試無法暫停、亦無法重新開始，請務必謹慎進行！"
-          }
-        }
-      }
-    },
-    "InterviewStartView_instructionsLine2Format" : {
-      "comment" : "Instruction line 2: After starting, program will ask %d questions... Each question requires voice recording... Click 'Next' to complete. Answer every question.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Once it begins, the program will ask %d questions in sequence. You must record a voice response for each question. After answering, please click \"Next\" to proceed until completion. Every question must be answered."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "開始後，程式將依序詢問 %d 個問題，每個問題都需語音錄製回答。在完成該題後，請點選「下一步」直至完成。每一題都需回答。"
-          }
-        }
-      }
-    },
-    "InterviewStartView_instructionsLine3" : {
-      "comment" : "Instruction line 3: Keep program open and network connected... Coins will be deducted upon starting... Accidental exit will result in irreversible coin deduction.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please keep the program open and maintain a stable internet connection during the mock interview. Tokens will be deducted once you click \"Start.\" Exiting the program unexpectedly at that point will result in an irreversible token deduction."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模擬面試進行時請保持程式開啟且保持網路暢通。點選「開始」後代幣將扣除，此時意外的離開程式將導致不可逆的代幣扣款。"
-          }
-        }
-      }
-    },
-    "InterviewStartView_loadingDescriptionGeneratingQuestions" : {
-      "comment" : "Description during loading: Program is generating questions...",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The program is generating interview questions based on the interview settings and file data. Once the generation is complete, the mock interview will begin immediately!"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "程式正在依據面試設定與檔案資料生成面試問題。生成完畢之後，將即刻開始進行模擬面試！"
-          }
-        }
-      }
-    },
-    "InterviewStartView_loadingMockInterviewTitle" : {
-      "comment" : "Title when mock interview is loading questions",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Loading"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "模擬面試載入中"
-          }
-        }
-      }
-    },
-    "InterviewStartView_loadingWarningKeepOpen" : {
-      "comment" : "Warning during loading/analyzing: Do not close the app and keep network connected! (reused)\nWarning during loading: Do not close the app and keep network connected!",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Do not close the program and please maintain a stable internet connection!\n"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "請勿關閉程式並請保持網路暢通！"
           }
         }
       }
@@ -2380,25 +2193,8 @@
         }
       }
     },
-    "InterviewStartView_microphonePermissionGranted" : {
-      "comment" : "Microphone permission status: Granted.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Microphone access granted."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已獲得麥克風權限。"
-          }
-        }
-      }
-    },
     "InterviewStartView_microphonePermissionTitle" : {
-      "comment" : "Title for microphone permission status section\nTitle for microphone permission status section (reused for denied state)",
+      "comment" : "Title for microphone permission status section (reused for denied state)",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2414,47 +2210,63 @@
         }
       }
     },
-    "InterviewStartView_mockInterviewInstructionsTitle" : {
-      "comment" : "Title for mock interview instructions section",
+    "InterviewStartView_numberOfQuestionsFormat" : {
+      "comment" : "shows question counts",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Info"
+            "value" : "%d Questions"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模擬面試說明"
+            "value" : "%d 題"
           }
         }
       }
     },
-    "InterviewStartView_questionLabel" : {
-      "comment" : "Label for the current interview question",
+    "InterviewStartView_pleaseWaitMessage" : {
+      "comment" : "Message: Please wait!",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Question"
+            "value" : "Please wait!"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "題目"
+            "value" : "請稍候"
           }
         }
       }
     },
-    "InterviewStartView_questionLabelWithNumberPrefix" : {
-      "comment" : "Prefix for question number display, e.g., 'Question'",
+    "InterviewStartView_preparationDisclaimer" : {
+      "comment" : "Disclaimer text on the preparation screen advising caution as the mock interview cannot be paused or restarted.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Q"
+            "value" : "The mock interview is about to begin! Please note, once the mock interview starts, it cannot be paused or restarted midway.\n\nPlease ensure you are fully prepared and conduct it during a time when you will not be disturbed. Furthermore, to successfully record your interview content, please be sure to go to your device's \"Settings\" and allow this application to access the microphone. If it is not enabled, recording will not be possible. The entire mock process (including audio file upload and AI analysis) requires a stable internet connection. Please ensure your device is connected to the internet. During the interview recording and analysis period, please do not switch to other applications, lock the screen, or answer non-emergency calls, to avoid interrupting or failing the recording, or affecting the analysis results. For the clearest recording quality and the most accurate AI analysis feedback, it is strongly recommended that you conduct the interview in a quiet, low-echo, and background noise-free environment.\n\nGood luck with your interview!"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模擬面試即將開始！請注意，模擬面試開始後將無法暫停或中途重新開始。\n\n請確保您已充分準備，並在一個不會被打擾的時段進行。且為了能成功錄製您的面試內容，請務必前往裝置的「設定」，並允許本應用程式取用麥克風。若未開啟，將無法進行錄製。整個模擬過程（包含音檔上傳及 AI 分析）都需要穩定的網路連線，請確保您的裝置已連上網路。在面試錄製和分析期間，請勿切換到其他應用程式、鎖定螢幕或接聽非緊急通話，以免造成錄製中斷、失敗或影響分析結果。為獲得最清晰的錄音品質與最準確的 AI 分析回饋，強烈建議您在一個安靜、少回音且無背景噪音的環境下進行。\n\n祝您面試順利！"
+          }
+        }
+      }
+    },
+    "InterviewStartView_questionsTitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions"
           }
         },
         "zh-Hant" : {
@@ -2465,25 +2277,8 @@
         }
       }
     },
-    "InterviewStartView_recordingAnswerDescription" : {
-      "comment" : "Description: Currently recording your answer.",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Currently recording your answer."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "目前正錄製您的回答。"
-          }
-        }
-      }
-    },
-    "InterviewStartView_recordingAnswerTitle" : {
-      "comment" : "Title indicating that answer is being recorded",
+    "InterviewStartView_recordingIndicator" : {
+      "comment" : "Indicator text: Recording",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2494,30 +2289,64 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "問答錄製中"
+            "value" : "錄製中"
           }
         }
       }
     },
-    "InterviewStartView_timeLimitDescriptionFormat" : {
-      "comment" : "Time limit description: The response time limit for this interview is %d minutes.",
+    "InterviewStartView_statusAnalyzing" : {
+      "comment" : "Status text: Analyzing\nStatus text: Generating",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The response time limit for this interview is %d minutes."
+            "value" : "Generating"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "本面試的回答時間上限為 %d 分鐘。"
+            "value" : "生成中"
+          }
+        }
+      }
+    },
+    "InterviewStartView_statusAnsweringQuestion" : {
+      "comment" : "Status text: question n",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question %d"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "問題 %d"
+          }
+        }
+      }
+    },
+    "InterviewStartView_timeLimit" : {
+      "comment" : "Time Limit, Need a placeholder",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d mins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d 分鐘"
           }
         }
       }
     },
     "InterviewStartView_timeLimitTitle" : {
-      "comment" : "Title for time limit information section\nTitle for time limit warning (reused)",
+      "comment" : "Title 'Time Limit'",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2534,18 +2363,18 @@
       }
     },
     "InterviewStartView_timeLimitWarningFormat" : {
-      "comment" : "Time limit warning: Approaching time limit... Remaining %d seconds.",
+      "comment" : "Time Limit Warning",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You are about to exceed the time limit. Once the time limit is reached, the interview will end immediately. Unanswered questions may result in a low score. %d seconds remaining."
+            "value" : "About to Time Limit. Left %d Seconds."
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "即將超過時間限制。到達時間限制後，將直接結束面試，未回答的問題可能導致低分。剩餘 %d 秒。"
+            "value" : "即將超過時間限制，剩餘 %d 秒"
           }
         }
       }
@@ -2750,6 +2579,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "進度"
+          }
+        }
+      }
+    },
+    "ListView_MockInterview" : {
+      "comment" : "Tab subment for Mock Interview",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interview"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面試"
+          }
+        }
+      }
+    },
+    "ListView_MockSpeech" : {
+      "comment" : "Tab subment for Mock Speech",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "演講"
+          }
+        }
+      }
+    },
+    "SpeechAnalysisView_deleteInterviewProfileSectionDescription" : {
+      "comment" : "Section description of delete this speech profile",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After tapping delete, this record will be deleted and cannot be undone! Tokens that cost cannot be returned."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "點擊刪除紀錄後將刪除本筆模擬面試紀錄，且不能復原，也不退還消耗之模擬代幣！"
+          }
+        }
+      }
+    },
+    "SpeechAnalysisView_deleteInterviewProfileSectionTitle" : {
+      "comment" : "Section title of delete this speech profile",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Record"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刪除紀錄"
           }
         }
       }
@@ -4511,7 +4408,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AIspeechMock"
+            "value" : "Mock Speech"
           }
         },
         "zh-Hant" : {
@@ -4596,13 +4493,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mock speech is starting soon!"
+            "value" : "Your mock speech is about to begin! Please be aware that once the session starts, it cannot be paused or restarted.\n\nEnsure you are fully prepared and in an environment where you will not be interrupted. To successfully record your speech, you must also go to your device's \"Settings\" and grant this app microphone access; recording cannot proceed otherwise. A stable internet connection is required for the entire process, including audio uploads and AI analysis, so please confirm your device is connected. During recording and analysis, avoid switching apps, locking your screen, or taking non-urgent calls to prevent interruptions, failures, or compromised results. For the best audio quality and most accurate AI feedback, we strongly recommend speaking in a quiet, echo-free environment with no background noise.\n\nGood luck with your speech!"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "稍後即將開始演講"
+            "value" : "模擬演講即將開始！請注意，模擬演說開始後將無法暫停或中途重新開始。\n\n請確保您已充分準備，並在一個不會被打擾的時段進行。且為了能成功錄製您的演說內容，請務必前往裝置的「設定」，並允許本應用程式取用麥克風。若未開啟，將無法進行錄製。整個模擬過程（包含音檔上傳及 AI 分析）都需要穩定的網路連線，請確保您的裝置已連上網路。在演說錄製和分析期間，請勿切換到其他應用程式、鎖定螢幕或接聽非緊急通話，以免造成錄製中斷、失敗或影響分析結果。為獲得最清晰的錄音品質與最準確的 AI 分析回饋，強烈建議您在一個安靜、少回音且無背景噪音的環境下進行。\n\n祝您演講順利！"
           }
         }
       }
@@ -4698,7 +4595,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "60min"
+            "value" : "60 mins"
           }
         },
         "zh-Hant" : {

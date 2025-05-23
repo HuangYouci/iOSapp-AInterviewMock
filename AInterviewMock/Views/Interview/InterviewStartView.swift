@@ -9,381 +9,268 @@ import SwiftUI
 
 struct InterviewStartView: View {
     
+    enum InterviewStartViewState: Equatable {
+        case readyToStart
+        case generating
+        case answering(current: Int)
+        case analyzing
+    }
+    
     @Binding var selected: InterviewProfile?
     
     @StateObject private var recording = AudioRecorder()
-    @State private var questionNum: Int = -2
-    // 0 以上開始，-1 錯誤，-2 準備，-3 準備開始，-4 分析中
+    @State private var state: InterviewStartViewState = .readyToStart
     @State private var timerSeconds: Int = 0
     @State private var timer: Timer? = nil
     
     var body: some View {
         ZStack{
             VStack(alignment: .leading){
-                ScrollView{
-                    Color.clear
-                        .frame(height: 50)
-                    
-                    switch (questionNum){
-                    case -1:
-                        Color.clear
-                            .frame(height: 200)
-                        VStack(alignment: .leading){
-                            HStack{
-                                Image(systemName: "exclamationmark.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 15, height: 15)
-                                    .foregroundStyle(Color(.red))
-                                Text(NSLocalizedString("InterviewStartView_errorOccurredTitle", comment: "Title for error message display"))
-                                    .bold()
-                                Spacer()
-                            }
-                            Text(NSLocalizedString("InterviewStartView_errorOccurredDuringMockInterview", comment: "Error message: an error occurred during the mock interview."))
-                            Text(NSLocalizedString("InterviewStartView_errorSuggestionContactDeveloper", comment: "Error suggestion: Please try again. If assistance is needed, contact the developer."))
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color(.red),
-                                    lineWidth: 2
-                                )
-                        )
-                        .padding(.horizontal)
-                    case -2:
-                        VStack(alignment: .leading){
-                            HStack{
-                                Image(systemName: "info.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 15, height: 15)
-                                    .foregroundStyle(Color(.accent))
-                                Text(NSLocalizedString("InterviewStartView_mockInterviewInstructionsTitle", comment: "Title for mock interview instructions section"))
-                                    .bold()
-                                Spacer()
-                            }
-                            Text(NSLocalizedString("InterviewStartView_instructionsLine1", comment: "Instruction line 1: Entered mock interview, prepare on this screen..."))
-                            Text(String(format: NSLocalizedString("InterviewStartView_instructionsLine2Format", comment: "Instruction line 2: After starting, program will ask %d questions... Each question requires voice recording... Click 'Next' to complete. Answer every question."), selected!.questionNumbers))
-                            Text(NSLocalizedString("InterviewStartView_instructionsLine3", comment: "Instruction line 3: Keep program open and network connected... Coins will be deducted upon starting... Accidental exit will result in irreversible coin deduction."))
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.accentColor,
-                                        lineWidth: 2
-                                       )
-                        )
-                        .padding(.horizontal)
-                        
-                        VStack(alignment: .leading){
-                            HStack{
-                                Image(systemName: "clock.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 15, height: 15)
-                                    .foregroundStyle(Color(.accent))
-                                Text(NSLocalizedString("InterviewStartView_timeLimitTitle", comment: "Title for time limit information section"))
-                                    .bold()
-                                Spacer()
-                            }
-                            Text(String(format: NSLocalizedString("InterviewStartView_timeLimitDescriptionFormat", comment: "Time limit description: The response time limit for this interview is %d minutes."), selected!.questionNumbers * 2))
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.accentColor,
-                                        lineWidth: 2
-                                       )
-                        )
-                        .padding(.horizontal)
-                        
-                        if (recording.checkPermission()){
+                switch (state){
+                case .readyToStart:
+                    ScrollView{
+                        VStack(alignment: .leading, spacing: 15){
+                            Image("InterviewProfile_\(selected!.templateImage)")
+                                .resizable()
+                                .frame(height: 250)
+                                .scaledToFill()
+                                .clipped()
                             VStack(alignment: .leading){
                                 HStack{
-                                    Image(systemName: "microphone.circle.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundStyle(Color("AppGreen"))
-                                    Text(NSLocalizedString("InterviewStartView_microphonePermissionTitle", comment: "Title for microphone permission status section"))
-                                        .bold()
-                                    Spacer()
-                                }
-                                Text(NSLocalizedString("InterviewStartView_microphonePermissionGranted", comment: "Microphone permission status: Granted."))
-                            }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color("AppGreen"),
-                                            lineWidth: 2
-                                           )
-                            )
-                            .padding(.horizontal)
-                        } else {
-                            VStack(alignment: .leading){
-                                HStack{
-                                    Image(systemName: "microphone.circle.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundStyle(Color(.red))
-                                    Text(NSLocalizedString("InterviewStartView_microphonePermissionTitle", comment: "Title for microphone permission status section (reused for denied state)"))
-                                        .bold()
-                                    Spacer()
-                                }
-                                Text(NSLocalizedString("InterviewStartView_microphonePermissionDenied", comment: "Microphone permission status: Denied. Instructs user to go to settings."))
-                            }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.red),
-                                            lineWidth: 2
-                                           )
-                            )
-                            .padding(.horizontal)
-                            .onAppear {
-                                recording.requestMicrophonePermissionOnly()
-                            }
-                        }
-                    case -3:
-                        VStack(spacing: 10){
-                            Color.clear
-                                .frame(height: 200)
-                            VStack(alignment: .leading){
-                                HStack{
-                                    Image(systemName: "info.circle.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundStyle(Color(.accent))
-                                    Text(NSLocalizedString("InterviewStartView_loadingMockInterviewTitle", comment: "Title when mock interview is loading questions"))
-                                        .bold()
-                                    Spacer()
-                                    ProgressView()
-                                        .frame(width: 15, height: 15)
-                                }
-                                Text(NSLocalizedString("InterviewStartView_loadingWarningKeepOpen", comment: "Warning during loading: Do not close the app and keep network connected!"))
-                                Text(NSLocalizedString("InterviewStartView_loadingDescriptionGeneratingQuestions", comment: "Description during loading: Program is generating questions..."))
-                            }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.accentColor,
-                                        lineWidth: 2
-                                    )
-                            )
-                            .padding(.horizontal)
-                        }
-                        .onAppear {
-                            Task {
-                                selected!.questions = await GeminiService.shared.generateInterviewQuestions(from: selected!)
-                                if (selected!.questions.count) > 0 {
-                                    questionNum = 0
-                                    CoinManager.shared.addCoin(-selected!.cost)
-                                    recording.startRecording()
-                                    startTimer()
-                                } else {
-                                    questionNum = -1
-                                }
-                            }
-                        }
-                    case -4:
-                        VStack(spacing: 10){
-                            Color.clear
-                                .frame(height: 200)
-                            VStack(alignment: .leading){
-                                HStack{
-                                    Image(systemName: "info.circle.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundStyle(Color(.accent))
-                                    Text(NSLocalizedString("InterviewStartView_analyzingTitle", comment: "Title when interview results are being analyzed"))
-                                        .bold()
-                                    Spacer()
-                                    ProgressView()
-                                        .frame(width: 15, height: 15)
-                                }
-                                Text(NSLocalizedString("InterviewStartView_loadingWarningKeepOpen", comment: "Warning during loading/analyzing: Do not close the app and keep network connected! (reused)"))
-                                Text(NSLocalizedString("InterviewStartView_analyzingDescription", comment: "Description during analysis: Program is generating results based on your answers."))
-                            }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.accentColor,
-                                        lineWidth: 2
-                                    )
-                            )
-                            .padding(.horizontal)
-                        }
-                        .onAppear {
-                            Task {
-                                DataManager.shared.saveInterviewProfileAudios(interviewProfile: &selected!)
-                                for index in selected!.questions.indices {
-                                    selected!.questions[index].answer = await GeminiService.shared.generateAudioText(source: selected!.questions[index].answerAudioPath)
-                                }
-                                var selectedTemp = selected!
-                                await GeminiService.shared.generateInterviewFeedback(interviewProfile: &selectedTemp)
-                                selected! = selectedTemp
-                                DataManager.shared.saveInterviewProfileJSON(selected!)
-                                
-                                ViewManager.shared.backHomePage()
-                                ViewManager.shared.addPage(view: InterviewAnalysisView(selected: .constant(selected!)))
-                            }
-                        }
-                    default:
-                        VStack(alignment: .leading){
-                            HStack{
-                                Text(NSLocalizedString("InterviewStartView_questionLabel", comment: "Label for the current interview question"))
-                                    .foregroundStyle(Color(.accent))
-                                    .bold()
-                                Spacer()
-                            }
-                            Text(selected!.questions[questionNum].question)
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.accentColor,
-                                        lineWidth: 2
-                                       )
-                        )
-                        .padding(.horizontal)
-                        
-                        VStack(alignment: .leading){
-                            HStack{
-                                Image(systemName: "microphone.circle.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 15, height: 15)
-                                    .foregroundStyle(Color(.accent))
-                                Text(NSLocalizedString("InterviewStartView_recordingAnswerTitle", comment: "Title indicating that answer is being recorded"))
-                                    .bold()
-                                Spacer()
-                            }
-                            Text(NSLocalizedString("InterviewStartView_recordingAnswerDescription", comment: "Description: Currently recording your answer."))
-                        }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color(.systemGray),
-                                        lineWidth: 2
-                                       )
-                        )
-                        .padding(.horizontal)
-                        
-                        if (timerSeconds+60 > (selected!.questionNumbers*2*60)){
-                            VStack(alignment: .leading){
-                                HStack{
-                                    Image(systemName: "clock.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundStyle(Color(.accent))
-                                    Text(NSLocalizedString("InterviewStartView_timeLimitTitle", comment: "Title for time limit warning (reused)"))
-                                        .bold()
-                                    Spacer()
-                                }
-                                Text(String(format: NSLocalizedString("InterviewStartView_timeLimitWarningFormat", comment: "Time limit warning: Approaching time limit... Remaining %d seconds."), (selected!.questionNumbers*2*60) - timerSeconds))
-                            }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.systemGray),
-                                            lineWidth: 2
-                                           )
-                            )
-                            .padding(.horizontal)
-                        }
-                    }
-                    
-                    Color.clear
-                        .frame(height: 300)
-                }
-                .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-            }
-            VStack(spacing: 0){
-                Color.clear
-                    .background(.ultraThinMaterial)
-                    .frame(height: 0)
-                VStack(spacing: 0){
-                    VStack{
-                        ZStack{
-                            if (questionNum >= 0){
-                                HStack(alignment: .top, spacing: 3){
-                                    Text(NSLocalizedString("InterviewStartView_questionLabelWithNumberPrefix", comment: "Prefix for question number display, e.g., 'Question'"))
-                                        .padding(.top, 3)
-                                    Text("\(questionNum+1)")
+                                    Text(selected!.templateName)
                                         .font(.title)
                                         .bold()
                                     Spacer()
                                 }
-                                HStack(alignment: .top, spacing: 3){
-                                    Spacer()
-                                    Text(timerSecToString())
-                                        .font(.title2)
+                                Text(selected!.templateDescription)
+                                    .foregroundStyle(Color(.systemGray))
+                            }
+                            .padding(.horizontal)
+                            Divider()
+                                .padding(.horizontal)
+                            HStack {
+                                Spacer()
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 20) {
+                                        VStack {
+                                            Image(systemName: "clock")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 30, height: 30)
+                                                .foregroundStyle(Color(.systemGray))
+                                            Text(String(format: NSLocalizedString("InterviewStartView_timeLimit", comment: "Time Limit, Need a placeholder"), selected!.questionNumbers*2))
+                                                .bold()
+                                            Text(NSLocalizedString("InterviewStartView_timeLimitTitle", comment: "Title 'Time Limit'"))
+                                                .font(.caption)
+                                                .foregroundStyle(Color(.systemGray))
+                                        }
+                                        VStack {
+                                            Image(systemName: "questionmark.message")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 30, height: 30)
+                                                .foregroundStyle(Color(.systemGray))
+                                            Text(String(format: NSLocalizedString("InterviewStartView_numberOfQuestionsFormat", comment: "shows question counts"), selected!.questionNumbers))
+                                                .bold()
+                                            Text(NSLocalizedString("InterviewStartView_questionsTitle", comment: ""))
+                                                .font(.caption)
+                                                .foregroundStyle(Color(.systemGray))
+                                        }
+                                    }
+                                    .frame(minWidth: UIScreen.main.bounds.width - 40)
+                                }
+                                Spacer()
+                            }
+                            
+                            .padding(.horizontal)
+                            Divider()
+                                .padding(.horizontal)
+                            Text(NSLocalizedString("InterviewStartView_preparationDisclaimer", comment: "Disclaimer text on the preparation screen advising caution as the mock interview cannot be paused or restarted."))
+                                .padding(.horizontal)
+                            if (!recording.checkPermission()){
+                                VStack(alignment: .leading){
+                                    HStack{
+                                        Image(systemName: "microphone.circle.fill")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 15, height: 15)
+                                            .foregroundStyle(Color(.red))
+                                        Text(NSLocalizedString("InterviewStartView_microphonePermissionTitle", comment: "Title for microphone permission status section (reused for denied state)"))
+                                            .bold()
+                                        Spacer()
+                                    }
+                                    Text(NSLocalizedString("InterviewStartView_microphonePermissionDenied", comment: "Microphone permission status: Denied. Instructs user to go to settings."))
+                                }
+                                .padding()
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color(.red),
+                                                lineWidth: 2
+                                               )
+                                )
+                                .padding(.horizontal)
+                                .onAppear {
+                                    recording.requestMicrophonePermissionOnly()
                                 }
                             }
-                            HStack{
-                                Image("Logo")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 30, height: 30)
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                                Text(NSLocalizedString("InterviewStartView_headerTitleMockInterview", comment: "Header title for the mock interview screen"))
-                                    .font(.title)
-                                    .bold()
-                                    .foregroundStyle(Color(.accent))
-                            }
+                            
+                            Color.clear.frame(height: 100)
+                        }
+                        .onAppear {
+                            recording.requestMicrophonePermissionOnly()
                         }
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal)
-                    .padding(.bottom)
+                    .scrollBounceBehavior(.basedOnSize, axes: .vertical)
+                case .generating:
+                    VStack(alignment: .leading, spacing: 15){
+                        VStack(alignment: .leading){
+                            Spacer()
+                            HStack{
+                                Text(NSLocalizedString("InterviewStartView_statusAnalyzing", comment: "Status text: Generating"))
+                                    .bold()
+                                    .font(.title)
+                                Spacer()
+                            }
+                            Text(NSLocalizedString("InterviewStartView_pleaseWaitMessage", comment: "Message: Please wait!"))
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                        }
+                        .foregroundStyle(Color(.white))
+                        .shadow(radius: 2)
+                        .padding(.horizontal)
+                        .background(
+                            LoopingVideoBackground(videoName: "InterviewStartView_generateQuestions", fileExtension: "mp4")
+                                .scaledToFill()
+                                .ignoresSafeArea(.all)
+                        )
+                    }
+                    .onAppear {
+                        Task {
+                            selected!.questions = await GeminiService.shared.generateInterviewQuestions(from: selected!)
+                            state = .answering(current: 0)
+                            recording.startRecording()
+                            startTimer()
+                        }
+                    }
+                case .answering(current: let current):
+                    VStack(alignment: .leading, spacing: 15){
+                        VStack(alignment: .leading){
+                            Spacer()
+                            VStack(alignment: .leading, spacing: 10){
+                                HStack{
+                                    Text(String(format: NSLocalizedString("InterviewStartView_statusAnsweringQuestion", comment: "Status text: question n"), current+1))
+                                    Spacer()
+                                }
+                                Text(selected!.questions[current].question)
+                                    .bold()
+                                    .font(.title)
+                            }
+                            .padding()
+                            .background(.ultraThinMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        .background(
+                            Image("InterviewStartView_answering")
+                                .resizable()
+                                .scaledToFill()
+                                .ignoresSafeArea(.all)
+                        )
+                    }
+                case .analyzing:
+                    VStack(alignment: .leading, spacing: 15){
+                        VStack(alignment: .leading){
+                            Spacer()
+                            HStack{
+                                Text(NSLocalizedString("InterviewStartView_statusAnalyzing", comment: "Status text: Analyzing"))
+                                    .bold()
+                                    .font(.title)
+                                Spacer()
+                            }
+                            Text(NSLocalizedString("InterviewStartView_pleaseWaitMessage", comment: "Message: Please wait!"))
+                            Spacer()
+                            Spacer()
+                            Spacer()
+                        }
+                        .foregroundStyle(Color(.white))
+                        .shadow(radius: 2)
+                        .padding(.horizontal)
+                        .background(
+                            LoopingVideoBackground(videoName: "InterviewStartView_analyzing", fileExtension: "mp4")
+                                .scaledToFill()
+                                .ignoresSafeArea(.all)
+                        )
+                    }
+                    .onAppear{
+                        Task {
+                            DataManager.shared.saveInterviewProfileAudios(interviewProfile: &selected!)
+                            for index in selected!.questions.indices {
+                                selected!.questions[index].answer = await GeminiService.shared.generateAudioText(source: selected!.questions[index].answerAudioPath)
+                            }
+                            var selectedTemp = selected!
+                            await GeminiService.shared.generateInterviewFeedback(target: &selectedTemp)
+                            selected! = selectedTemp
+                            DataManager.shared.saveInterviewProfileJSON(selected!)
+                            
+                            CoinManager.shared.addCoin(-selected!.cost)
+                            
+                            ViewManager.shared.backHomePage()
+                            ViewManager.shared.addPage(view: InterviewAnalysisView(selected: .constant(selected!)))
+                        }
+                    }
                 }
-                .background(.ultraThinMaterial)
-                .clipShape(
-                    .rect(
-                        topLeadingRadius: 0,
-                        bottomLeadingRadius: 20,
-                        bottomTrailingRadius: 20,
-                        topTrailingRadius: 0
-                    )
-                )
-                .frame(maxHeight: .infinity, alignment: .top)
             }
+            
+            VStack(spacing: 0){
+                Color.clear
+                    .frame(height: 55)
+                VStack{
+                    HStack{
+                        Image("Logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                        Text(NSLocalizedString("InterviewStartView_headerTitleMockInterview", comment: "Header title for the mock Interview screen"))
+                            .font(.title)
+                            .bold()
+                            .foregroundStyle(Color(.accent))
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal)
+                .padding(.bottom)
+            }
+            .background(.ultraThinMaterial)
+            .clipShape(
+                .rect(
+                    topLeadingRadius: 0,
+                    bottomLeadingRadius: 20,
+                    bottomTrailingRadius: 20,
+                    topTrailingRadius: 0
+                )
+            )
+            .frame(maxHeight: .infinity, alignment: .top)
+            .ignoresSafeArea(edges: .top)
+            
             VStack(spacing: 0){
                 VStack(spacing: 0){
                     Color.clear
                         .frame(height: 10)
                     VStack{
                         HStack(spacing: 20){
-                            if (questionNum >= 0){
-                                Button {
-                                    attemptToNext()
-                                } label: {
-                                    HStack{
-                                        Text(questionNum+1 == selected!.questionNumbers ? NSLocalizedString("InterviewStartView_buttonFinish", comment: "Button text: Finish (for last question)") : NSLocalizedString("InterviewStartView_buttonNextQuestion", comment: "Button text: Next Question"))
-                                            .font(.title3)
-                                        Image(systemName: "chevron.right")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
-                                    }
-                                    .frame(maxWidth: .infinity)
-                                }
-                                .foregroundStyle(Color(.white))
-                                .padding()
-                                .background(Color(.accent))
-                                .clipShape(Capsule())
-                                
-                            } else if (questionNum == -2){
+                            switch(state){
+                            case .readyToStart:
                                 if (recording.checkPermission()){
                                     Button {
-                                        questionNum = -3
+                                        state = .generating
                                     } label: {
                                         HStack{
-                                            Text(NSLocalizedString("InterviewStartView_buttonStart", comment: "Button text: Start (to begin interview setup)"))
+                                            Text(NSLocalizedString("InterviewStartView_buttonStart", comment: "Button text: Start"))
                                                 .font(.title3)
                                             Image(systemName: "chevron.right")
                                                 .resizable()
@@ -398,7 +285,7 @@ struct InterviewStartView: View {
                                     .clipShape(Capsule())
                                 } else {
                                     HStack{
-                                        Text(NSLocalizedString("InterviewStartView_buttonStart", comment: "Button text: Start (disabled state when no mic permission)"))
+                                        Text(NSLocalizedString("InterviewStartView_buttonStart", comment: "Button text: Start"))
                                             .font(.title3)
                                         Image(systemName: "chevron.right")
                                             .resizable()
@@ -411,13 +298,76 @@ struct InterviewStartView: View {
                                     .background(Color(.systemGray2))
                                     .clipShape(Capsule())
                                 }
-                                
+                            case .generating:
+                                EmptyView()
+                            case .answering(current: let current):
+                                VStack{
+                                    Color.clear
+                                        .frame(height: 5)
+                                    HStack{
+                                        Circle()
+                                            .frame(width: 10, height: 10)
+                                        Text(NSLocalizedString("InterviewStartView_recordingIndicator", comment: "Indicator text: Recording"))
+                                    }
+                                    .foregroundStyle(Color(.red))
+                                    Text(timerSecToString())
+                                        .font(.largeTitle)
+                                        .bold()
+                                    if (timerSeconds > (selected!.questionNumbers*2*55)){
+                                        Text(String(format: NSLocalizedString("InterviewStartView_timeLimitWarningFormat", comment: "Time Limit Warning"), selected!.questionNumbers*2 - timerSeconds))
+                                    }
+                                    if (current+1 < selected!.questionNumbers){
+                                        Button {
+                                            selected!.questions[current].answerAudioPath = recording.stopRecording()!.path
+                                            state = .answering(current: current+1)
+                                            recording.startRecording()
+                                        } label: {
+                                            HStack{
+                                                Text(NSLocalizedString("InterviewStartView_buttonNextQuestion", comment: "Button text: Next Question"))
+                                                    .font(.title3)
+                                                Image(systemName: "chevron.right")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 15, height: 15)
+                                            }
+                                            .frame(maxWidth: .infinity)
+                                        }
+                                        .foregroundStyle(Color(.white))
+                                        .padding()
+                                        .background(Color(.accent))
+                                        .clipShape(Capsule())
+                                    } else {
+                                        Button {
+                                            stopTimer()
+                                            selected!.questions[current].answerAudioPath = recording.stopRecording()!.path
+                                            state = .analyzing
+                                        } label: {
+                                            HStack{
+                                                Text(NSLocalizedString("InterviewStartView_buttonFinish", comment: "Button text: Finish (for last question)"))
+                                                    .font(.title3)
+                                                Image(systemName: "chevron.right")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 15, height: 15)
+                                            }
+                                            .frame(maxWidth: .infinity)
+                                        }
+                                        .foregroundStyle(Color(.white))
+                                        .padding()
+                                        .background(Color(.accent))
+                                        .clipShape(Capsule())
+                                    }
+                                }
+                            case .analyzing:
+                                EmptyView()
                             }
                         }
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal)
                     .padding(.bottom)
+                    Color.clear
+                        .frame(height: 50)
                 }
                 .background(.ultraThinMaterial)
                 .clipShape(
@@ -429,9 +379,7 @@ struct InterviewStartView: View {
                     )
                 )
                 .frame(maxHeight: .infinity, alignment: .bottom)
-                Color.clear
-                    .background(.ultraThinMaterial)
-                    .frame(height: 0)
+                .ignoresSafeArea(edges: .bottom)
             }
         }
     }
@@ -446,7 +394,7 @@ struct InterviewStartView: View {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
             timerSeconds += 1
             if (timerSeconds > (selected!.questionNumbers*2*60)){
-                attemptToNext()
+                state = .analyzing
                 stopTimer()
             }
         }
@@ -455,18 +403,6 @@ struct InterviewStartView: View {
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
-    }
-    
-    func attemptToNext() {
-        if (questionNum < (selected!.questionNumbers-1)){
-            selected!.questions[questionNum].answerAudioPath = recording.stopRecording()!.path
-            questionNum += 1
-            recording.startRecording()
-        } else {
-            stopTimer()
-            selected!.questions[questionNum].answerAudioPath = recording.stopRecording()!.path
-            questionNum = -4
-        }
     }
     
 }
