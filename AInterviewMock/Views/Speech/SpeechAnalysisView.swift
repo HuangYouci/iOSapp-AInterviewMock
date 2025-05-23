@@ -204,6 +204,7 @@ struct SpeechAnalysisView: View {
                                         Button {
                                             var reuse = selected
                                             reuse.id = UUID()
+                                            reuse.date = Date()
                                             ViewManager.shared.addPage(view: SpeechView(SpeechProfile: reuse))
                                         } label: {
                                             VStack(alignment: .leading){

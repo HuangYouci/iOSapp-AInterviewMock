@@ -7,346 +7,362 @@
 
 import SwiftUI
 
-/// Interview 結果頁
-/// 傳入 selected Binding 作為顯示資料的依據
-/// 如果 InterviewProfile 的 status 為 4 則顯示結果，為 1 則顯示未完成
 struct InterviewAnalysisView: View {
+
+    enum InterviewAnalysisViewPage: Equatable {
+        case rating
+        case review
+        case method
+    }
     
     @Binding var selected: InterviewProfile
+    @State private var currentPage: InterviewAnalysisViewPage = .rating
+    @State private var scoringBarWidth: CGFloat = 100
     
     var body: some View {
         VStack(spacing: 0){
-            
-            HStack{
-                Image("Logo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 25, height: 25)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                Text(NSLocalizedString("InterviewAnalysisView_Title", comment: "Title displayed at the top of the coin list screen"))
-                    .font(.title2)
-                    .bold()
-                    .foregroundStyle(Color(.accent))
-                Spacer()
-                Button {
-                    ViewManager.shared.backHomePage()
-                } label: {
-                    Image(systemName: "xmark")
+            VStack{
+                HStack{
+                    Image("Logo")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 15, height: 15)
-                        .foregroundStyle(Color(.systemGray))
+                        .frame(width: 25, height: 25)
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                    Text(NSLocalizedString("InterviewAnalysisView_Title", comment: "Title displayed at the top of the coin list screen"))
+                        .font(.title2)
+                        .bold()
+                        .foregroundStyle(Color(.accent))
+                    Spacer()
+                    Button {
+                        ViewManager.shared.backHomePage()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 15, height: 15)
+                            .foregroundStyle(Color(.systemGray))
+                    }
                 }
+                .padding(.bottom)
+                .padding(.horizontal)
             }
-            .padding(.bottom)
-            .padding(.horizontal)
-            .background(Color(.systemBackground).opacity(0.3))
-            .background(.ultraThinMaterial)
-            
             ScrollView{
-                Color.clear
-                    .frame(height: 5)
-                // MARK: - 每個階段不同的顯示
-                switch (selected.status){
-                case 4: // 完成
-                    VStack(alignment: .leading, spacing: 20){
-                        // Header
-                        VStack(alignment: .leading, spacing: 10){
+                LazyVStack(alignment: .leading, spacing: 15, pinnedViews: .sectionHeaders){
+                    Section {
+                        Image("InterviewProfile_\(selected.templateImage)")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(height: 250, alignment: .bottom)
+                            .clipped()
+
+                        VStack(alignment: .leading){
                             HStack{
                                 Text(selected.templateName)
-                                    .font(.largeTitle)
+                                    .font(.title)
                                     .bold()
                                 Spacer()
                             }
                             Text(selected.templateDescription)
-                            Text({
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyy/MM/dd HH:mm"
-                                return formatter.string(from: selected.date)
-                            }())
-                            .padding(.top, 40)
-                        }
-                        .foregroundStyle(Color(.white))
-                        .padding()
-                        .background(
-                            Image(systemName: "\(selected.templateImage)")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                                .offset(x: 160, y: 70)
-                                .foregroundStyle(Color(.white))
-                        )
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [
-                                    Color(red: 52 / 255, green: 41 / 255, blue: 157 / 255),
-                                    Color(red: 108 / 255, green: 106 / 255, blue: 237 / 255)
-                                ]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.horizontal)
-                        
-                        // Overall Rating
-                        VStack(alignment: .leading){
-                            Text(NSLocalizedString("InterviewAnalysisView_overallRatingSectionTitle", comment: "Section title for 'Overall Rating'"))
                                 .foregroundStyle(Color(.systemGray))
-                                .padding(.horizontal)
-                            VStack(alignment: .leading){
-                                HStack{
-                                    Image(systemName: "star.circle.fill")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundStyle(Color(.accent))
-                                    Text(NSLocalizedString("InterviewAnalysisView_overallRatingLabel", comment: "Label for 'Overall Rating' value"))
-                                        .bold()
-                                    Spacer()
-                                }
-                                Text("\(selected.overallRating)")
-                                    .bold()
-                                    .font(.largeTitle)
+                            HStack{
+                                Spacer()
+                                Text({
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "yyyy/MM/dd HH:mm"
+                                    return formatter.string(from: selected.date)
+                                }())
                             }
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(
-                                        Color.accentColor ,
-                                        lineWidth: 2
-                                    )
-                            )
-                            .padding(.horizontal)
                         }
-                        
-                        // Feedback
-                        VStack(alignment: .leading){
-                            Text(NSLocalizedString("InterviewAnalysisView_feedbackSectionTitle", comment: "Section title for 'Feedback' (overall comments)"))
-                                .foregroundStyle(Color(.systemGray))
-                                .padding(.horizontal)
-                            ForEach(selected.feedbacks) { item in
+                        .padding(.horizontal)
+                    }
+
+                    Section {
+                        switch(currentPage){
+                        case .rating:
+                            VStack(alignment: .leading, spacing: 20){
                                 VStack(alignment: .leading){
-                                    HStack{
-                                        Image(systemName: "star.bubble.fill")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
-                                            .foregroundStyle(Color(.accent))
-                                        Text(NSLocalizedString("InterviewAnalysisView_feedbackItemLabel", comment: "Label for an individual feedback item/comment"))
+                                    Text(overallScoreToText(selected.overallRating))
+                                        .font(.title3)
+                                    Text("\(selected.overallRating)")
+                                        .font(.largeTitle)
+                                        .bold()
+                                    HStack(spacing: 0){
+                                        Rectangle()
+                                            .fill(Color(.accent))
+                                            .frame(width: (scoringBarWidth/100 * CGFloat(selected.overallRating)))
+                                        Rectangle()
+                                            .fill(Color(.systemGray))
+                                    }
+                                    .frame(height: 5)
+                                    .clipShape(Capsule())
+                                    .padding(.top, -10)
+                                    .background(GeometryReader { proxy in
+                                        Color.clear
+                                            .onAppear {
+                                                self.scoringBarWidth = proxy.size.width
+                                            }
+                                            .onChange(of: proxy.size){ t in
+                                                self.scoringBarWidth = t.width
+                                            }
+                                    })
+                                }
+                                VStack(alignment: .leading, spacing: 5){
+                                    Text(NSLocalizedString("InterviewAnalysisView_ratingFeedbackSectionTitle", comment: "ratingFeedbackSectionTitle (General)"))
+                                        .bold()
+//                                    Text(selected.feedback)
+                                }
+                                if(selected.feedbacks.count > 0){
+                                    VStack(alignment: .leading, spacing: 5){
+                                        Text(NSLocalizedString("InterviewAnalysisView_ratingFeedbacksSectionTitle", comment: "ratingFeedbacksSectionTitle (Sub)"))
                                             .bold()
-                                        Spacer()
-                                        if (item.positive){
-                                            Image(systemName: "hand.thumbsup.fill")
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 15, height: 15)
-                                                .foregroundStyle(Color("AppGreen"))
+                                        ForEach(selected.feedbacks){ i in
+                                            VStack(alignment: .leading){
+                                                Text(i.content)
+                                            }
+                                            .padding(10)
+                                            .background(Color(.secondarySystemBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
                                         }
                                     }
-                                    Text(item.content)
                                 }
-                                .padding()
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(
-                                            Color.accentColor ,
-                                            lineWidth: 2
-                                        )
-                                )
-                                .padding(.horizontal)
-                            }
-                        }
-                        
-                        // Each Question Feedback
-                        VStack(alignment: .leading){
-                            Text(NSLocalizedString("InterviewAnalysisView_answersSectionTitle", comment: "Section title for 'Answers' (per-question analysis)"))
-                                .foregroundStyle(Color(.systemGray))
-                                .padding(.horizontal)
-                            ForEach(selected.questions) { item in
-                                VStack(alignment: .leading){
-                                    HStack{
-                                        Image(systemName: "bubble.circle.fill")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
-                                            .foregroundStyle(Color(.accent))
-                                        Text(NSLocalizedString("InterviewAnalysisView_qnaItemLabel", comment: "Label for an individual question-answer item"))
+                                if(selected.questions.count > 0){
+                                    VStack(alignment: .leading, spacing: 5){
+                                        Text(NSLocalizedString("InterviewAnalysisView_ratingQuestionsFeedbackSectionTitle", comment: "Rating feedback for questions"))
                                             .bold()
-                                        Spacer()
+                                        ForEach(selected.questions){ i in
+                                            VStack(alignment: .leading){
+                                                Text(i.question)
+                                                    .padding(10)
+                                                    .background(Color(.systemBackground))
+                                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                    .padding(.trailing)
+                                                HStack{
+                                                    Text(i.answer)
+                                                    Spacer()
+                                                }
+                                                .padding(10)
+                                                .background(Color(.systemBackground))
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                .padding(.leading)
+                                                Divider()
+                                                HStack{
+                                                    Text("\(i.score)")
+                                                        .bold()
+                                                        .font(.title3)
+                                                    Text(subScoreToText(i.score))
+                                                }
+                                                .padding(.bottom, 3)
+                                                Text(i.feedback)
+                                            }
+                                            .padding(10)
+                                            .background(Color(.secondarySystemBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        }
                                     }
-                                    Text(NSLocalizedString("InterviewAnalysisView_questionSublabel", comment: "Sublabel for 'Question' within Q&A item"))
-                                        .foregroundStyle(Color(.systemGray))
-                                        .font(.caption)
-                                        .padding(.top, 5)
-                                    Text(item.question)
-                                    
-                                    Text(NSLocalizedString("InterviewAnalysisView_answerSublabel", comment: "Sublabel for 'Answer' within Q&A item"))
-                                        .foregroundStyle(Color(.systemGray))
-                                        .font(.caption)
-                                        .padding(.top, 5)
-                                    Text(item.answer)
-                                    
-                                    Text(NSLocalizedString("InterviewAnalysisView_feedbackSublabel", comment: "Sublabel for 'Feedback' within Q&A item"))
-                                        .foregroundStyle(Color(.systemGray))
-                                        .font(.caption)
-                                        .padding(.top, 5)
-                                    Text(item.feedback)
-                                    
-                                    Text(NSLocalizedString("InterviewAnalysisView_referenceScoreSublabel", comment: "Sublabel for 'Reference Score' within Q&A item"))
-                                        .foregroundStyle(Color(.systemGray))
-                                        .font(.caption)
-                                        .padding(.top, 5)
-                                    Text("\(item.score)")
-                                        .bold()
-                                        .font(.title3)
                                 }
-                                .padding()
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(
-                                            Color.accentColor ,
-                                            lineWidth: 2
-                                        )
-                                )
-                                .padding(.horizontal)
                             }
-                        }
-                    }
-                case 1: // 草稿
-                    VStack(alignment: .leading, spacing: 20){
-                        // Header
-                        VStack(alignment: .leading, spacing: 10){
-                            HStack{
-                                Text(selected.templateName)
-                                    .font(.largeTitle)
-                                    .bold()
-                                Text(NSLocalizedString("InterviewAnalysisView_draftLabel", comment: "Label for Draft"))
-                                    .padding(3)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .stroke(
-                                                Color(.white),
-                                                lineWidth: 1
+                            .padding(.horizontal)
+                        case .review:
+                            VStack(alignment: .leading, spacing: 20){
+                                if(selected.questions.count > 0){
+                                    VStack(alignment: .leading, spacing: 5){
+                                        Text(NSLocalizedString("InterviewAnalysisView_ratingQuestionsFeedbackSectionTitle", comment: "Rating feedback for questions"))
+                                            .bold()
+                                        ForEach(selected.questions){ i in
+                                            VStack(alignment: .leading){
+                                                Text(i.question)
+                                                    .padding(10)
+                                                    .background(Color(.systemBackground))
+                                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                    .padding(.trailing)
+                                                HStack{
+                                                    Text(i.answer)
+                                                    Spacer()
+                                                }
+                                                .padding(10)
+                                                .background(Color(.systemBackground))
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                .padding(.leading)
+                                            }
+                                            .padding(10)
+                                            .background(Color(.secondarySystemBackground))
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(.horizontal)
+                        case .method:
+                            VStack(alignment: .leading, spacing: 20){
+                                VStack(alignment: .leading, spacing: 5){
+                                    if selected.status == .completed {
+                                        Button {
+                                            var reuse = selected
+                                            reuse.id = UUID()
+                                            reuse.date = Date()
+                                            ViewManager.shared.addPage(view: InterviewView(interviewProfile: reuse))
+                                        } label: {
+                                            VStack(alignment: .leading){
+                                                HStack{
+                                                    Image(systemName: "arrow.uturn.down.circle")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 15, height: 15)
+                                                    Text(NSLocalizedString("InterviewAnalysisView_reuseSublabel", comment: "Sublabel for 'Reuse Template' within delete item"))
+                                                        .bold()
+                                                    Spacer()
+                                                }
+                                                .foregroundStyle(Color(.accent))
+                                            }
+                                            .padding()
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(
+                                                        Color(.accent),
+                                                        lineWidth: 1
+                                                    )
                                             )
-                                    )
-                                Spacer()
-                            }
-                            Text(selected.templateDescription)
-                            Text({
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyy/MM/dd HH:mm"
-                                return formatter.string(from: selected.date)
-                            }())
-                            .padding(.top, 40)
-                        }
-                        .foregroundStyle(Color(.white))
-                        .padding()
-                        .background(
-                            Image(systemName: "\(selected.templateImage)")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                                .offset(x: 160, y: 70)
-                                .foregroundStyle(Color(.white))
-                        )
-                        .background(
-                            LinearGradient(
-                                gradient: Gradient(colors: [
-                                    Color(red: 92 / 255, green: 92 / 255, blue: 92 / 255),
-                                    Color(red: 52 / 255, green: 52 / 255, blue: 52 / 255)
-                                ]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.horizontal)
-                        
-                        // Start Back
-                        VStack(alignment: .leading){
-                            Text(NSLocalizedString("InterviewAnalysisView_draftSectionTitle", comment: "Section Title for Draft"))
-                                .foregroundStyle(Color(.systemGray))
-                                .padding(.horizontal)
-                            Button {
-                                ViewManager.shared.addPage(view: InterviewView(interviewProfile: selected))
-                            } label: {
-                                VStack(alignment: .leading){
-                                    HStack{
-                                        Image(systemName: "arrow.circlepath")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
-                                            .foregroundStyle(Color(.accent))
-                                        Text(NSLocalizedString("InterviewAnalysisView_draftReturnSubLabel", comment: "Sub Label for Return Draft"))
-                                            .bold()
-                                        Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 15, height: 15)
-                                            .foregroundStyle(Color(.systemGray))
+                                        }
+                                    } else {
+                                        Button {
+                                            ViewManager.shared.addPage(view: InterviewView(interviewProfile: selected))
+                                        } label: {
+                                            VStack(alignment: .leading){
+                                                HStack{
+                                                    Image(systemName: "arrow.uturn.down.circle")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 15, height: 15)
+                                                    Text(NSLocalizedString("InterviewAnalysisView_useDraftSublabel", comment: "Sublabel for 'Use Draft' within method page"))
+                                                        .bold()
+                                                    Spacer()
+                                                }
+                                                .foregroundStyle(Color(.accent))
+                                            }
+                                            .padding()
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .stroke(
+                                                        Color(.accent),
+                                                        lineWidth: 1
+                                                    )
+                                            )
+                                        }
+                                    }
+                                    Button {
+                                        ViewManager.shared.setTopView(view:
+                                            ConfirmationDialog(
+                                                title: NSLocalizedString("SpeechAnalysisView_deleteInterviewProfileSectionTitle", comment: "Section title of delete this speech profile"),
+                                                message: NSLocalizedString("SpeechAnalysisView_deleteInterviewProfileSectionDescription", comment: "Section description of delete this speech profile"),
+                                                onConfirm: {
+                                                    ViewManager.shared.perviousPage()
+                                                    DataManager.shared.deleteInterviewProfile(withId: selected.id.uuidString)
+                                                },
+                                                onCancel: {}
+                                            )
+                                        )
+                                    } label: {
+                                        VStack(alignment: .leading){
+                                            HStack{
+                                                Image(systemName: "trash.fill")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 15, height: 15)
+                                                Text(NSLocalizedString("InterviewAnalysisView_deleteRecordSublabel", comment: "Sublabel for 'Delete Record' within delete item"))
+                                                    .bold()
+                                                Spacer()
+                                            }
+                                            .foregroundStyle(Color(.red))
+                                        }
+                                        .padding()
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(
+                                                    Color(.red),
+                                                    lineWidth: 1
+                                                )
+                                        )
                                     }
                                 }
-                                .padding()
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(
-                                            Color.accentColor,
-                                            lineWidth: 2
-                                        )
-                                )
-                                .padding(.horizontal)
                             }
+                            .padding(.horizontal)
                         }
-                    }
-                default:
-                    EmptyView()
-                }
-                
-                // MARK: - 共用顯示
-                
-                Color.clear
-                    .frame(height: 5)
-                
-                // 全部共用：刪除
-                VStack(alignment: .leading){
-                    Text(NSLocalizedString("InterviewAnalysisView_deleteSectionTitle", comment: "Section for Delete"))
-                        .foregroundStyle(Color(.systemGray))
-                        .padding(.horizontal)
-                    Button {
-                        DataManager.shared.deleteInterviewProfile(withId: selected.id.uuidString)
-                        ViewManager.shared.perviousPage()
-                    } label: {
+                    } header: {
                         VStack(alignment: .leading){
-                            HStack{
-                                Image(systemName: "trash.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 15, height: 15)
-                                Text(NSLocalizedString("InterviewAnalysisView_deleteRecordSublabel", comment: "Sublabel for 'Delete Record' within delete item"))
-                                    .bold()
-                                Spacer()
+                            HStack(spacing: 10){
+                                if (selected.status == .completed){
+                                    pageTab(title: NSLocalizedString("InterviewAnalysisView_tabBarRating", comment: "Tab bar Rating"), page: .rating)
+                                    pageTab(title: NSLocalizedString("InterviewAnalysisView_tabBarReview", comment: "Tab bar Review"), page: .review)
+                                }
+                                pageTab(title: NSLocalizedString("InterviewAnalysisView_tabBarMethod", comment: "Tab bar Method"), page: .method)
                             }
-                            .foregroundStyle(Color(.red))
+                            .padding(.horizontal)
+                            Divider()
                         }
-                        .padding()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(
-                                    Color(.red),
-                                    lineWidth: 2
-                                )
-                        )
-                        .padding(.horizontal)
+                        .background(Color(.systemBackground))
                     }
                 }
-                
-                // 空白
-                Color.clear
-                    .frame(height: 300)
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+        }
+        .onAppear {
+            if (selected.status != .completed) { currentPage = .method }
+        }
+    }
+    
+    @ViewBuilder
+    private func pageTab(title: String, page: InterviewAnalysisViewPage) -> some View {
+        VStack{
+            Text(title)
+                .padding(.horizontal, 10)
+                .background(
+                    Rectangle()
+                        .fill(Color(currentPage == page ? .accent : .clear))
+                        .frame(height: 5)
+                        .offset(y: 20)
+                )
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.3)){
+                currentPage = page
+            }
+        }
+    }
+    
+    private func overallScoreToText(_ i: Int) -> String {
+        if (i >= 90){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_A", comment: "Score to text A")
+        } else if (i >= 80){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_B", comment: "Score to text B")
+        } else if (i >= 70){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_C", comment: "Score to text C")
+        } else if (i >= 60){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_D", comment: "Score to text D")
+        } else if (i >= 50){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_E", comment: "Score to text E")
+        } else if (i >= 40){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_F", comment: "Score to text F")
+        } else {
+            return NSLocalizedString("InterviewAnalysisView_scoreText_G", comment: "Score to text G")
+        }
+    }
+    
+    private func subScoreToText(_ i: Int) -> String {
+        if (i >= 9){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_A", comment: "Score to text A")
+        } else if (i >= 8){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_B", comment: "Score to text B")
+        } else if (i >= 7){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_C", comment: "Score to text C")
+        } else if (i >= 6){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_D", comment: "Score to text D")
+        } else if (i >= 5){
+            return NSLocalizedString("InterviewAnalysisView_scoreText_E", comment: "Score to text E")
+        } else if (i >= 4){
+            return NSLocalizedString("SpeechAnalysisView_scoreText_F", comment: "Score to text F")
+        } else {
+            return NSLocalizedString("InterviewAnalysisView_scoreText_G", comment: "Score to text G")
         }
     }
 }

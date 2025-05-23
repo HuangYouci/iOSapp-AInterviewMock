@@ -31,8 +31,7 @@ struct LoopingVideoBackground: View {
             .onAppear {
                 playerInstance = player
                 playerInstance?.play()
-
-                // 加入重播通知
+                
                 NotificationCenter.default.addObserver(
                     forName: .AVPlayerItemDidPlayToEndTime,
                     object: playerInstance?.currentItem,

@@ -12,10 +12,6 @@ struct InterviewView: View {
     // 第一步
     @State private var interviewProfile: InterviewProfile?
     
-    // 拖曳爸元件
-    @State private var barHeight: CGFloat = 150
-    @State private var isBarDraging: Bool = true
-    
     // 任務元件
     @State private var session: Int = 1
     @State private var sessionIsForward: Bool = true
@@ -23,6 +19,7 @@ struct InterviewView: View {
     init(){}
     init(interviewProfile: InterviewProfile){
         self._interviewProfile = State(initialValue: interviewProfile)
+        self._session = State(initialValue: 5)
     }
     
     var body: some View {
@@ -118,6 +115,7 @@ struct InterviewView: View {
                     nextText: slidingBarNextText(),
                     previousText: slidingBarPreviousText()
                 )
+                .ignoresSafeArea(edges: .bottom)
             }
         }
     }
@@ -221,13 +219,9 @@ struct InterviewView: View {
             
             // 切換後執行操作
             switch (session){
-            case 2:
-                withAnimation(.easeInOut(duration: 0.3)){
-                    barHeight = 0
-                }
             case 5:
                 DataManager.shared.saveInterviewProfileDocuments(interviewProfile: &interviewProfile!)
-                interviewProfile!.status = 1 // 1 回答完問題
+                interviewProfile!.status = .prepared // 1 回答完問題
             default:
                 break
             }
