@@ -109,7 +109,7 @@ struct InterviewAnalysisView: View {
                                 VStack(alignment: .leading, spacing: 5){
                                     Text(NSLocalizedString("InterviewAnalysisView_ratingFeedbackSectionTitle", comment: "ratingFeedbackSectionTitle (General)"))
                                         .bold()
-//                                    Text(selected.feedback)
+                                    Text(selected.feedback)
                                 }
                                 if(selected.feedbacks.count > 0){
                                     VStack(alignment: .leading, spacing: 5){
