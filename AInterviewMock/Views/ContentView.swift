@@ -10,12 +10,13 @@ import FirebaseAnalytics
 
 struct ContentView: View {
     
+    @EnvironmentObject var authManager: AuthManager
     @ObservedObject var vm = ViewManager.shared
     @ObservedObject var co = CoinManager.shared
     
     var body: some View {
         ZStack{
-            // MARK: - Views
+            // MARK: - Views (Vm)
             // VM STACK
             vm.viewStack.last!
                 .background(Color(.systemBackground))
@@ -35,15 +36,16 @@ struct ContentView: View {
             vm.topView
                 .id("topViewIdentifier")
                 .transition(.opacity)
-            // MARK: - Global Notification
+            
+            // MARK: - Top Views (Top)
             // CO NOTIF
             if (co.showCoinNotification){
                 CoinManagerView(amountChanged: co.lastCoinChange, finalAmount: co.coins)
             }
+            // Auth
+            if ((authManager.user == nil)){
+                AuthView()
+            }
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.522922111571-vnvtol5e7rlaijuf2bmsmar11ne6mv4t</string>
+			</array>
+		</dict>
+	</array>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-4733744894615858~9431950076</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -205,5 +216,7 @@
 			<string>3qcr597p9d.skadnetwork</string>
 		</dict>
 	</array>
+	<key>GIDClientID</key>
+	<string>522922111571-vnvtol5e7rlaijuf2bmsmar11ne6mv4t.apps.googleusercontent.com</string>
 </dict>
 </plist>

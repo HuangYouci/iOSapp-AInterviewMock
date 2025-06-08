@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeEntryView: View {
     
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
         
         ScrollView {
@@ -108,6 +110,11 @@ struct HomeEntryView: View {
         }
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
         
+        Button {
+            authManager.signOut()
+        } label: {
+            Text("Log out")
+        }
     }
     
 }

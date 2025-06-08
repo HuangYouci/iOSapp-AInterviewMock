@@ -10,6 +10,10 @@
 		731D45962DC772520006F044 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 731D45952DC772520006F044 /* FirebaseAnalytics */; };
 		731D45982DC772520006F044 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 731D45972DC772520006F044 /* FirebaseMessaging */; };
 		731D459A2DC772520006F044 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 731D45992DC772520006F044 /* FirebaseVertexAI */; };
+		73582D0F2DF57AD100B57EBB /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 73582D0E2DF57AD100B57EBB /* FirebaseAuth */; };
+		73582D152DF57D8B00B57EBB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 73582D142DF57D8B00B57EBB /* GoogleSignIn */; };
+		73582D172DF57D8B00B57EBB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 73582D162DF57D8B00B57EBB /* GoogleSignInSwift */; };
+		73582D1D2DF5CF1500B57EBB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 73582D1C2DF5CF1500B57EBB /* FirebaseFirestore */; };
 		73F0D5322DCDE8D800D83BD9 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
@@ -21,7 +25,7 @@
 		731D46112DCC8EFF0006F044 /* Exceptions for "AInterviewMock" folder in "AInterviewMock" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Assets/Plist/Info.plist,
 			);
 			target = 731D45802DC770C70006F044 /* AInterviewMock */;
 		};
@@ -44,9 +48,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				73F0D5322DCDE8D800D83BD9 /* GoogleMobileAds in Frameworks */,
+				73582D0F2DF57AD100B57EBB /* FirebaseAuth in Frameworks */,
+				73582D172DF57D8B00B57EBB /* GoogleSignInSwift in Frameworks */,
 				731D45982DC772520006F044 /* FirebaseMessaging in Frameworks */,
 				731D459A2DC772520006F044 /* FirebaseVertexAI in Frameworks */,
+				73582D1D2DF5CF1500B57EBB /* FirebaseFirestore in Frameworks */,
 				731D45962DC772520006F044 /* FirebaseAnalytics in Frameworks */,
+				73582D152DF57D8B00B57EBB /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +101,10 @@
 				731D45972DC772520006F044 /* FirebaseMessaging */,
 				731D45992DC772520006F044 /* FirebaseVertexAI */,
 				73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */,
+				73582D0E2DF57AD100B57EBB /* FirebaseAuth */,
+				73582D142DF57D8B00B57EBB /* GoogleSignIn */,
+				73582D162DF57D8B00B57EBB /* GoogleSignInSwift */,
+				73582D1C2DF5CF1500B57EBB /* FirebaseFirestore */,
 			);
 			productName = AInterviewMock;
 			productReference = 731D45812DC770C70006F044 /* AInterviewMock.app */;
@@ -126,6 +138,7 @@
 			packageReferences = (
 				731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				73F0D5302DCDE8D800D83BD9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				73582D132DF57D8B00B57EBB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 731D45822DC770C70006F044 /* Products */;
@@ -284,14 +297,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AInterviewMock/AInterviewMock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_ASSET_PATHS = "\"AInterviewMock/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = NSPJ9RY42B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AInterviewMock/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "AI 模擬";
+				INFOPLIST_FILE = AInterviewMock/Assets/Plist/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = inif;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能使用程式功能";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -304,7 +318,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huangyouci.AInterviewMock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -318,14 +332,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = AInterviewMock/AInterviewMock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
-				DEVELOPMENT_ASSET_PATHS = "\"AInterviewMock/Preview Content\"";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = NSPJ9RY42B;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AInterviewMock/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "AI 模擬";
+				INFOPLIST_FILE = AInterviewMock/Assets/Plist/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = inif;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "需要存取麥克風，才能使用程式功能";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -338,7 +353,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3;
+				MARKETING_VERSION = 0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.huangyouci.AInterviewMock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -379,6 +394,14 @@
 				minimumVersion = 11.12.0;
 			};
 		};
+		73582D132DF57D8B00B57EBB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		73F0D5302DCDE8D800D83BD9 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads";
@@ -404,6 +427,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseVertexAI;
+		};
+		73582D0E2DF57AD100B57EBB /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		73582D142DF57D8B00B57EBB /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73582D132DF57D8B00B57EBB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		73582D162DF57D8B00B57EBB /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73582D132DF57D8B00B57EBB /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		73582D1C2DF5CF1500B57EBB /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 		73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;
