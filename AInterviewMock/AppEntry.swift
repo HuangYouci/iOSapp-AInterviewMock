@@ -8,24 +8,35 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAnalytics
+import GoogleSignIn
 
 @main
 struct AInterviewMockApp: App {
     
+    @StateObject var userProfileService: UserProfileService
+    @StateObject var authManager: AuthManager
+    
     init() {
-        #if DEBUG
-        UserDefaults.standard.set(true, forKey: "FIRDebugEnabled")
-        #endif
+        // MARK: - Firebase Cofigure
         FirebaseApp.configure()
-        
         Analytics.logEvent("debug_app_launched", parameters: [
                     "launch_source": "app_init"
                 ])
+        
+        // MARK: - Init
+        let ups = UserProfileService()
+        _userProfileService = StateObject(wrappedValue: ups)
+        _authManager = StateObject(wrappedValue: AuthManager(userProfileService: ups))
     }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(authManager)
+                .environmentObject(userProfileService)
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
         }
     }
 }

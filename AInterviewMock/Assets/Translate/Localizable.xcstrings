@@ -561,6 +561,9 @@
         }
       }
     },
+    "inif" : {
+
+    },
     "InterviewAnalysisView_deleteRecordSublabel" : {
       "comment" : "Sublabel for 'Delete Record' within delete item",
       "localizations" : {
@@ -2616,6 +2619,9 @@
           }
         }
       }
+    },
+    "Log out" : {
+
     },
     "SpeechAnalysisView_deleteInterviewProfileSectionDescription" : {
       "comment" : "Section description of delete this speech profile",
@@ -4911,6 +4917,24 @@
           }
         }
       }
+    },
+    "使用您的 Apple 帳號或 Google 帳號登入 inif" : {
+
+    },
+    "使用條款" : {
+
+    },
+    "登入" : {
+
+    },
+    "登入表示您同意 inif 的" : {
+
+    },
+    "與" : {
+
+    },
+    "隱私政策" : {
+
     }
   },
   "version" : "1.0"
