@@ -14,6 +14,7 @@
 		73582D152DF57D8B00B57EBB /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 73582D142DF57D8B00B57EBB /* GoogleSignIn */; };
 		73582D172DF57D8B00B57EBB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 73582D162DF57D8B00B57EBB /* GoogleSignInSwift */; };
 		73582D1D2DF5CF1500B57EBB /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 73582D1C2DF5CF1500B57EBB /* FirebaseFirestore */; };
+		73EEF1DD2DFC947600AFFEBF /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 73EEF1DC2DFC947600AFFEBF /* FirebaseFunctions */; };
 		73F0D5322DCDE8D800D83BD9 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = 73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */; };
 /* End PBXBuildFile section */
 
@@ -50,6 +51,7 @@
 				73F0D5322DCDE8D800D83BD9 /* GoogleMobileAds in Frameworks */,
 				73582D0F2DF57AD100B57EBB /* FirebaseAuth in Frameworks */,
 				73582D172DF57D8B00B57EBB /* GoogleSignInSwift in Frameworks */,
+				73EEF1DD2DFC947600AFFEBF /* FirebaseFunctions in Frameworks */,
 				731D45982DC772520006F044 /* FirebaseMessaging in Frameworks */,
 				731D459A2DC772520006F044 /* FirebaseVertexAI in Frameworks */,
 				73582D1D2DF5CF1500B57EBB /* FirebaseFirestore in Frameworks */,
@@ -105,6 +107,7 @@
 				73582D142DF57D8B00B57EBB /* GoogleSignIn */,
 				73582D162DF57D8B00B57EBB /* GoogleSignInSwift */,
 				73582D1C2DF5CF1500B57EBB /* FirebaseFirestore */,
+				73EEF1DC2DFC947600AFFEBF /* FirebaseFunctions */,
 			);
 			productName = AInterviewMock;
 			productReference = 731D45812DC770C70006F044 /* AInterviewMock.app */;
@@ -447,6 +450,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		73EEF1DC2DFC947600AFFEBF /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 731D45942DC772520006F044 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
 		};
 		73F0D5312DCDE8D800D83BD9 /* GoogleMobileAds */ = {
 			isa = XCSwiftPackageProductDependency;

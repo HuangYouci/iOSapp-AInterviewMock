@@ -14,6 +14,8 @@ struct UserProfile: Codable, Identifiable {
     
     // MARK: - Core User Informaion
     let userId: Int
+    var userEmail: String?
+    var userName: String?
     
     // MARK: - App Data
     var coins: Int
@@ -27,6 +29,8 @@ struct UserProfile: Codable, Identifiable {
     init(
         id: String? = nil,
         userId: Int,
+        userEmail: String? = nil,
+        userName: String? = nil,
         coins: Int = 0,
         creationDate: Timestamp = Timestamp(date: Date()),
         updateDate: Timestamp = Timestamp(date: Date()),
@@ -34,6 +38,8 @@ struct UserProfile: Codable, Identifiable {
     ) {
         self.id = id
         self.userId = userId
+        self.userEmail = userEmail
+        self.userName = userName
         self.coins = coins
         self.creationDate = creationDate
         self.updateDate = updateDate

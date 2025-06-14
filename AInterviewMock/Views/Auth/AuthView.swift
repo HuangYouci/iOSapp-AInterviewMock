@@ -27,7 +27,7 @@ struct AuthView: View {
                         .foregroundStyle(Color(.white))
                     Spacer()
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
                 VStack{
                     VStack(alignment: .leading){
@@ -43,24 +43,6 @@ struct AuthView: View {
                         
                         Text("使用您的 Apple 帳號或 Google 帳號登入 inif")
                         
-                        if let em = authManager.errorMessage {
-                            VStack(alignment: .leading){
-                                Text("錯誤")
-                                    .bold()
-                                HStack{
-                                    Text(em.errorDescription ?? "Unknown Bug")
-                                    Spacer()
-                                }
-                            }
-                            .padding(10)
-                            .background(Color(.red).opacity(0.2))
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color(.red), lineWidth: 1)
-                            )
-                        }
-                        
                         VStack(alignment: .leading, spacing: 10){
                             SignInWithAppleButton(
                                 .signIn, // 按鈕樣式
@@ -68,8 +50,8 @@ struct AuthView: View {
                                     // 1. 生成 Nonce
                                     let nonce = authManager.generateNonce()
                                     appleSignInNonce = nonce
-                                    // 2. 請求用戶的 email (可選)
-                                    request.requestedScopes = [.email]
+                                    // 2. 請求用戶的 email
+                                    request.requestedScopes = [.fullName, .email]
                                     // 3. 將 Nonce 的 SHA256 哈希值設置到請求中
                                     request.nonce = sha256(nonce)
                                     print("AuthView | Apple Sign In onRequest - Nonce generated and set.")
@@ -128,7 +110,23 @@ struct AuthView: View {
                         }
                         .padding(.vertical)
                         
-                        Spacer()
+                        if let em = authManager.errorMessage {
+                            VStack(alignment: .leading){
+                                Text("錯誤")
+                                    .bold()
+                                HStack{
+                                    Text(em.errorDescription ?? "Unknown Bug")
+                                    Spacer()
+                                }
+                            }
+                            .padding(10)
+                            .background(Color(.red).opacity(0.2))
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color(.red), lineWidth: 1)
+                            )
+                        }
                         
                         FlowLayout(horizontalSpacing: 0, verticalSpacing: 10){
                             Text("登入表示您同意 inif 的")
@@ -136,12 +134,13 @@ struct AuthView: View {
                             Text("與")
                             Text("使用條款").foregroundStyle(Color.accentColor)
                         }
-                        .font(.caption) // 使用更小的字體
+                        .font(.caption)
                         .foregroundStyle(Color(.systemGray))
+                        .padding(.top, 60)
                     }
                     .padding(25)
                 }
-                .frame(maxWidth: .infinity, minHeight: 300)
+                .frame(maxWidth: .infinity)
                 .background(Color("Background"))
                 .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
                 .disabled(authManager.isLoading)
@@ -166,77 +165,75 @@ struct AuthView: View {
 }
 
 
-#Preview {
-    ZStack {
+#Preview("This") {
+    VStack(spacing: 0){
         VStack(spacing: 0){
-            VStack(spacing: 0){
-                VStack{
-                    Spacer()
-                    Text("inif")
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                        .foregroundStyle(Color(.white))
-                    Spacer()
-                }
-                .frame(maxWidth: .infinity)
-                
-                VStack{
+            VStack{
+                Spacer()
+                Text("inif")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                    .foregroundStyle(Color(.white))
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            VStack{
+                VStack(alignment: .leading){
+                    HStack{
+                        Text("登入")
+                            .font(.title)
+                            .bold()
+                            ProgressView()
+                        Spacer()
+                    }
+                    
+                    Text("使用您的 Apple 帳號或 Google 帳號登入 inif")
+                    
+                    VStack(alignment: .leading, spacing: 10){
+                        Text("Apple")
+                        .frame(height: 50)
+                        
+                        // Google 登入按鈕
+                        Text("Google")
+                        .frame(height: 50)
+                    }
+                    .padding(.vertical)
+                    
                     VStack(alignment: .leading){
+                        Text("錯誤")
+                            .bold()
                         HStack{
-                            Text("登入")
-                                .font(.title)
-                                .bold()
+                            Text("Unknown Bug唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷唷六一八")
                             Spacer()
                         }
-                        
-                        Text("使用您的 Apple 帳號或 Google 帳號登入 inif")
-                        
-                        VStack(alignment: .leading){
-                            Text("錯誤")
-                                .bold()
-                            HStack{
-                                Text("無效的登入")
-                                Spacer()
-                            }
-                        }
-                        .padding(10)
-                        .background(Color(.red).opacity(0.2))
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color(.red), lineWidth: 1)
-                        )
-                        
-                        VStack(alignment: .leading, spacing: 10){
-                            Text("Apple")
-                            .frame(height: 50)
-                            
-                            // Google 登入按鈕
-                            Text("Google")
-                            .frame(height: 50)
-                        }
-                        .padding(.vertical)
-                        
-                        Spacer()
-                        
-                        FlowLayout(horizontalSpacing: 0, verticalSpacing: 10){
-                            Text("登入表示您同意 inif 的")
-                            Text("隱私政策").foregroundStyle(Color.accentColor)
-                            Text("與")
-                            Text("使用條款").foregroundStyle(Color.accentColor)
-                        }
-                        .font(.caption) // 使用更小的字體
-                        .foregroundStyle(Color(.systemGray))
                     }
-                    .padding(25)
+                    .padding(10)
+                    .background(Color(.red).opacity(0.2))
+                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color(.red), lineWidth: 1)
+                    )
+                    
+                    FlowLayout(horizontalSpacing: 0, verticalSpacing: 10){
+                        Text("登入表示您同意 inif 的")
+                        Text("隱私政策").foregroundStyle(Color.accentColor)
+                        Text("與")
+                        Text("使用條款").foregroundStyle(Color.accentColor)
+                    }
+                    .font(.caption)
+                    .foregroundStyle(Color(.systemGray))
+                    .padding(.top, 60)
                 }
-                .frame(maxWidth: .infinity, minHeight: 300)
-                .background(Color("Background"))
-                .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+                .padding(25)
             }
-            .background(Color.accentColor)
-            Color.clear.frame(height: 1)
+            .frame(maxWidth: .infinity)
+            .background(Color("Background"))
+            .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
         }
-        .background(Color("Background"))
+        .background(Color.accentColor)
+        Color.clear.frame(height: 1)
     }
+    .background(Color("Background"))
 }

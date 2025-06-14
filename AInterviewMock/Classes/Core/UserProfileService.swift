@@ -8,6 +8,7 @@
 import Firebase
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseFunctions
 
 // MARK: - UserProfileServiceError (頂層錯誤枚舉)
 /// `UserProfileServiceError` 定義了在處理用戶 Profile 數據過程中可能發生的各種特定錯誤。
@@ -95,10 +96,10 @@ class UserProfileService: ObservableObject {
     /// Firestore 數據庫的實例，用於所有 Firestore 操作。
     private let db = Firestore.firestore()
     /// 用於實時監聽當前用戶 Profile 文檔變化的 Firestore 監聽器註冊對象。
-    /// 當不再需要監聽時（例如用戶登出或服務被銷毀），需要調用其 `remove()` 方法來移除監聽器。
     private var userProfileListener: ListenerRegistration?
+    private let functions = Functions.functions(region: "asia-east1")
 
-    // MARK: - @Published 公開屬性 (Published Properties for SwiftUI)
+    // MARK: - @Published 公開屬性
 
     /// 當前已登入用戶的 `UserProfile` 數據的本地緩存。
     /// 當用戶登入並成功加載 Profile 後，此屬性會被填充。
@@ -134,7 +135,7 @@ class UserProfileService: ObservableObject {
     ///   - completion: 操作完成後的回調閉包。
     ///                 - `Result.success(UserProfile)`: 如果 Profile 成功獲取或創建，返回 `UserProfile` 對象。
     ///                 - `Result.failure(UserProfileServiceError)`: 如果操作過程中發生錯誤，返回相應的錯誤。
-    func checkAndCreateUserProfile(for authUser: User, completion: @escaping (Result<UserProfile, UserProfileServiceError>) -> Void) {
+    func checkAndCreateUserProfile(for authUser: User, initialDisplayName: String?, completion: @escaping (Result<UserProfile, UserProfileServiceError>) -> Void) {
         print("UserProfileService | 開始檢查或創建 Profile，針對 Auth UID: \(authUser.uid)")
         DispatchQueue.main.async {
             self.isLoading = true
@@ -174,7 +175,7 @@ class UserProfileService: ObservableObject {
                         self.currentUserProfile = profile
                         self.isLoading = false
                         // Profile 獲取成功後，更新該用戶的最後登入時間。
-                        self.updateUserLastLoginDate(uid: authUser.uid) { updateError in
+                        self.callCloudFunctionToUpdateUserLastLoginDate(uid: authUser.uid) { updateError in
                             if let error = updateError {
                                 // 更新最後登入時間失敗是一個非關鍵錯誤，通常只記錄日誌，不阻塞主流程。
                                 print("UserProfileService | 更新用戶最後登入時間失敗 (在獲取 Profile 後)，UID: \(authUser.uid)。錯誤: \(error.localizedDescription)")
@@ -194,123 +195,82 @@ class UserProfileService: ObservableObject {
             } else {
                 // Profile 文檔不存在，需要創建新的 Profile。
                 print("UserProfileService | Profile 文檔不存在，UID: \(authUser.uid)。將調用 createNewUserProfile。")
-                self.createNewUserProfile(for: authUser, completion: completion)
+                self.callCloudFunctionToCreateUserProfile(for: authUser, initialDisplayName: initialDisplayName, completion: completion)
             }
         }
     }
 
-    /// 創建一個新的用戶 Profile 文檔到 Firestore 中。
-    /// 此方法使用 Firestore 事務 (transaction) 來確保原子性操作：
-    /// 1. 從 `counters/userCounter` 文檔讀取下一個可用的應用程式級別 `userId`。
-    /// 2. 更新 `counters/userCounter` 文檔中的 `nextUserId` 為下一個值。
-    /// 3. 使用獲取到的 `userId` 和其他初始值創建新的 `UserProfile` 文檔，文檔 ID 為 `authUser.uid`。
-    /// 這些操作要么全部成功，要么全部失敗回滾。
-    ///
-    /// - Parameters:
-    ///   - authUser: 新註冊或首次需要 Profile 的 Firebase `User` 對象。
-    ///   - completion: 操作完成後的回調。
-    private func createNewUserProfile(for authUser: User, completion: @escaping (Result<UserProfile, UserProfileServiceError>) -> Void) {
-        print("UserProfileService | 開始創建新 Profile，針對 Auth UID: \(authUser.uid)")
-        // 計數器文檔和新用戶 Profile 文檔的引用。
-        let counterRef = db.collection("counters").document("userCounter")
-        let userProfileRef = db.collection("users").document(authUser.uid)
+    private func callCloudFunctionToCreateUserProfile(for authUser: User, initialDisplayName: String?, completion: @escaping (Result<UserProfile, UserProfileServiceError>) -> Void) {
+        print("UserProfileService | 呼叫 Cloud Function createInitialUserProfile 創建新 Profile，UID: \(authUser.uid)")
 
-        // 執行 Firestore 事務。
-        db.runTransaction({ (transaction, errorPointer) -> Any? in
-            // 步驟 1: 在事務中讀取計數器文檔。
-            let counterDocument: DocumentSnapshot
-            do {
-                print("UserProfileService | 事務內部：嘗試獲取計數器文檔 (\(counterRef.path))。")
-                try counterDocument = transaction.getDocument(counterRef)
-            } catch let fetchError as NSError {
-                // 如果讀取計數器失敗，則設置錯誤指針並返回 nil，事務將失敗。
-                print("UserProfileService | 事務內部：獲取計數器文檔失敗。錯誤: \(fetchError.localizedDescription)")
-                errorPointer?.pointee = fetchError // 將錯誤傳遞給事務處理器
-                // 返回 nil 表示此事務塊內的原子操作失敗。
-                // 最終的 completion 將收到 .counterTransactionFailed 或 .profileCreationTransactionFailed
-                return nil
-            }
+        // 準備傳遞給 Cloud Function 的數據
+        var data: [String: Any] = [:]
+        if let email = authUser.email {
+            data["userEmail"] = email // <-- 注意這裡的 Key 名稱與 TypeScript 和 UserProfile 結構體保持一致
+        }
+        if let displayName = initialDisplayName { // 優先使用從 Apple 登入傳遞的 displayName
+            data["userName"] = displayName // <-- 注意這裡的 Key 名稱與 TypeScript 和 UserProfile 結構體保持一致
+        } else if let authDisplayName = authUser.displayName { // 其次使用 Firebase Auth 提供的 displayName
+            data["userName"] = authDisplayName // <-- 注意這裡的 Key 名稱與 TypeScript 和 UserProfile 結構體保持一致
+        }
 
-            // 步驟 2: 確定新的應用程式級別 userId。
-            // 如果計數器文檔或 "nextUserId" 字段不存在，則將當前用戶的 userId 設為 1 (作為第一個用戶)。
-            let currentCount = counterDocument.data()?["nextUserId"] as? Int ?? 1
-            let newAppUserId = currentCount
-            print("UserProfileService | 事務內部：確定新的 App UserID 為 \(newAppUserId)。")
+        functions.httpsCallable("createInitialUserProfile").call(data) { [weak self] result, error in
+            guard let self = self else { return }
 
-            // 步驟 3: 準備新的 UserProfile 對象數據。
-            // @DocumentID (`id` 字段) 會在從 Firestore 讀取時被自動填充為文檔 ID (即 authUser.uid)。
-            // 在這裡創建 UserProfile 實例時，我們不需要手動設置 `id`。
-            let newUserProfile = UserProfile(
-                userId: newAppUserId, // 應用程式級別的自增 ID
-                coins: 0,             // 初始金幣數量
-                creationDate: Timestamp(date: Date()), // 創建時間戳
-                updateDate: Timestamp(date: Date()),   // 初始更新時間戳
-                lastloginDate: Timestamp(date: Date()) // 初始最後登入時間戳
-            )
-
-            // 步驟 4: 在事務中更新計數器文檔。
-            // 將 "nextUserId" 字段的值設置為 newAppUserId + 1。
-            // `merge: true` 選項確保如果 `userCounter` 文檔中還有其他字段，它們不會被覆蓋。
-            // 如果 `userCounter` 文檔不存在，`setData` 會創建它。
-            print("UserProfileService | 事務內部：更新計數器文檔 (\(counterRef.path)) 的 nextUserId 為 \(newAppUserId + 1)。")
-            transaction.setData(["nextUserId": newAppUserId + 1], forDocument: counterRef, merge: true)
-
-            // 步驟 5: 在事務中創建新的用戶 Profile 文檔。
-            // 使用 `setData(from: ...)` 可以直接將 `Codable` 的 `UserProfile` 對象寫入 Firestore。
-            do {
-                print("UserProfileService | 事務內部：創建新的用戶 Profile 文檔 (\(userProfileRef.path))。")
-                try transaction.setData(from: newUserProfile, forDocument: userProfileRef)
-            } catch let encodeError {
-                // 如果將 UserProfile 對象編碼到 Firestore 數據時失敗。
-                print("UserProfileService | 事務內部：設置 UserProfile 數據失敗。錯誤: \(encodeError.localizedDescription)")
-                errorPointer?.pointee = encodeError as NSError // 轉換為 NSError
-                return nil
-            }
-            
-            // 如果事務內的所有操作都準備成功，返回創建的 UserProfile 對象。
-            // Firestore 會嘗試提交這些更改。
-            // 我們手動為返回的 UserProfile 實例的 id 賦值，使其包含文檔 ID (Auth UID)，
-            // 這樣在事務成功的回調中，可以直接使用這個帶有 ID 的 Profile 對象。
-            var profileWithId = newUserProfile
-            profileWithId.id = authUser.uid // 確保返回的 Profile 實例包含 Firestore Document ID
-            print("UserProfileService | 事務內部：所有操作準備就緒，將返回 Profile。")
-            return profileWithId
-
-        }) { [weak self] (object, error) in
-            // Firestore 事務的完成回調。
-            // `object` 是事務閉包返回的值 (如果成功)。
-            // `error` 是事務提交過程中發生的錯誤 (如果失敗)。
-            guard let self = self else {
-                print("UserProfileService | createNewUserProfile 事務回調 - self (UserProfileService) 已被釋放。")
+            if let callableError = error as NSError? {
+                print("UserProfileService | Cloud Function createInitialUserProfile 呼叫失敗: \(callableError.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                    // 嘗試將 Cloud Function 返回的錯誤轉換為 UserProfileServiceError
+                    if let code = FunctionsErrorCode(rawValue: callableError.code) {
+                        switch code {
+                        case .alreadyExists:
+                            self.serviceError = .profileAlreadyExists(uid: authUser.uid)
+                        case .internal:
+                            self.serviceError = .profileCreationTransactionFailed(underlyingError: callableError)
+                        default:
+                            self.serviceError = .generalError(message: callableError.localizedDescription)
+                        }
+                    } else {
+                        self.serviceError = .generalError(message: callableError.localizedDescription)
+                    }
+                }
+                completion(.failure(self.serviceError!))
                 return
             }
 
-            if let transactionError = error {
-                // 事務失敗。
-                print("UserProfileService | 創建新 Profile 的事務提交失敗，Auth UID: \(authUser.uid)。錯誤: \(transactionError.localizedDescription)")
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                    // 這裡的錯誤可能是因為內部讀取計數器失敗 (被 errorPointer 捕獲)
-                    // 或因為提交時的併發衝突等。
-                    // 根據 errorPointer?.pointee 的原始錯誤類型，可以更細化是 counterTransactionFailed 還是 profileCreation本身。
-                    // 為簡化，如果事務失敗，我們認為是 Profile 創建流程的一部分失敗。
-                    self.serviceError = .profileCreationTransactionFailed(underlyingError: transactionError)
-                }
-                completion(.failure(.profileCreationTransactionFailed(underlyingError: transactionError)))
-                return
-            }
+            // Cloud Function 成功返回，嘗試解析結果
+            if let resultData = result?.data as? [String: Any],
+               let userProfileDict = resultData["userProfile"] as? [String: Any] {
+                do {
+                    // 將字典轉換為 Data，然後解碼為 UserProfile
+                    let jsonData = try JSONSerialization.data(withJSONObject: userProfileDict, options: [])
+                    let decoder = JSONDecoder()
+                    let newProfile = try decoder.decode(UserProfile.self, from: jsonData)
 
-            // 事務成功，並且返回了預期的 UserProfile 對象。
-            if let createdProfile = object as? UserProfile {
-                print("UserProfileService | 新 Profile 事務成功提交並創建，Auth UID: \(authUser.uid)，App UserID: \(createdProfile.userId)。")
-                DispatchQueue.main.async {
-                    self.currentUserProfile = createdProfile
-                    self.isLoading = false
+                    // 因為 `@DocumentID` 只有在 Firestore SDK 讀取時才會自動填充
+                    // 我們需要手動設置 id 為 authUser.uid
+                    var profileWithId = newProfile
+                    profileWithId.id = authUser.uid
+
+                    print("UserProfileService | Cloud Function createInitialUserProfile 成功，App UserID: \(profileWithId.userId)。")
+                    DispatchQueue.main.async {
+                        self.currentUserProfile = profileWithId
+                        self.isLoading = false
+                        // 開始監聽此用戶 Profile 在 Firestore 中的後續變化。
+                        self.listenForUserProfileChanges(uid: authUser.uid)
+                    }
+                    completion(.success(profileWithId))
+                } catch {
+                    print("UserProfileService | 從 Cloud Function 返回的 Profile 數據解碼失敗: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.serviceError = .decodingError(underlyingError: error)
+                    }
+                    completion(.failure(.decodingError(underlyingError: error)))
                 }
-                completion(.success(createdProfile))
             } else {
-                // 事務成功，但返回的對象不是 UserProfile 或為 nil，這是一個意外情況。
-                print("UserProfileService | 新 Profile 事務成功，但返回的對象類型不正確或為 nil，Auth UID: \(authUser.uid)。")
+                print("UserProfileService | Cloud Function createInitialUserProfile 返回數據格式不正確或為 nil。")
                 DispatchQueue.main.async {
                     self.isLoading = false
                     self.serviceError = .unexpectedTransactionResult
@@ -322,99 +282,80 @@ class UserProfileService: ObservableObject {
     
     // MARK: - Profile 更新 (Profile Updates)
 
-    /// 更新指定用戶的最後登入時間 (`lastloginDate`) 和總體更新時間 (`updateDate`) 到 Firestore。
-    /// 這通常在用戶成功登入並加載 Profile 後調用。
-    ///
-    /// - Parameters:
-    ///   - uid: 要更新的用戶的 Firebase Auth UID。
-    ///   - completion: (可選) 操作完成後的回調，如果發生錯誤則包含錯誤。
-    func updateUserLastLoginDate(uid: String, completion: ((UserProfileServiceError?) -> Void)? = nil) {
-        guard !uid.isEmpty else {
-            print("UserProfileService | 更新最後登入時間錯誤：UID 為空。")
-            completion?(.generalError(message: "用戶 UID 無效，無法更新登入時間。"))
-            return
-        }
-        print("UserProfileService | 準備更新最後登入時間，UID: \(uid)。")
-        let userProfileRef = db.collection("users").document(uid)
-        let now = Timestamp(date: Date()) // 使用當前伺服器時間戳（由客戶端生成，但 Firestore 會處理）
-        let updateData: [String: Any] = [
-            "lastloginDate": now,
-            "updateDate": now // 通常，更新最後登入時間也視為一次 Profile 的更新
-        ]
-        
-        userProfileRef.updateData(updateData) { [weak self] error in
-            guard let self = self else { return }
-            if let firestoreError = error {
-                print("UserProfileService | 更新最後登入時間失敗，UID: \(uid)。錯誤: \(firestoreError.localizedDescription)")
-                completion?(.firestoreError(underlyingError: firestoreError))
-            } else {
-                print("UserProfileService | 成功更新最後登入時間，UID: \(uid)。")
-                // 如果本地有該用戶的 Profile 緩存，也同步更新它。
-                DispatchQueue.main.async {
-                    if self.currentUserProfile?.id == uid {
-                        self.currentUserProfile?.lastloginDate = now
-                        self.currentUserProfile?.updateDate = now
-                        print("UserProfileService | 本地 currentUserProfile 的登入/更新時間已同步。")
-                    }
+    func callCloudFunctionToUpdateUserLastLoginDate(uid: String, completion: ((UserProfileServiceError?) -> Void)? = nil) {
+            guard !uid.isEmpty else {
+                print("UserProfileService | 更新最後登入時間錯誤：UID 為空。")
+                completion?(.generalError(message: "用戶 UID 無效，無法更新登入時間。"))
+                return
+            }
+            print("UserProfileService | 呼叫 Cloud Function updateUserLastLoginDate 更新最後登入時間，UID: \(uid)。")
+
+            // Callable Function 不需要傳遞 UID，因為 context.auth.uid 會提供
+            // 但為了呼叫範例的清晰性，你可以傳遞一個空字典或僅傳遞與用戶無關的數據
+            // functions.httpsCallable("updateUserLastLoginDate").call([:]) 也可以
+        functions.httpsCallable("updateUserLastLoginDate").call([:]) { result, error in // <-- 傳遞一個空字典或無關緊要的數據
+                if let callableError = error as NSError? {
+                    print("UserProfileService | Cloud Function updateUserLastLoginDate 呼叫失敗: \(callableError.localizedDescription)")
+                    completion?(.generalError(message: callableError.localizedDescription))
+                    return
                 }
-                completion?(nil) // 成功時，錯誤為 nil
+                print("UserProfileService | Cloud Function updateUserLastLoginDate 成功。")
+                // Cloud Function 會在 Firestore 中更新時間戳，監聽器會自動同步到本地 currentUserProfile
+                completion?(nil)
             }
         }
-    }
-
-    /// 更新指定用戶的金幣數量到 Firestore。
-    /// **警告：直接從客戶端修改金幣等關鍵數據通常是不安全的。**
-    /// 為了真正的安全性，應考慮使用 Firebase Cloud Functions 來處理此類操作。
-    /// 此方法僅作為一個示例。
-    ///
+    
+    /// 修改金錢（透過 Clodu Function）
     /// - Parameters:
     ///   - uid: 要更新的用戶的 Firebase Auth UID。
-    ///   - newCoinAmount: 新的金幣總數。
+    ///   - amount: 金幣的變動量（正數為增加，負數為減少）。
     ///   - completion: 操作完成後的回調，如果發生錯誤則包含錯誤。
-    func updateUserCoins(uid: String, newCoinAmount: Int, completion: @escaping (UserProfileServiceError?) -> Void) {
+    func callCloudFunctionToUpdateUserCoins(uid: String, amount: Int, completion: @escaping (UserProfileServiceError?) -> Void) { // <-- 參數名為 amount
         guard !uid.isEmpty else {
             print("UserProfileService | 更新金幣錯誤：UID 為空。")
             completion(.generalError(message: "用戶 UID 無效，無法更新金幣。"))
             return
         }
-        // 應添加對 newCoinAmount 的基本驗證，例如 >= 0
-        guard newCoinAmount >= 0 else {
-            print("UserProfileService | 更新金幣錯誤：金幣數量不能為負。請求值: \(newCoinAmount)")
-            completion(.generalError(message: "金幣數量不能設置為負數。"))
+        // 客戶端做初步驗證，例如不允許零變動，最終業務邏輯在 Cloud Function 中
+        if amount == 0 {
+            print("UserProfileService | 金幣變動量為零，無需更新。")
+            completion(nil)
             return
         }
 
-        print("UserProfileService | 準備更新金幣，UID: \(uid)，新金幣數量: \(newCoinAmount)。")
-        let userProfileRef = db.collection("users").document(uid)
-        let now = Timestamp(date: Date())
-        let updateData: [String: Any] = [
-            "coins": newCoinAmount,
-            "updateDate": now // 每次重要數據更新時，都應更新 updateDate
-        ]
-        
-        userProfileRef.updateData(updateData) { [weak self] error in
+        print("UserProfileService | 呼叫 Cloud Function updateUserCoins 更新金幣，UID: \(uid)，變動量: \(amount)。")
+        let data = ["amount": amount] // 傳遞變動量
+
+        functions.httpsCallable("updateUserCoins").call(data) { [weak self] result, error in
             guard let self = self else { return }
-            if let firestoreError = error {
-                print("UserProfileService | 更新金幣失敗，UID: \(uid)。錯誤: \(firestoreError.localizedDescription)")
+
+            if let callableError = error as NSError? {
+                print("UserProfileService | Cloud Function updateUserCoins 呼叫失敗: \(callableError.localizedDescription)")
                 DispatchQueue.main.async {
-                    self.serviceError = .firestoreError(underlyingError: firestoreError) // 更新全局錯誤狀態
+                    self.serviceError = .generalError(message: callableError.localizedDescription)
                 }
-                completion(.firestoreError(underlyingError: firestoreError))
-            } else {
-                print("UserProfileService | 成功更新金幣，UID: \(uid)。")
-                // 更新本地緩存
+                completion(.generalError(message: callableError.localizedDescription))
+                return
+            }
+
+            // Cloud Function 成功返回
+            if let resultData = result?.data as? [String: Any], let finalCoins = resultData["newCoins"] as? Int {
+                print("UserProfileService | Cloud Function updateUserCoins 成功，新金幣總數: \(finalCoins)。")
+                // 監聽器會自動同步更新 currentUserProfile，這裡確保回調成功
                 DispatchQueue.main.async {
                     if self.currentUserProfile?.id == uid {
-                        self.currentUserProfile?.coins = newCoinAmount
-                        self.currentUserProfile?.updateDate = now
-                        print("UserProfileService | 本地 currentUserProfile 的金幣/更新時間已同步。")
+                        self.currentUserProfile?.coins = finalCoins
+                        print("UserProfileService | 本地 currentUserProfile 的金幣已同步。")
                     }
                 }
-                completion(nil) // 成功
+                completion(nil)
+            } else {
+                print("UserProfileService | Cloud Function updateUserCoins 返回數據格式不正確或為 nil。")
+                completion(.unexpectedTransactionResult)
             }
         }
     }
-
+    
     // MARK: - Profile 獲取與監聽 (Profile Fetching and Listening)
 
     /// 直接從 Firestore 獲取指定用戶的 Profile 數據，並更新本地緩存。
