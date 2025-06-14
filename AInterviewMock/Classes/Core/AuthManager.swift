@@ -3,14 +3,13 @@ import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 import AuthenticationServices
-import CryptoKit // 為了 SHA256，雖然 Firebase SDK 會處理，但 good practice to know it's there
+import CryptoKit
 
 // MARK: - AuthManager
 /// `AuthManager` 類別負責處理應用程式中所有與 Firebase 身份驗證相關的操作。
 /// 它使用 `ObservableObject` 協定，使其屬性可以在 SwiftUI 視圖中被觀察，從而實現 UI 的自動更新。
 /// 主要功能包括：監聽 Firebase Auth 狀態變化、處理 Google 登入、Apple 登入以及登出操作。
-/// 同時，它會與 `UserProfileService` 協作，在用戶登入後觸發用戶 Profile 數據的加載或創建。
-class AuthManager : ObservableObject {
+class AuthManager : NSObject, ObservableObject {
 
     // MARK: - @Published 公開屬性 (Published Properties)
     // 這些屬性值的任何改變都會通知所有觀察此 AuthManager 實例的 SwiftUI 視圖進行更新。
@@ -33,12 +32,13 @@ class AuthManager : ObservableObject {
     // MARK: - 私有屬性 (Private Properties)
 
     /// `UserProfileService` 的實例，通過依賴注入（Dependency Injection）傳入。
-    /// 這種設計將身份驗證邏輯與用戶數據管理邏輯解耦，提高了程式碼的可測試性和可維護性。
     private let userProfileService: UserProfileService
 
     /// Firebase Auth 狀態監聽器的句柄 (handle)。
-    /// 用於在 `AuthManager` 實例被銷毀 (`deinit`) 時，能夠正確地從 Firebase Auth 系統中移除監聽器，以防止記憶體洩漏。
     private var authStateHandler: AuthStateDidChangeListenerHandle?
+    
+    /// 用於在 Apple 登入請求期間臨時保存隨機數 (Nonce)。
+    private var currentNonce: String?
     
     // MARK: - 錯誤類型枚舉 (Error Type Enumeration)
     /// `AuthManagerErrorType` 定義了在身份驗證過程中可能發生的各種錯誤類型。
@@ -116,13 +116,15 @@ class AuthManager : ObservableObject {
     /// - Parameter userProfileService: 一個 `UserProfileService` 的實例，用於後續的用戶 Profile 操作。
     /// 在初始化過程中，會立即註冊一個 Firebase Auth 狀態監聽器。
     init(userProfileService: UserProfileService) {
+        
+        // 初始化子類別自己的屬性
         self.userProfileService = userProfileService
         print("AuthManager | INIT | AuthManager 已初始化，並注入 UserProfileService。")
+        
+        // 呼叫父類別的初始化方法，完成第一階段
+        super.init()
 
         // 添加 Firebase 身份驗證狀態變更的監聽器。
-        // 這個監聽器是一個閉包，當 Firebase 的用戶認證狀態發生任何改變時（例如用戶登入、登出，或身份令牌刷新），
-        // Firebase SDK 都會自動調用這個閉包。
-        // `[weak self]` 用於避免 AuthManager 與閉包之間的循環引用。
         authStateHandler = Auth.auth().addStateDidChangeListener { [weak self] (auth, firebaseUser) in
             guard let self = self else {
                 print("AuthManager | AuthStateListener | self (AuthManager) 已被釋放，提前返回。")
@@ -208,7 +210,19 @@ class AuthManager : ObservableObject {
         return nonceString
     }
 
-
+    /// 計算字串的 SHA256 哈希值，用於 Apple 登入請求。
+    /// - Parameter input: 要進行哈希的原始字串。
+    /// - Returns: SHA256 哈希後的字串表示。
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+            String(format: "%02x", $0)
+        }.joined()
+        
+        return hashString
+    }
+    
     // MARK: - 登入方法 (Sign-In Methods)
 
     // --- Google 登入 (Google Sign-In) ---
@@ -309,6 +323,33 @@ class AuthManager : ObservableObject {
         
         // 調用統一的 Firebase 登入方法
         self.signInToFirebase(with: firebaseCredential, providerName: "Apple", initialDisplayName: initialDisplayName)
+    }
+    
+    /// 啟動 Apple ID 登入流程。
+    func signInWithApple() {
+        print("AuthManager | signInWithApple | 開始 Apple 登入流程...")
+        DispatchQueue.main.async {
+            self.isLoading = true
+            self.errorMessage = nil
+        }
+        
+        // 1. 生成並保存一個隨機數 (Nonce)
+        let nonce = generateNonce()
+        currentNonce = nonce
+        
+        // 2. 創建 Apple ID 登入請求
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        // 3. 將哈希後的 Nonce 附加到請求中
+        request.nonce = sha256(nonce)
+        
+        // 4. 創建並執行授權控制器
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
     
     // --- 統一的 Firebase 登入處理器 ---
@@ -425,6 +466,61 @@ class AuthManager : ObservableObject {
                 self.errorMessage = .firebaseSignOutFailed(underlyingError: signOutError)
                 self.isLoading = false // 確保在錯誤時重置 isLoading
             }
+        }
+    }
+}
+
+extension AuthManager: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    /// 指定在哪個視窗上顯示 Apple 登入介面。
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        guard let window = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow }) else {
+            // 如果找不到主視窗，這是一個備用方案，但通常不應發生。
+            return UIWindow()
+        }
+        return window
+    }
+    
+    /// 當 Apple 登入成功時由系統調用。
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        print("AuthManager | Delegate | Apple 登入成功。")
+        // 1. 檢查是否為 Apple ID 憑證
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            print("AuthManager | Delegate | 錯誤：收到的憑證不是 ASAuthorizationAppleIDCredential。")
+            DispatchQueue.main.async {
+                self.errorMessage = .appleSignInMissingCredentialOrToken
+                self.isLoading = false
+            }
+            return
+        }
+        
+        // 2. 獲取之前保存的 Nonce
+        guard let nonce = currentNonce else {
+            print("AuthManager | Delegate | 嚴重錯誤：Nonce 未被保存。")
+            DispatchQueue.main.async {
+                self.errorMessage = .unexpectedInternalError(underlyingError: nil)
+                self.isLoading = false
+            }
+            return
+        }
+        
+        // 3. 調用您已有的 handleAppleSignIn 方法來處理後續的 Firebase 登入
+        handleAppleSignIn(credential: appleIDCredential, nonce: nonce)
+    }
+    
+    /// 當 Apple 登入失敗或用戶取消時由系統調用。
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("AuthManager | Delegate | Apple 登入失敗或被取消。錯誤: \(error.localizedDescription)")
+        DispatchQueue.main.async {
+            if (error as NSError).code == ASAuthorizationError.Code.canceled.rawValue {
+                self.errorMessage = .userCancelledOperation
+            } else {
+                self.errorMessage = .appleSignInFailed(underlyingError: error)
+            }
+            self.isLoading = false
         }
     }
 }

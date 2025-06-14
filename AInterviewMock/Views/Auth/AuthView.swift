@@ -44,80 +44,58 @@ struct AuthView: View {
                         Text("使用您的 Apple 帳號或 Google 帳號登入 inif")
                         
                         VStack(alignment: .leading, spacing: 10){
-                            SignInWithAppleButton(
-                                .signIn, // 按鈕樣式
-                                onRequest: { request in
-                                    // 1. 生成 Nonce
-                                    let nonce = authManager.generateNonce()
-                                    appleSignInNonce = nonce
-                                    // 2. 請求用戶的 email
-                                    request.requestedScopes = [.fullName, .email]
-                                    // 3. 將 Nonce 的 SHA256 哈希值設置到請求中
-                                    request.nonce = sha256(nonce)
-                                    print("AuthView | Apple Sign In onRequest - Nonce generated and set.")
-                                },
-                                onCompletion: { result in
-                                    print("AuthView | Apple Sign In onCompletion - Result received.")
-                                    switch result {
-                                    case .success(let authorization):
-                                        print("AuthView | Apple Sign In onCompletion - Succeeded.")
-                                        // 成功獲取 Apple 授權憑證
-                                        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-                                            print("AuthView | Apple Sign In onCompletion - Error: Failed to cast credential to ASAuthorizationAppleIDCredential.")
-                                            // 設置 AuthManager 的錯誤狀態
-                                            authManager.errorMessage = .appleSignInMissingCredentialOrToken
-                                            return
-                                        }
-                                        
-                                        // 獲取之前在 onRequest 中保存的原始 Nonce
-                                        guard let rawNonce = appleSignInNonce else {
-                                            print("AuthView | Apple Sign In onCompletion - Error: Missing rawNonce.")
-                                            // 這是一個應用程式內部邏輯錯誤
-                                            authManager.errorMessage = .unexpectedInternalError(underlyingError: nil)
-                                            return
-                                        }
-                                        
-                                        // 將憑證和原始 Nonce 傳遞給 AuthManager 以便使用 Firebase 進行登入
-                                        print("AuthView | Apple Sign In onCompletion - Calling authManager.handleAppleSignIn.")
-                                        authManager.handleAppleSignIn(credential: appleIDCredential, nonce: rawNonce)
-                                        
-                                    case .failure(let error):
-                                        print("AuthView | Apple Sign In onCompletion - Failed with error: \(error.localizedDescription)")
-                                        // 處理 Apple 登入本身的錯誤 (ASAuthorizationError)
-                                        if let authError = error as? ASAuthorizationError {
-                                            if authError.code == .canceled {
-                                                print("AuthView | Apple Sign In onCompletion - User cancelled.")
-                                                authManager.errorMessage = .userCancelledOperation
-                                                // 通常用戶取消不需要彈出錯誤提示，或者只是一個溫和的提示
-                                            } else {
-                                                authManager.errorMessage = .appleSignInFailed(underlyingError: error)
-                                            }
-                                        } else {
-                                            authManager.errorMessage = .appleSignInFailed(underlyingError: error)
-                                        }
-                                    }
+                            Button {
+                                authManager.signInWithApple()
+                            } label: {
+                                HStack(alignment: .center, spacing: 10){
+                                    Spacer()
+                                    Image(systemName: "apple.logo")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("使用 Apple 登入")
+                                        .font(.title3)
+                                    Spacer()
                                 }
-                            )
-                            .frame(height: 50)
+                                .padding()
+                            }
+                            .buttonStyle(.plain)
+                            .foregroundStyle(Color(.white))
+                            .background(Color("AccentColorP1"))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                             
                             // Google 登入按鈕
-                            GoogleSignInButton() {
-                                print("AuthView | Google Sign In button tapped.")
-                                appleSignInNonce = nil
+                            Button {
                                 authManager.signInWithGoogle()
+                            } label: {
+                                HStack(alignment: .center, spacing: 10){
+                                    Spacer()
+                                    Image(systemName: "g.circle.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 20, height: 20)
+                                    Text("使用 Google 登入")
+                                        .font(.title3)
+                                    Spacer()
+                                }
+                                .padding()
                             }
-                            .frame(height: 50)
+                            .buttonStyle(.plain)
+                            .foregroundStyle(Color(.white))
+                            .background(Color("AccentColorP1"))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            
                         }
                         .padding(.vertical)
                         
                         if let em = authManager.errorMessage {
                             VStack(alignment: .leading){
-                                Text("錯誤")
-                                    .bold()
                                 HStack{
-                                    Text(em.errorDescription ?? "Unknown Bug")
+                                    Text("錯誤")
+                                        .bold()
                                     Spacer()
                                 }
+                                Text(em.errorDescription ?? "Unknown Bug")
                             }
                             .padding(10)
                             .background(Color(.red).opacity(0.2))
@@ -191,12 +169,46 @@ struct AuthView: View {
                     Text("使用您的 Apple 帳號或 Google 帳號登入 inif")
                     
                     VStack(alignment: .leading, spacing: 10){
-                        Text("Apple")
-                        .frame(height: 50)
+                        Button {
+                            
+                        } label: {
+                            HStack(alignment: .center, spacing: 10){
+                                Spacer()
+                                Image(systemName: "apple.logo")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("使用 Apple 登入")
+                                    .font(.title3)
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                        .buttonStyle(.plain)
+                        .foregroundStyle(Color(.white))
+                        .background(Color("AccentColorP1"))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                         
                         // Google 登入按鈕
-                        Text("Google")
-                        .frame(height: 50)
+                        Button {
+                            
+                        } label: {
+                            HStack(alignment: .center, spacing: 10){
+                                Spacer()
+                                Image(systemName: "g.circle.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                Text("使用 Google 登入")
+                                    .font(.title3)
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                        .buttonStyle(.plain)
+                        .foregroundStyle(Color(.white))
+                        .background(Color("AccentColorP1"))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                     .padding(.vertical)
                     
