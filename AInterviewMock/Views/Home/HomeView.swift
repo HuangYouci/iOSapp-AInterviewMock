@@ -9,87 +9,146 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var currentPage: Int = 0
-    @State private var whatsNew: String = "Error"
-    @State private var newestVersion: String = "E"
+    @EnvironmentObject var ups: UserProfileService
+    @EnvironmentObject var vm: ViewManager
     
     var body: some View {
-        ZStack{
-            VStack(spacing: 0){
-                
-                HStack{
-                    Image("Logo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 25, height: 25)
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                    Text(NSLocalizedString("HomeView_appTitle", comment: "The main title of the application"))
-                        .font(.title2)
-                        .bold()
-                        .foregroundStyle(Color(.accent))
-                    Spacer()
-                    Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
-                        .foregroundStyle(Color(.systemGray))
+        VStack(spacing: 0){
+            ScrollView{
+                VStack(alignment: .leading){
+                    HStack{
+                        Text("inif")
+                            .font(.largeTitle)
+                            .fontWeight(.heavy)
+                        Spacer()
+                        Image(systemName: "info.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .padding(8)
+                            .background(Color("AccentColorP1"))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Button {
+                            vm.addPage(.profile)
+                        } label: {
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+                                .padding(8)
+                                .background(Color("AccentColorP1"))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        }
+                    }
+                    .foregroundStyle(Color(.white))
+                    .padding(.horizontal)
+                    .padding(.vertical, 5)
+                    
+                    VStack(alignment: .leading){
+                        HStack{
+                            Text("功能")
+                                .font(.title2)
+                                .bold()
+                                .foregroundStyle(Color("AccentColorP1"))
+                            Spacer()
+                        }
+                        HStack{
+                            Button {
+                                // vm.addPage(view: InterviewView())
+                            } label: {
+                                VStack(alignment: .leading){
+                                    Text("模擬面試")
+                                        .font(.title)
+                                        .bold()
+                                        .foregroundStyle(Color(.white))
+                                    HStack{
+                                        Spacer()
+                                    }
+                                }
+                                .padding()
+                                .frame(height: 100, alignment: .topLeading)
+                                .background(
+                                    Image("HomeEntryView_interviewIllu")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 400, height: 200)
+                                        .mask(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [.clear, .white]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                        .offset(x: 50)
+                                )
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [
+                                            Color(red: 122 / 255, green: 121 / 255, blue: 217 / 255),
+                                            Color(red: 88 / 255, green: 86 / 255, blue: 207 / 255)
+                                        ]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                        }
+                        HStack{
+                            Button {
+                                // vm.addPage(view: SpeechView())
+                            } label: {
+                                VStack(alignment: .leading){
+                                    Text("模擬演講")
+                                        .font(.title)
+                                        .bold()
+                                        .foregroundStyle(Color(.white))
+                                    HStack{
+                                        Spacer()
+                                    }
+                                }
+                                .padding()
+                                .frame(height: 100, alignment: .topLeading)
+                                .background(
+                                    Image("HomeEntryView_speechIllu")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 400, height: 200)
+                                        .mask(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [.clear, .white]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                        .offset(x: 50)
+                                )
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(colors: [
+                                            Color(red: 122 / 255, green: 121 / 255, blue: 217 / 255),
+                                            Color(red: 88 / 255, green: 86 / 255, blue: 207 / 255)
+                                        ]),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                        }
+                    }
+                    .padding(25)
+                    .frame(maxWidth: .infinity)
+                    .background(Color("Background"))
+                    .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
                 }
-                .padding(.bottom)
-                .padding(.horizontal)
-                
-                switch(currentPage){
-                case 0:
-                    HomeEntryView()
-                case 1:
-                    ListView()
-                case 2:
-                    CoinView()
-                default:
-                    Color.clear
-                }
-                
-                Divider()
-                HStack(spacing: 30){
-                    Spacer()
-                    barBuilder(page: 2, icon: "hockey.puck")
-                    barBuilder(page: 0, icon: "house")
-                    barBuilder(page: 1, icon: "list.bullet")
-                    Spacer()
-                }
-                .padding(20)
             }
+            .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+            .fixedSize(horizontal: false, vertical: true)
+            Color("Background")
+                .ignoresSafeArea(edges: [.bottom])
         }
-        .onAppear {
-            // 讀取頁面狀態
-            currentPage = ViewManager.shared.getState(state: "HomeViewCurrentPage") as? Int ?? 0
-            // 檢查更新
-            if (UpdateChecker.shared.haveUpdate){
-                ViewManager.shared.addPage(view: UpdateCheckerView())
-            }
-        }
-        .onChange(of: currentPage){ _ in
-            ViewManager.shared.setState(state: "HomeViewCurrentPage", value: currentPage)
-        }
+        .background(Color.accentColor)
     }
     
-    private func barBuilder(page: Int, icon: String) -> some View {
-        VStack{
-            Image(systemName: "\(icon)")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 30, height: 30)
-            if (currentPage == page){
-                Circle()
-                    .frame(width: 5, height: 5)
-            }
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            withAnimation(.easeInOut(duration: 0.3)){
-                currentPage = page
-            }
-        }
-    }
-    
-}
-
-#Preview {
-    HomeView()
 }

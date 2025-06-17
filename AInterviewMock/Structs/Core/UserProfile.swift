@@ -21,9 +21,9 @@ struct UserProfile: Codable, Identifiable {
     var coins: Int
     
     // MARK: - Data Info
-    var creationDate: Timestamp
-    var updateDate: Timestamp
-    var lastloginDate: Timestamp
+    @ServerTimestamp var creationDate: Date?
+    var updateDate: Date?
+    var lastloginDate: Date?
     
     // MARK: - init
     init(
@@ -31,19 +31,13 @@ struct UserProfile: Codable, Identifiable {
         userId: Int,
         userEmail: String? = nil,
         userName: String? = nil,
-        coins: Int = 0,
-        creationDate: Timestamp = Timestamp(date: Date()),
-        updateDate: Timestamp = Timestamp(date: Date()),
-        lastloginDate: Timestamp = Timestamp(date: Date())
+        coins: Int = 0
     ) {
         self.id = id
         self.userId = userId
         self.userEmail = userEmail
         self.userName = userName
         self.coins = coins
-        self.creationDate = creationDate
-        self.updateDate = updateDate
-        self.lastloginDate = lastloginDate
     }
     
 }

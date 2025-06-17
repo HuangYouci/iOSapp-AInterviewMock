@@ -52,23 +52,6 @@ struct ListView: View {
         .onAppear {
             interview = DataManager.shared.loadAllInterviewProfiles()
             speech = DataManager.shared.loadAllSpeechProfiles()
-            
-            // 讀取頁面狀態
-            let ts = ViewManager.shared.getState(state: "ListViewCurrentPage") as? Int ?? 0
-            switch(ts){
-            case 1:
-                currentPage = .speech
-            default: // case 0
-                currentPage = .interview
-            }
-        }
-        .onChange(of: currentPage){ _ in
-            switch(currentPage){
-            case .interview:
-                ViewManager.shared.setState(state: "ListViewCurrentPage", value: 0)
-            case .speech:
-                ViewManager.shared.setState(state: "ListViewCurrentPage", value: 1)
-            }
         }
         
     }
@@ -115,7 +98,7 @@ struct ListView: View {
             .padding()
             .contentShape(Rectangle())
             .onTapGesture {
-                ViewManager.shared.addPage(view: InterviewAnalysisView(selected: .constant(i)))
+                // ViewManager.shared.addPage(view: InterviewAnalysisView(selected: .constant(i)))
             }
             Divider()
         }
@@ -143,7 +126,7 @@ struct ListView: View {
             .padding()
             .contentShape(Rectangle())
             .onTapGesture {
-                ViewManager.shared.addPage(view: SpeechAnalysisView(selected: .constant(i)))
+                // ViewManager.shared.addPage(view: SpeechAnalysisView(selected: .constant(i)))
             }
             Divider()
         }

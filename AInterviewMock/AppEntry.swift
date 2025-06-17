@@ -13,8 +13,10 @@ import GoogleSignIn
 @main
 struct AInterviewMockApp: App {
     
-    @StateObject var userProfileService: UserProfileService
-    @StateObject var authManager: AuthManager
+    @StateObject var ups: UserProfileService
+    @StateObject var am: AuthManager
+    @StateObject var vm = ViewManager.shared
+    @StateObject var co = CoinManager.shared
     
     init() {
         // MARK: - Firebase Cofigure
@@ -25,15 +27,17 @@ struct AInterviewMockApp: App {
         
         // MARK: - Init
         let ups = UserProfileService()
-        _userProfileService = StateObject(wrappedValue: ups)
-        _authManager = StateObject(wrappedValue: AuthManager(userProfileService: ups))
+        _ups = StateObject(wrappedValue: ups)
+        _am = StateObject(wrappedValue: AuthManager(userProfileService: ups))
     }
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(authManager)
-                .environmentObject(userProfileService)
+                .environmentObject(am)
+                .environmentObject(ups)
+                .environmentObject(vm)
+                .environmentObject(co)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

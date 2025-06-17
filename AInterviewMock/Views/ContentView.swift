@@ -10,40 +10,36 @@ import FirebaseAnalytics
 
 struct ContentView: View {
     
-    @EnvironmentObject var authManager: AuthManager
-    @ObservedObject var vm = ViewManager.shared
-    @ObservedObject var co = CoinManager.shared
+    @EnvironmentObject var am: AuthManager
+    @EnvironmentObject var vm: ViewManager
+    @EnvironmentObject var co: CoinManager
     
     var body: some View {
         ZStack{
-            // MARK: - Views (Vm)
-            // VM STACK
-            vm.viewStack.last!
-                .background(Color(.systemBackground))
-                .id(vm.viewStack.count)
-                .transition(
-                    vm.leaving ?
-                        .asymmetric(
-                            insertion: .scale(scale: 0.95).combined(with: .opacity),
-                            removal: .scale(scale: 0.85, anchor: .center).combined(with: .opacity)
-                        ) :
-                        .asymmetric(
-                            insertion: .move(edge: .trailing),
-                            removal: .opacity
-                        )
-                 )
-            
-            vm.topView
-                .id("topViewIdentifier")
-                .transition(.opacity)
+            // MARK: - Views
+            NavigationStack(path: $vm.path){
+                HomeView()
+                    .navigationDestination(for: ViewManager.ViewManagerRoute.self) { route in
+                        switch route {
+                        case .profile:
+                            ProfileView()
+                        case .profileDeletion:
+                            ProfileDeletionView()
+                        }
+                    }
+            }
             
             // MARK: - Top Views (Top)
             // CO NOTIF
             if (co.showCoinNotification){
                 CoinManagerView(amountChanged: co.lastCoinChange, finalAmount: co.coins)
             }
-            // Auth
-            if ((authManager.user == nil)){
+            // UPDATE
+            if (UpdateChecker.shared.haveUpdate){
+                UpdateCheckerView()
+            }
+            // AUTH
+            if ((am.user == nil)){
                 AuthView()
             }
         }

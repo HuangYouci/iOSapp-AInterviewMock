@@ -97,8 +97,6 @@ class UpdateChecker: ObservableObject {
                         self.thisVersion = currentVersionString
                         self.haveUpdate = true
                         
-                        ViewManager.shared.addPage(view: UpdateCheckerView())
-                        
                         AnalyticsLogger.shared.logEvent(name: "updateChecker", parameters: ["date": Date(), "status": "OLD", "currentVersion": currentVersionString, "newestVersion": appStoreVersion, "logVersion": 1])
                     }
                 } else if currentVersionComponents.lexicographicallyPrecedes(appStoreVersionComponents, by: >) {

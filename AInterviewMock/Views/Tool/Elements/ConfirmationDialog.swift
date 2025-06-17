@@ -27,7 +27,6 @@ struct ConfirmationDialog: View {
                     Spacer()
                     Button {
                         onCancel()
-                        ViewManager.shared.clearTopView()
                     } label: {
                         Text(NSLocalizedString("ConfirmationDialog_Cancel", comment: "Cancel"))
                             .padding(10)
@@ -37,7 +36,6 @@ struct ConfirmationDialog: View {
                     }
                     Button {
                         onConfirm()
-                        ViewManager.shared.clearTopView()
                     } label: {
                         Text(NSLocalizedString("ConfirmationDialog_Confirm", comment: "Confirm"))
                             .padding(10)
@@ -59,7 +57,6 @@ struct ConfirmationDialog: View {
 
 #Preview {
     ZStack{
-        HomeEntryView()
         ConfirmationDialog(title: "Are you sure?", message: "That cannot be undone!", onConfirm: {}, onCancel: {})
     }
 }

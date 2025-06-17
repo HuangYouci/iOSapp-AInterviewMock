@@ -34,7 +34,7 @@ struct InterviewAnalysisView: View {
                         .foregroundStyle(Color(.accent))
                     Spacer()
                     Button {
-                        ViewManager.shared.backHomePage()
+                        // ViewManager.shared.backHomePage()
                     } label: {
                         Image(systemName: "xmark")
                             .resizable()
@@ -200,7 +200,7 @@ struct InterviewAnalysisView: View {
                                             var reuse = selected
                                             reuse.id = UUID()
                                             reuse.date = Date()
-                                            ViewManager.shared.addPage(view: InterviewView(interviewProfile: reuse))
+                                            // ViewManager.shared.addPage(view: InterviewView(interviewProfile: reuse))
                                         } label: {
                                             VStack(alignment: .leading){
                                                 HStack{
@@ -225,7 +225,7 @@ struct InterviewAnalysisView: View {
                                         }
                                     } else {
                                         Button {
-                                            ViewManager.shared.addPage(view: InterviewView(interviewProfile: selected))
+                                            // ViewManager.shared.addPage(view: InterviewView(interviewProfile: selected))
                                         } label: {
                                             VStack(alignment: .leading){
                                                 HStack{
@@ -250,17 +250,17 @@ struct InterviewAnalysisView: View {
                                         }
                                     }
                                     Button {
-                                        ViewManager.shared.setTopView(view:
-                                            ConfirmationDialog(
-                                                title: NSLocalizedString("SpeechAnalysisView_deleteInterviewProfileSectionTitle", comment: "Section title of delete this speech profile"),
-                                                message: NSLocalizedString("SpeechAnalysisView_deleteInterviewProfileSectionDescription", comment: "Section description of delete this speech profile"),
-                                                onConfirm: {
-                                                    ViewManager.shared.perviousPage()
-                                                    DataManager.shared.deleteInterviewProfile(withId: selected.id.uuidString)
-                                                },
-                                                onCancel: {}
-                                            )
-                                        )
+//                                        ViewManager.shared.setTopView(view:
+//                                            ConfirmationDialog(
+//                                                title: NSLocalizedString("SpeechAnalysisView_deleteInterviewProfileSectionTitle", comment: "Section title of delete this speech profile"),
+//                                                message: NSLocalizedString("SpeechAnalysisView_deleteInterviewProfileSectionDescription", comment: "Section description of delete this speech profile"),
+//                                                onConfirm: {
+//                                                    ViewManager.shared.perviousPage()
+//                                                    DataManager.shared.deleteInterviewProfile(withId: selected.id.uuidString)
+//                                                },
+//                                                onCancel: {}
+//                                            )
+//                                        )
                                     } label: {
                                         VStack(alignment: .leading){
                                             HStack{

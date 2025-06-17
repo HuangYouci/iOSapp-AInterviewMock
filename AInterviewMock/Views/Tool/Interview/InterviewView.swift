@@ -253,14 +253,15 @@ struct InterviewView: View {
         switch (session){
         case 1:
             interviewProfile = nil
-            ViewManager.shared.perviousPage()
+//            ViewManager.shared.perviousPage()
         case 5:
             DataManager.shared.saveInterviewProfileDocuments(interviewProfile: &interviewProfile!)
             DataManager.shared.saveInterviewProfileJSON(interviewProfile!)
-            ViewManager.shared.perviousPage()
+//            ViewManager.shared.perviousPage()
         case 6:
+            break
             // 需要做 Confirmation
-            ViewManager.shared.perviousPage()
+//            ViewManager.shared.perviousPage()
         default:
             sessionIsForward = false
             DispatchQueue.main.async {

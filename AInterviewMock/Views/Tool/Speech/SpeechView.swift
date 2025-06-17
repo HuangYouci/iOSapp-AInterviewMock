@@ -250,14 +250,15 @@ struct SpeechView: View {
         switch (session){
         case 1:
             target = nil
-            ViewManager.shared.perviousPage()
+//            ViewManager.shared.perviousPage()
         case 5:
             DataManager.shared.saveSpeechProfileDocuments(speechProfile: &target!)
             DataManager.shared.saveSpeechProfileJSON(target!)
-            ViewManager.shared.perviousPage()
+//            ViewManager.shared.perviousPage()
         case 6:
+            print("NO")
             // 需要做 Confirmation
-            ViewManager.shared.perviousPage()
+//            ViewManager.shared.perviousPage()
         default:
             sessionIsForward = false
             DispatchQueue.main.async {

@@ -246,8 +246,8 @@ struct SpeechStartView: View {
                             selected! = temp
                             DataManager.shared.saveSpeechProfileJSON(selected!)
                             
-                            ViewManager.shared.backHomePage()
-                            ViewManager.shared.addPage(view: SpeechAnalysisView(selected: .constant(selected!)))
+//                            ViewManager.shared.backHomePage()
+//                            ViewManager.shared.addPage(view: SpeechAnalysisView(selected: .constant(selected!)))
                             
                             CoinManager.shared.addCoin(-selected!.cost)
                         }

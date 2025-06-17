@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "zh-Hant",
   "strings" : {
+    "#%lld" : {
+
+    },
     "%lld" : {
       "localizations" : {
         "en" : {
@@ -512,6 +515,7 @@
     },
     "HomeEntryView_startMockInterviewButton" : {
       "comment" : "Button text to start a mock interview",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -529,6 +533,7 @@
     },
     "HomeEntryView_startMockSpeechButton" : {
       "comment" : "Button text to start a mock speech",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -546,6 +551,7 @@
     },
     "HomeView_appTitle" : {
       "comment" : "The main title of the application",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -562,6 +568,9 @@
       }
     },
     "inif" : {
+
+    },
+    "inifid" : {
 
     },
     "InterviewAnalysisView_deleteRecordSublabel" : {
@@ -2619,9 +2628,6 @@
           }
         }
       }
-    },
-    "Log out" : {
-
     },
     "SpeechAnalysisView_deleteInterviewProfileSectionDescription" : {
       "comment" : "Section description of delete this speech profile",
@@ -4918,6 +4924,12 @@
         }
       }
     },
+    "代幣" : {
+
+    },
+    "你確定要刪除帳號？這將會刪除你帳號中的所有資訊（未上傳伺服器之本機資料仍會存留，您可透過刪除 app 來手動移除）。此操作不可逆！觀看廣告或是付費購買的代幣將會清空，且無法退款。" : {
+
+    },
     "使用 Apple 登入" : {
 
     },
@@ -4930,13 +4942,49 @@
     "使用條款" : {
 
     },
+    "刪除帳號" : {
+
+    },
+    "功能" : {
+
+    },
+    "帳號創建日期" : {
+
+    },
+    "按下本按鈕後將會登出帳號並立刻進行刪除作業。" : {
+
+    },
+    "操作" : {
+
+    },
+    "模擬演講" : {
+
+    },
+    "模擬面試" : {
+
+    },
     "登入" : {
 
     },
     "登入表示您同意 inif 的" : {
 
     },
+    "登出" : {
+
+    },
+    "確認刪除帳號" : {
+
+    },
     "與" : {
+
+    },
+    "請再等候 %lld 秒方可刪除。" : {
+
+    },
+    "資訊" : {
+
+    },
+    "這將解除登入之 Apple 或 Google 帳號對本程式伺服器帳號的綁定。您仍可透過相同帳號進行重註冊。" : {
 
     },
     "錯誤" : {

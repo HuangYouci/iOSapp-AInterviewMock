@@ -218,8 +218,8 @@ struct InterviewStartView: View {
                             
                             CoinManager.shared.addCoin(-selected!.cost)
                             
-                            ViewManager.shared.backHomePage()
-                            ViewManager.shared.addPage(view: InterviewAnalysisView(selected: .constant(selected!)))
+//                            ViewManager.shared.backHomePage()
+//                            ViewManager.shared.addPage(view: InterviewAnalysisView(selected: .constant(selected!)))
                         }
                     }
                 }

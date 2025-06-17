@@ -34,7 +34,7 @@ struct SpeechAnalysisView: View {
                         .foregroundStyle(Color(.accent))
                     Spacer()
                     Button {
-                        ViewManager.shared.backHomePage()
+                        ViewManager.shared.homePage()
                     } label: {
                         Image(systemName: "xmark")
                             .resizable()
@@ -205,7 +205,7 @@ struct SpeechAnalysisView: View {
                                             var reuse = selected
                                             reuse.id = UUID()
                                             reuse.date = Date()
-                                            ViewManager.shared.addPage(view: SpeechView(SpeechProfile: reuse))
+//                                            ViewManager.shared.addPage(view: SpeechView(SpeechProfile: reuse))
                                         } label: {
                                             VStack(alignment: .leading){
                                                 HStack{
@@ -230,7 +230,7 @@ struct SpeechAnalysisView: View {
                                         }
                                     } else {
                                         Button {
-                                            ViewManager.shared.addPage(view: SpeechView(SpeechProfile: selected))
+//                                            ViewManager.shared.addPage(view: SpeechView(SpeechProfile: selected))
                                         } label: {
                                             VStack(alignment: .leading){
                                                 HStack{
@@ -255,17 +255,17 @@ struct SpeechAnalysisView: View {
                                         }
                                     }
                                     Button {
-                                        ViewManager.shared.setTopView(view:
-                                            ConfirmationDialog(
-                                                title: NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionTitle", comment: "Section title of delete this speech profile"),
-                                                message: NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionDescription", comment: "Section description of delete this speech profile"),
-                                                onConfirm: {
-                                                    ViewManager.shared.perviousPage()
-                                                    DataManager.shared.deleteSpeechProfile(withId: selected.id.uuidString)
-                                                },
-                                                onCancel: {}
-                                            )
-                                        )
+//                                        ViewManager.shared.setTopView(view:
+//                                            ConfirmationDialog(
+//                                                title: NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionTitle", comment: "Section title of delete this speech profile"),
+//                                                message: NSLocalizedString("SpeechAnalysisView_deleteSpeechProfileSectionDescription", comment: "Section description of delete this speech profile"),
+//                                                onConfirm: {
+//                                                    ViewManager.shared.perviousPage()
+//                                                    DataManager.shared.deleteSpeechProfile(withId: selected.id.uuidString)
+//                                                },
+//                                                onCancel: {}
+//                                            )
+//                                        )
                                     } label: {
                                         VStack(alignment: .leading){
                                             HStack{

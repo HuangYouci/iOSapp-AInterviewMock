@@ -13,7 +13,7 @@ import CryptoKit
 struct AuthView: View {
     
     @EnvironmentObject var authManager: AuthManager
-    
+
     @State private var appleSignInNonce: String?
 
     var body: some View {
@@ -124,7 +124,9 @@ struct AuthView: View {
                 .disabled(authManager.isLoading)
             }
             .background(Color.accentColor)
-            Color.clear.frame(height: 1)
+            Color("Background")
+                .frame(height: 1)
+                .ignoresSafeArea(edges: [.bottom])
         }
         .background(Color("Background"))
     }
@@ -245,7 +247,9 @@ struct AuthView: View {
             .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
         }
         .background(Color.accentColor)
-        Color.clear.frame(height: 1)
+        Color("Background")
+            .frame(height: 1)
+            .ignoresSafeArea(edges: [.bottom])
     }
     .background(Color("Background"))
 }

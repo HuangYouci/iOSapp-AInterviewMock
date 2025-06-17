@@ -132,18 +132,29 @@ class AuthManager : NSObject, ObservableObject {
             }
             print("AuthManager | AuthStateListener | 監聽到 Firebase Auth 狀態變化。Firebase User UID: \(firebaseUser?.uid ?? "未登入")")
             
-            // 確保 UI 更新在主線程執行。雖然 Firebase 通常在此處調用主線程，但明確指定是更安全的做法。
             DispatchQueue.main.async {
                 let wasUserLoggedIn = self.user != nil
                 let isUserLoggedInNow = firebaseUser != nil
                 
+                // 先更新 user 狀態
                 self.user = firebaseUser
                 
-                // 狀態從登入變為登出
+                // 情況一：狀態從「登入」變為「登出」
                 if wasUserLoggedIn && !isUserLoggedInNow {
                     print("AuthManager | AuthStateListener | 用戶已登出。清除本地用戶 Profile。")
                     self.userProfileService.clearLocalUserProfile()
                     self.isLoading = false // 確保登出後結束加載狀態
+                }
+                // 情況二：狀態從「登出」變為「登入」(包括首次和自動登入)
+                else if !wasUserLoggedIn && isUserLoggedInNow, let userToProcess = firebaseUser {
+                    print("AuthManager | AuthStateListener | 用戶已登入。將觸發 Profile 處理流程。")
+                    // 這是關鍵！觸發與手動登入相同的 Profile 處理流程。
+                    // 由於 handleUserSignedIn 是 async，我們需要用 Task 來呼叫。
+                    Task {
+                        // 對於自動登入的現有用戶，我們沒有 initialDisplayName，傳入 nil 即可，
+                        // 因為 checkAndCreateUserProfile 會找到現有的 Profile。
+                        await self.handleUserSignedIn(user: userToProcess, initialDisplayName: nil)
+                    }
                 }
             }
         }
@@ -383,11 +394,6 @@ class AuthManager : NSObject, ObservableObject {
             }
             
             print("AuthManager | signInToFirebase | Firebase Auth 成功! User UID: \(user.uid)。準備處理用戶 Profile。")
-            // 登入成功，authStateDidChangeListener 會更新 self.user，
-            // 接著我們手動觸發 Profile 的檢查和創建。
-            Task {
-                await self.handleUserSignedIn(user: user, initialDisplayName: initialDisplayName)
-            }
         }
     }
 
@@ -468,6 +474,41 @@ class AuthManager : NSObject, ObservableObject {
             }
         }
     }
+    
+    // MARK: - 刪除方法
+    
+    /// 要透過這個刪除帳號。
+    func coordinateAccountDeletion(completion: @escaping (AuthManagerErrorType?) -> Void) {
+        print("AuthManager | coordinateAccountDeletion | 開始協調帳號刪除流程。")
+        
+        // 1. 呼叫 UserProfileService 執行後端刪除
+        userProfileService.deleteUserAccount { [weak self] (success, profileError) in
+            guard let self = self else { return }
+
+            if success {
+                // 2. 後端刪除成功，執行前端登出清理
+                print("AuthManager | coordinateAccountDeletion | 後端刪除成功，執行本地登出。")
+                self.signOut()
+                completion(nil)
+            } else {
+                // 3. 後端刪除失敗，將錯誤傳遞出去
+                print("AuthManager | coordinateAccountDeletion | 後端刪除失敗。")
+                let authError: AuthManagerErrorType
+                if let profileError = profileError {
+                    // 將 UserProfileServiceError 包裝成 AuthManagerErrorType
+                    authError = .userProfileOperationFailed(profileError: profileError)
+                } else {
+                    authError = .unexpectedInternalError(underlyingError: nil)
+                }
+                
+                DispatchQueue.main.async {
+                    self.errorMessage = authError
+                }
+                completion(authError)
+            }
+        }
+    }
+    
 }
 
 extension AuthManager: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {

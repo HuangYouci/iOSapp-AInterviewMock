@@ -168,3 +168,54 @@ export const updateUserLastLoginDate = onCall(
         "Failed to update last login date.", error.message);
     }
   });
+
+// 4. Cloud Function: 刪除帳號
+export const deleteUserAccount = onCall(
+  {region: "asia-east1"},
+  async (request) => {
+    // 步驟 1: 驗證使用者是否已登入。
+    if (!request.auth) {
+      // 如果未登入就嘗試呼叫，則拋出錯誤。
+      throw new HttpsError("unauthenticated",
+        "You must be logged in to delete your account.");
+    }
+
+    const uid = request.auth.uid;
+    logger.info(`Account deletion process started for UID: ${uid}.`);
+
+    const userProfileRef = db.collection("users").doc(uid);
+
+    try {
+      // 步驟 2: 刪除 Firebase Authentication 中的使用者紀錄。
+      // 我們先刪除 Auth 紀錄，因為這是用戶的「身份」。
+      // 如果這步失敗，後續操作就不應進行。
+      // 如果這步成功，用戶就再也無法登入了。
+      await admin.auth().deleteUser(uid);
+      logger.info(`Successfully deleted Firebase Auth user for UID: ${uid}.`);
+
+      // 步驟 3: 刪除 Firestore 中的使用者 Profile 文件。
+      // 即使這一步失敗，用戶也已經無法登入，資料變成了「孤兒資料」，
+      // 這比資料被刪除但用戶還能登入的狀況要安全。
+      await userProfileRef.delete();
+      logger.info(`Successfully deleted Firestore profile for UID: ${uid}.`);
+
+      // 步驟 4: 返回成功訊息給客戶端。
+      return {
+        success: true,
+        message: "Your account and all associated data have been deleted.",
+      };
+    } catch (error: any) {
+      // 步驟 5: 處理錯誤。
+      logger.error(`Failed to delete account for UID: ${uid}. Error:`, error);
+      // 如果錯誤是已知的 HttpsError，直接拋出。
+      if (error instanceof HttpsError) {
+        throw error;
+      }
+      // 將其他類型的錯誤包裝成 HttpsError 再拋出，方便客戶端處理。
+      // 例如，如果 deleteUser 找不到用戶，會拋出 auth/user-not-found 錯誤。
+      throw new HttpsError("internal",
+        "An error occurred while deleting your account.",
+        error.message);
+    }
+  }
+);

@@ -46,6 +46,10 @@ enum UserProfileServiceError: Error, Identifiable, LocalizedError {
     /// 用於表示一些未被上述 case 覆蓋的通用錯誤。
     /// - Parameter message: 描述錯誤的字符串。
     case generalError(message: String)
+    
+    /// 刪除帳號失敗
+    /// - Parameter underlyingError: 導致事務失敗的原始 `Error` 對象。
+    case accountDeletionFailed(underlyingError: Error)
 
     // MARK: Identifiable Conformance
     /// 為 SwiftUI 的 `Alert(item: ...)` 提供一個穩定的 ID。
@@ -74,6 +78,8 @@ enum UserProfileServiceError: Error, Identifiable, LocalizedError {
             return "無法完成您的用戶資料創建: \(error.localizedDescription)"
         case .unexpectedTransactionResult:
             return "處理您的請求時發生了未預期的情況。"
+        case .accountDeletionFailed(let error):
+            return "刪除帳號時發生錯誤：\(error.localizedDescription)"
         case .generalError(let message):
             return message
         }
@@ -282,6 +288,7 @@ class UserProfileService: ObservableObject {
     
     // MARK: - Profile 更新 (Profile Updates)
 
+    /// 修改上次登入日期
     func callCloudFunctionToUpdateUserLastLoginDate(uid: String, completion: ((UserProfileServiceError?) -> Void)? = nil) {
             guard !uid.isEmpty else {
                 print("UserProfileService | 更新最後登入時間錯誤：UID 為空。")
@@ -305,11 +312,7 @@ class UserProfileService: ObservableObject {
             }
         }
     
-    /// 修改金錢（透過 Clodu Function）
-    /// - Parameters:
-    ///   - uid: 要更新的用戶的 Firebase Auth UID。
-    ///   - amount: 金幣的變動量（正數為增加，負數為減少）。
-    ///   - completion: 操作完成後的回調，如果發生錯誤則包含錯誤。
+    /// 修改硬幣
     func callCloudFunctionToUpdateUserCoins(uid: String, amount: Int, completion: @escaping (UserProfileServiceError?) -> Void) { // <-- 參數名為 amount
         guard !uid.isEmpty else {
             print("UserProfileService | 更新金幣錯誤：UID 為空。")
@@ -353,6 +356,47 @@ class UserProfileService: ObservableObject {
                 print("UserProfileService | Cloud Function updateUserCoins 返回數據格式不正確或為 nil。")
                 completion(.unexpectedTransactionResult)
             }
+        }
+    }
+    
+    /// 刪除帳號
+    /// 此方法只負責呼叫後端，成功後，登出等清理操作應由 AuthManager 觸發。
+    /// - Parameter completion: 操作完成後的回調。成功時返回 true，失敗時返回 false 和錯誤。
+    func deleteUserAccount(completion: @escaping (Bool, UserProfileServiceError?) -> Void) {
+        print("UserProfileService | 呼叫 Cloud Function 'deleteUserAccount'...")
+        
+        DispatchQueue.main.async {
+            self.isLoading = true
+            self.serviceError = nil
+        }
+        
+        functions.httpsCallable("deleteUserAccount").call { [weak self] result, error in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
+
+            if let callableError = error {
+                // 後端返回錯誤
+                print("UserProfileService | Cloud Function 'deleteUserAccount' 呼叫失敗: \(callableError.localizedDescription)")
+                
+                // 將後端錯誤包裝成我們自己的錯誤類型
+                let deletionError = UserProfileServiceError.accountDeletionFailed(underlyingError: callableError)
+                
+                DispatchQueue.main.async {
+                    self.serviceError = deletionError
+                }
+                
+                // 回傳失敗
+                completion(false, deletionError)
+                return
+            }
+            
+            // 後端成功執行
+            print("UserProfileService | Cloud Function 'deleteUserAccount' 成功返回。")
+            // 回傳成功
+            completion(true, nil)
         }
     }
     
