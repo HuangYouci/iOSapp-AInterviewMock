@@ -414,19 +414,18 @@ class AuthManager : NSObject, ObservableObject {
             let _ = try await user.getIDToken()
             print("AuthManager | handleUserSignedIn | 步驟 1/3: Firebase ID Token 已驗證。")
 
-            // 步驟 2: 調用 UserProfileService 檢查或創建 Profile。
-            // 使用 withCheckedThrowingContinuation 將閉包 API 轉換為 async/await 風格。
-            print("AuthManager | handleUserSignedIn | 步驟 2/3: 調用 UserProfileService 檢查/創建 Profile...")
+            // 步驟 2: 建立監聽器
+            print("AuthManager | handleUserSignedIn | 步驟 2/3: 建立用戶 Profile 的實時監聽器。")
+                    userProfileService.listenForUserProfileChanges(uid: user.uid)
+                    
+            // 步驟 3: 然後才檢查或創建 Profile
+            print("AuthManager | handleUserSignedIn | 步驟 3/3: 調用 UserProfileService 檢查/創建 Profile...")
             let profile = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<UserProfile, Error>) in
                 userProfileService.checkAndCreateUserProfile(for: user, initialDisplayName: initialDisplayName) { result in
                     continuation.resume(with: result)
                 }
             }
             print("AuthManager | handleUserSignedIn | UserProfileService 成功返回 Profile。UserID: \(profile.userId)。")
-            
-            // 步驟 3: 為 Profile 建立實時監聽器
-            print("AuthManager | handleUserSignedIn | 步驟 3/3: 建立用戶 Profile 的實時監聽器。")
-            userProfileService.listenForUserProfileChanges(uid: user.uid)
             
             print("AuthManager | handleUserSignedIn | 登入及 Profile 處理流程全部成功完成。")
             

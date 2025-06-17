@@ -102,6 +102,7 @@ struct ProfileView: View {
                             VStack{
                                 Button {
                                     am.signOut()
+                                    vm.homePage()
                                 } label: {
                                     HStack{
                                         Text("登出")

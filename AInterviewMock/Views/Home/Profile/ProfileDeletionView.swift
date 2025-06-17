@@ -82,6 +82,8 @@ struct ProfileDeletionView: View {
                                     am.coordinateAccountDeletion { error in
                                         if let error = error {
                                             deletedFailed = error.errorDescription
+                                        } else {
+                                            vm.homePage()
                                         }
                                     }
                                 } label: {
