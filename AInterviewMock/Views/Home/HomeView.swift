@@ -14,44 +14,44 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 0){
+            
+            HStack{
+                Text("inif")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                Spacer()
+                Button {
+                    vm.addPage(.appinfo)
+                } label: {
+                    Image(systemName: "info.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color("AccentBackgroundP1"))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+                Button {
+                    vm.addPage(.profile)
+                } label: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 20, height: 20)
+                        .padding(8)
+                        .background(Color("AccentBackgroundP1"))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+            }
+            .foregroundStyle(Color(.white))
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+            .padding(.bottom, 5)
+            
             ScrollView{
                 VStack(alignment: .leading){
-                    HStack{
-                        Text("inif")
-                            .font(.largeTitle)
-                            .fontWeight(.heavy)
-                        Spacer()
-                        Image(systemName: "info.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .padding(8)
-                            .background(Color("AccentColorP1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                        Button {
-                            vm.addPage(.profile)
-                        } label: {
-                            Image(systemName: "person.circle")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-                                .padding(8)
-                                .background(Color("AccentColorP1"))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                        }
-                    }
-                    .foregroundStyle(Color(.white))
-                    .padding(.horizontal)
-                    .padding(.vertical, 5)
                     
                     VStack(alignment: .leading){
-                        HStack{
-                            Text("功能")
-                                .font(.title2)
-                                .bold()
-                                .foregroundStyle(Color("AccentColorP1"))
-                            Spacer()
-                        }
                         HStack{
                             Button {
                                 // vm.addPage(view: InterviewView())
@@ -136,6 +136,30 @@ struct HomeView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
+                        HStack{
+                            Button {
+                                vm.addPage(.shop)
+                            } label: {
+                                VStack(alignment: .leading){
+                                    Text("代幣")
+                                        .font(.title)
+                                        .bold()
+                                        .foregroundStyle(Color(.white))
+                                    HStack{
+                                        Spacer()
+                                    }
+                                }
+                                .padding()
+                                .background(
+                                    Image("HomeEntryView_speechIllu")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 400, height: 200)
+                                        .offset(x: 50)
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                        }
                     }
                     .padding(25)
                     .frame(maxWidth: .infinity)
@@ -145,10 +169,11 @@ struct HomeView: View {
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
             .fixedSize(horizontal: false, vertical: true)
+            
             Color("Background")
                 .ignoresSafeArea(edges: [.bottom])
         }
-        .background(Color.accentColor)
+        .background(Color("AccentBackground"))
     }
     
 }

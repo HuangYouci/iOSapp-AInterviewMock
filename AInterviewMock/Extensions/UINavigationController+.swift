@@ -10,6 +10,7 @@ import UIKit
 // 自訂 NavigationStack 保留返回手勢
 
 extension UINavigationController: @retroactive UIGestureRecognizerDelegate {
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         interactivePopGestureRecognizer?.delegate = self

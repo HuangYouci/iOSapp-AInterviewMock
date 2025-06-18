@@ -20,6 +20,12 @@
         }
       }
     },
+    "100 代幣" : {
+
+    },
+    "300 代幣" : {
+
+    },
     "CoinManagerView_coinBalance" : {
       "comment" : "Show coins balance",
       "localizations" : {
@@ -4841,6 +4847,7 @@
     },
     "UpdateCheckerView_currentVersionLabel" : {
       "comment" : "Label for current app version",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4858,6 +4865,7 @@
     },
     "UpdateCheckerView_latestVersionLabel" : {
       "comment" : "Label for latest app version available",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4875,6 +4883,7 @@
     },
     "UpdateCheckerView_updateAppMessage" : {
       "comment" : "Message instructing user to update from App Store",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4892,6 +4901,7 @@
     },
     "UpdateCheckerView_updateAppTitle" : {
       "comment" : "Title for the force update screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4909,6 +4919,7 @@
     },
     "UpdateCheckerView_updateNotesLabel" : {
       "comment" : "Label for what's new/release notes section",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4924,10 +4935,19 @@
         }
       }
     },
+    "YC" : {
+
+    },
+    "ycdev@icloud.com" : {
+
+    },
+    "一次性獲得代幣" : {
+
+    },
     "代幣" : {
 
     },
-    "你確定要刪除帳號？這將會刪除你帳號中的所有資訊（未上傳伺服器之本機資料仍會存留，您可透過刪除 app 來手動移除）。此操作不可逆！觀看廣告或是付費購買的代幣將會清空，且無法退款。" : {
+    "你確定要刪除帳號？這將會刪除你帳號中的所有資訊，且觀看廣告或是付費購買的代幣將會清空，無法退款。此操作不可逆，按下確認刪除帳號按鈕後會立刻刪除！" : {
 
     },
     "使用 Apple 登入" : {
@@ -4942,25 +4962,52 @@
     "使用條款" : {
 
     },
+    "刪除" : {
+
+    },
+    "刪除 - 請再等候 %lld 秒" : {
+
+    },
     "刪除帳號" : {
 
     },
-    "功能" : {
+    "在一段期間內可觀看一定次數" : {
+
+    },
+    "尚未準備" : {
 
     },
     "帳號創建日期" : {
 
     },
-    "按下本按鈕後將會登出帳號並立刻進行刪除作業。" : {
+    "帳號操作" : {
 
     },
-    "操作" : {
+    "帳號資訊" : {
+
+    },
+    "條款與政策" : {
 
     },
     "模擬演講" : {
 
     },
     "模擬面試" : {
+
+    },
+    "檢測到版本更新！" : {
+
+    },
+    "測試版" : {
+
+    },
+    "準備刪除的帳號" : {
+
+    },
+    "版本" : {
+
+    },
+    "獲得代幣" : {
 
     },
     "登入" : {
@@ -4972,22 +5019,56 @@
     "登出" : {
 
     },
+    "目前程式版本是 %@，最新版本為 %@" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "目前程式版本是 %1$@，最新版本為 %2$@"
+          }
+        }
+      }
+    },
     "確認刪除帳號" : {
+
+    },
+    "程式資訊" : {
+
+    },
+    "聯絡信箱" : {
+
+    },
+    "至 App Store 更新" : {
 
     },
     "與" : {
 
     },
-    "請再等候 %lld 秒方可刪除。" : {
+    "觀看" : {
 
     },
-    "資訊" : {
+    "觀看廣告" : {
+
+    },
+    "資料檢查" : {
+
+    },
+    "購買代幣" : {
+
+    },
+    "輕鬆獲得代幣" : {
 
     },
     "這將解除登入之 Apple 或 Google 帳號對本程式伺服器帳號的綁定。您仍可透過相同帳號進行重註冊。" : {
 
     },
     "錯誤" : {
+
+    },
+    "開發者" : {
+
+    },
+    "開發者資訊" : {
 
     },
     "隱私政策" : {

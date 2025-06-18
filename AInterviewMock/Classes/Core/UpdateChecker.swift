@@ -9,15 +9,20 @@ import Foundation
 
 class UpdateChecker: ObservableObject {
     
+    enum UpdateCheckerStatus {
+        case higher  // Beta
+        case same    // Stable
+        case lower   // Old
+    }
+    
     static let shared = UpdateChecker()
     
-    @Published var haveUpdate: Bool = false     // 低於 app store 版本
-    @Published var isTestVersion: Bool = false  // 高於 app store 版本
+    @Published var status: UpdateCheckerStatus = .same
     @Published var newestVersion: String = ""   // app store 版本
-    @Published var thisVersion: String = ""     // 本版本
+    @Published var thisVersion: String = ""     // 現在運行的版本
     @Published var whatsNew: String = ""        // app store 更新信息
     
-    private init(){
+    init(){
         checkAppStoreVersion()
     }
     
@@ -93,11 +98,8 @@ class UpdateChecker: ObservableObject {
                     DispatchQueue.main.async {
                         print("UpdateChecker | Update available! New version: \(appStoreVersion), Release Notes: \(releaseNotes)")
                         self.whatsNew = releaseNotes
-                        self.newestVersion = appStoreVersion
-                        self.thisVersion = currentVersionString
-                        self.haveUpdate = true
+                        self.status = .lower
                         
-                        AnalyticsLogger.shared.logEvent(name: "updateChecker", parameters: ["date": Date(), "status": "OLD", "currentVersion": currentVersionString, "newestVersion": appStoreVersion, "logVersion": 1])
                     }
                 } else if currentVersionComponents.lexicographicallyPrecedes(appStoreVersionComponents, by: >) {
                     
@@ -105,17 +107,23 @@ class UpdateChecker: ObservableObject {
                     
                     DispatchQueue.main.async {
                         print("UpdateChecker | You are running test version! App Store version: \(appStoreVersion), Your Version: \(currentVersionString)")
-                        self.isTestVersion = true
+                        self.status = .higher
                         
-                        AnalyticsLogger.shared.logEvent(name: "updateChecker", parameters: ["date": Date(), "status": "TEST", "currentVersion": currentVersionString, "newestVersion": appStoreVersion, "logVersion": 1])
                     }
                 } else {
                     
                     // 版本等於商店版本：正式版
                     
                     print("UpdateChecker | App is up to date. Current: \(currentVersionString), AppStore: \(appStoreVersion)")
-                    
-                    AnalyticsLogger.shared.logEvent(name: "updateChecker", parameters: ["date": Date(), "status": "NEWEST", "currentVersion": currentVersionString, "newestVersion": appStoreVersion, "logVersion": 1])
+                    self.status = .same
+                }
+                
+                DispatchQueue.main.async {
+                    self.thisVersion = currentVersionString
+                    self.newestVersion = appStoreVersion
+                    if self.status == .lower {
+                        self.whatsNew = releaseNotes
+                    }
                 }
                 
             } catch {
@@ -124,79 +132,5 @@ class UpdateChecker: ObservableObject {
         }
         task.resume()
     }
-}
-
-import SwiftUI
-
-struct UpdateCheckerView: View {
     
-    @ObservedObject var uc: UpdateChecker = UpdateChecker.shared
-    
-    var body: some View {
-        VStack {
-            Spacer()
-            Link(destination: URL(string: "https://apps.apple.com/tw/app/id6745684106")!){
-                VStack(alignment: .leading){
-                    HStack{
-                        Text(NSLocalizedString("UpdateCheckerView_updateAppTitle", comment: "Title for the force update screen"))
-                            .font(.title)
-                            .bold()
-                        Spacer()
-                        Image(systemName: "arrow.up.right.square")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 20, height: 20)
-                            .foregroundStyle(Color(.systemGray))
-                    }
-                    Text(NSLocalizedString("UpdateCheckerView_updateAppMessage", comment: "Message instructing user to update from App Store"))
-                        .multilineTextAlignment(.leading)
-                    Color.clear
-                        .frame(height: 10)
-                    HStack{
-                        VStack(alignment: .leading){
-                            Text(NSLocalizedString("UpdateCheckerView_currentVersionLabel", comment: "Label for current app version"))
-                            Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
-                                .font(.title3)
-                        }
-                        VStack(alignment: .leading){
-                            Text(NSLocalizedString("UpdateCheckerView_latestVersionLabel", comment: "Label for latest app version available"))
-                            Text(uc.newestVersion)
-                                .font(.title3)
-                        }
-                    }
-                    Color.clear
-                        .frame(height: 10)
-                    Text(NSLocalizedString("UpdateCheckerView_updateNotesLabel", comment: "Label for what's new/release notes section"))
-                    ScrollView {
-                        VStack(alignment: .leading){
-                            Text(uc.whatsNew)
-                                .multilineTextAlignment(.leading)
-                        }
-                    }
-                    .frame(maxHeight: 100)
-                    .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-                }
-                .foregroundStyle(Color(.white))
-                .padding()
-                .background(Color(.black).opacity(0.3))
-                .background(.ultraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(radius: 5)
-                .padding(.horizontal)
-            }
-            Spacer()
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            Image("UpdateCheckerView_illu")
-                .resizable()
-                .scaledToFill()
-        )
-        .ignoresSafeArea()
-    }
-}
-
-#Preview {
-    UpdateCheckerView()
 }

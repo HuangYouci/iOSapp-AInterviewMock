@@ -14,6 +14,8 @@ class ViewManager: ObservableObject {
     enum ViewManagerRoute: Hashable {
         case profile
         case profileDeletion
+        case appinfo
+        case shop
     }
     
     // 主要元件

@@ -52,7 +52,7 @@ struct LoadView: View {
             .padding(.horizontal)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .foregroundStyle(Color(.white))
-            .background(Color.accentColor)
+            .background(Color("AccentBackground"))
             
             VStack(spacing: 0){
                 HStack{
@@ -64,7 +64,7 @@ struct LoadView: View {
                             .scaledToFit()
                             .frame(width: 20, height: 20)
                             .padding(8)
-                            .background(Color("AccentColorP1"))
+                            .background(Color("AccentBackgroundP1"))
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                     .frame(width: loadedTimeSec > 10 ? 36 : 0) // 20 + padding(8)
@@ -107,4 +107,5 @@ struct LoadView: View {
 
 #Preview {
     LoadView()
+        .environmentObject(ViewManager())
 }

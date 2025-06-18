@@ -13,6 +13,7 @@ struct ContentView: View {
     @EnvironmentObject var am: AuthManager
     @EnvironmentObject var vm: ViewManager
     @EnvironmentObject var co: CoinManager
+    @EnvironmentObject var uc: UpdateChecker
     
     var body: some View {
         ZStack{
@@ -25,6 +26,10 @@ struct ContentView: View {
                             ProfileView()
                         case .profileDeletion:
                             ProfileDeletionView()
+                        case .appinfo:
+                            InfoView()
+                        case .shop:
+                            ShopView()
                         }
                     }
             }
@@ -35,8 +40,8 @@ struct ContentView: View {
                 CoinManagerView(amountChanged: co.lastCoinChange, finalAmount: co.coins)
             }
             // UPDATE
-            if (UpdateChecker.shared.haveUpdate){
-                UpdateCheckerView()
+            if ((uc.status == .lower)){
+                UpdateInfoView()
             }
             // AUTH
             if ((am.user == nil)){

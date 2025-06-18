@@ -123,7 +123,7 @@ struct AuthView: View {
                 .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
                 .disabled(authManager.isLoading)
             }
-            .background(Color.accentColor)
+            .background(Color("AccentBackground"))
             Color("Background")
                 .frame(height: 1)
                 .ignoresSafeArea(edges: [.bottom])

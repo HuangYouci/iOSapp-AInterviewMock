@@ -17,29 +17,30 @@ struct ProfileView: View {
     var body: some View {
         VStack(spacing: 0){
             if let up = ups.currentUserProfile {
+                HStack{
+                    Button{
+                        vm.perviousPage()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .padding(8)
+                            .background(Color("AccentBackgroundP1"))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                    Text("inif")
+                        .font(.largeTitle)
+                        .fontWeight(.heavy)
+                    Spacer()
+                }
+                .foregroundStyle(Color(.white))
+                .padding(.horizontal)
+                .padding(.vertical, 5)
+                .padding(.bottom, 5)
+                
                 ScrollView{
                     VStack(alignment: .leading){
-                        HStack{
-                            Button{
-                                vm.perviousPage()
-                            } label: {
-                                Image(systemName: "chevron.left")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                                    .padding(8)
-                                    .background(Color("AccentColorP1"))
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                            Text("inif")
-                                .font(.largeTitle)
-                                .fontWeight(.heavy)
-                            Spacer()
-                        }
-                        .foregroundStyle(Color(.white))
-                        .padding(.horizontal)
-                        .padding(.vertical, 5)
-                        
                         VStack {
                             Text(up.userName ?? "inif")
                                 .font(.title)
@@ -55,7 +56,7 @@ struct ProfileView: View {
                                 Text("#\(up.userId)")
                             }
                             .padding(8)
-                            .background(Color("AccentColorP1"))
+                            .background(Color("AccentBackgroundP1"))
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                         .padding(25)
@@ -63,13 +64,9 @@ struct ProfileView: View {
                         .foregroundStyle(Color(.white))
                         
                         VStack(alignment: .leading){
-                            HStack{
-                                Text("資訊")
-                                    .font(.title3)
-                                    .foregroundStyle(Color("AccentColorP1"))
-                                    .bold()
-                                Spacer()
-                            }
+                            Text("帳號資訊")
+                                .foregroundStyle(Color(.systemGray))
+                                .font(.caption)
                             VStack{
                                 HStack{
                                     Text("代幣")
@@ -87,18 +84,13 @@ struct ProfileView: View {
                                 }
                             }
                             .padding()
-                            .background(Color("AccentColorR5"))
+                            .background(Color("BackgroundR1"))
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.bottom, 10)
                             
-                            HStack{
-                                Text("操作")
-                                    .font(.title3)
-                                    .foregroundStyle(Color("AccentColorP1"))
-                                    .bold()
-                                Spacer()
-                            }
-                            
+                            Text("帳號操作")
+                                .foregroundStyle(Color(.systemGray))
+                                .font(.caption)
                             VStack{
                                 Button {
                                     am.signOut()
@@ -133,7 +125,7 @@ struct ProfileView: View {
                                 }
                             }
                             .padding()
-                            .background(Color("AccentColorR5"))
+                            .background(Color("BackgroundR1"))
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.bottom, 10)
                         }
@@ -145,13 +137,14 @@ struct ProfileView: View {
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
                 .fixedSize(horizontal: false, vertical: true)
+                
                 Color("Background")
                     .ignoresSafeArea(edges: [.bottom])
             } else {
                 LoadView(loadingTitle: "個人資料載入中")
             }
         }
-        .background(Color.accentColor)
+        .background(Color("AccentBackground"))
         .navigationBarHidden(true)
     }
     
