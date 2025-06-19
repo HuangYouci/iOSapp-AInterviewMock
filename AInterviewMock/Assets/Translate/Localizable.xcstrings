@@ -28,6 +28,7 @@
     },
     "CoinManagerView_coinBalance" : {
       "comment" : "Show coins balance",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -45,6 +46,7 @@
     },
     "CoinView_coinPack100Title" : {
       "comment" : "Title for the 100 coins pack",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -62,6 +64,7 @@
     },
     "CoinView_coinPack300Title" : {
       "comment" : "Title for the 300 coins pack",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -79,6 +82,7 @@
     },
     "CoinView_coinPackSubtitle" : {
       "comment" : "Subtitle for coin packs: 'One-time coin acquisition'\nSubtitle for coin packs: 'One-time coin acquisition' (reused)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -96,6 +100,7 @@
     },
     "CoinView_contactDeveloperButton" : {
       "comment" : "Button text for 'Contact Developer'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -113,6 +118,7 @@
     },
     "CoinView_cooldownStatus" : {
       "comment" : "Status text when coin claim is on cooldown",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -130,6 +136,7 @@
     },
     "CoinView_getCoinButton" : {
       "comment" : "Button text to claim free coins for subscribers",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -147,6 +154,7 @@
     },
     "CoinView_monthlySubscriptionBenefit" : {
       "comment" : "Benefit description for monthly subscription\nBenefit description for monthly subscription (also used when not subscribed)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -164,6 +172,7 @@
     },
     "CoinView_monthlySubscriptionStatusSubscribed" : {
       "comment" : "Status text when user is subscribed",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -181,6 +190,7 @@
     },
     "CoinView_monthlySubscriptionTitle" : {
       "comment" : "Title for monthly subscription card\nTitle for monthly subscription card (also used when not subscribed)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -198,6 +208,7 @@
     },
     "CoinView_notesBody" : {
       "comment" : "Body text for important notes regarding purchases and app usage",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -215,6 +226,7 @@
     },
     "CoinView_privacyPolicyButton" : {
       "comment" : "Button text for 'Privacy Policy'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -232,6 +244,7 @@
     },
     "CoinView_requestRefundButton" : {
       "comment" : "Button text for 'Request a Refund'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -249,6 +262,7 @@
     },
     "CoinView_restorePurchasesSubtitle" : {
       "comment" : "Subtitle for restore purchases: 'Restore subscription status'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -266,6 +280,7 @@
     },
     "CoinView_restorePurchasesTitle" : {
       "comment" : "Title for restore purchases button/card",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -283,6 +298,7 @@
     },
     "CoinView_sectionTitleCoins" : {
       "comment" : "Section title for 'Coins' display area",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -300,6 +316,7 @@
     },
     "CoinView_sectionTitleGetCoins" : {
       "comment" : "Section title for 'Get Coins' options",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -317,6 +334,7 @@
     },
     "CoinView_sectionTitleNotes" : {
       "comment" : "Section title for 'Notes' or 'Important Information'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -334,6 +352,7 @@
     },
     "CoinView_sectionTitlePurchase" : {
       "comment" : "Section title for 'Purchase' options",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -351,6 +370,7 @@
     },
     "CoinView_subscriberUserDescription" : {
       "comment" : "Description for subscribed user benefits regarding coins",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -368,6 +388,7 @@
     },
     "CoinView_subscriberUserTitle" : {
       "comment" : "Title for subscribed user section",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -385,6 +406,7 @@
     },
     "CoinView_termsOfUseButton" : {
       "comment" : "Button text for 'Terms of Use'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -402,6 +424,7 @@
     },
     "CoinView_watchAdBenefit" : {
       "comment" : "Benefit text for watch ad: 'Get some coins'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -419,6 +442,7 @@
     },
     "CoinView_watchAdSubtitleEasy" : {
       "comment" : "Subtitle for watch ad: 'Easily get coins'\nSubtitle for watch ad: 'Easily get coins' (also used when ad is unavailable)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -436,6 +460,7 @@
     },
     "CoinView_watchAdSubtitleLimit" : {
       "comment" : "Subtitle for watch ad: '(Limited times within a period)'\nSubtitle for watch ad: '(Limited times within a period)' (also used when ad is unavailable)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -453,6 +478,7 @@
     },
     "CoinView_watchAdTitle" : {
       "comment" : "Title for the watch ad to get coins card\nTitle for the watch ad to get coins card (also used when ad is unavailable)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -470,6 +496,7 @@
     },
     "CoinView_watchAdUnavailable" : {
       "comment" : "Status text when watch ad is unavailable",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4971,10 +4998,16 @@
     "刪除帳號" : {
 
     },
+    "加載中" : {
+
+    },
+    "嘗試復原帳號的訂閱型或非消耗型購買紀錄" : {
+
+    },
     "在一段期間內可觀看一定次數" : {
 
     },
-    "尚未準備" : {
+    "將先前存於本機的代幣轉移到本帳號中" : {
 
     },
     "帳號創建日期" : {
@@ -4986,7 +5019,13 @@
     "帳號資訊" : {
 
     },
+    "復原購買" : {
+
+    },
     "條款與政策" : {
+
+    },
+    "條款與說明" : {
 
     },
     "模擬演講" : {
@@ -4996,6 +5035,9 @@
 
     },
     "檢測到版本更新！" : {
+
+    },
+    "此操作無法復原" : {
 
     },
     "測試版" : {
@@ -5035,19 +5077,19 @@
     "程式資訊" : {
 
     },
-    "聯絡信箱" : {
-
-    },
     "至 App Store 更新" : {
 
     },
     "與" : {
 
     },
-    "觀看" : {
+    "要求退款" : {
 
     },
     "觀看廣告" : {
+
+    },
+    "請確認現在登入的是要轉移到的帳號" : {
 
     },
     "資料檢查" : {
@@ -5062,16 +5104,34 @@
     "這將解除登入之 Apple 或 Google 帳號對本程式伺服器帳號的綁定。您仍可透過相同帳號進行重註冊。" : {
 
     },
+    "遷移代幣" : {
+
+    },
     "錯誤" : {
 
     },
     "開發者" : {
 
     },
+    "開發者信箱" : {
+
+    },
     "開發者資訊" : {
 
     },
     "隱私政策" : {
+
+    },
+    "餘額" : {
+
+    },
+    "點擊嘗試" : {
+
+    },
+    "點擊觀看" : {
+
+    },
+    "點擊遷移 %lld 代幣" : {
 
     }
   },

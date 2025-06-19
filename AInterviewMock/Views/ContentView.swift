@@ -10,6 +10,7 @@ import FirebaseAnalytics
 
 struct ContentView: View {
     
+    @EnvironmentObject var usp: UserProfileService
     @EnvironmentObject var am: AuthManager
     @EnvironmentObject var vm: ViewManager
     @EnvironmentObject var co: CoinManager
@@ -36,8 +37,8 @@ struct ContentView: View {
             
             // MARK: - Top Views (Top)
             // CO NOTIF
-            if (co.showCoinNotification){
-                CoinManagerView(amountChanged: co.lastCoinChange, finalAmount: co.coins)
+            if (vm.coinModNot){
+                CoinModView(amountChanged: vm.coinModLast, finalAmount: usp.currentUserProfile?.coins ?? 0)
             }
             // UPDATE
             if ((uc.status == .lower)){

@@ -11,6 +11,7 @@ struct ShopView: View {
     
     @EnvironmentObject var vm: ViewManager
     @EnvironmentObject var ups: UserProfileService
+    @StateObject var co = CoinManager.shared // Depreciated
     @StateObject var ad = AdManager.shared
     @StateObject var iap = IAPManager.shared
     
@@ -95,12 +96,13 @@ struct ShopView: View {
                                         .bold()
                                     Text("輕鬆獲得代幣")
                                     Text("在一段期間內可觀看一定次數")
-                                    Text("觀看")
+                                    Text("點擊觀看")
                                         .padding(.top, 10)
                                         .bold()
                                 }
                                 .padding()
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .multilineTextAlignment(.leading)
                                 .foregroundStyle(Color(.white))
                                 .background(
                                     LinearGradient(
@@ -123,12 +125,34 @@ struct ShopView: View {
                                     .bold()
                                 Text("輕鬆獲得代幣")
                                 Text("在一段期間內可觀看一定次數")
-                                Text("尚未準備")
+                                Text("加載中")
                                     .padding(.top, 10)
                                     .bold()
                             }
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
+                            .background(Color("BackgroundR1"))
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.bottom, 10)
+                        }
+                        
+                        // Depreciatied: Remove after sss version
+                        if(co.coins > 0){
+                            VStack(alignment: .leading){
+                                Text("遷移代幣")
+                                    .font(.title)
+                                    .bold()
+                                Text("將先前存於本機的代幣轉移到本帳號中")
+                                Text("請確認現在登入的是要轉移到的帳號")
+                                Text("此操作無法復原")
+                                Text("點擊遷移 \(co.coins) 代幣")
+                                    .padding(.top, 10)
+                                    .bold()
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
                             .background(Color("BackgroundR1"))
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.bottom, 10)
@@ -156,6 +180,7 @@ struct ShopView: View {
                             }
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
                             .foregroundStyle(Color(.white))
                             .background(
                                 LinearGradient(
@@ -189,6 +214,7 @@ struct ShopView: View {
                             }
                             .padding()
                             .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
                             .foregroundStyle(Color(.white))
                             .background(
                                 LinearGradient(
@@ -203,6 +229,99 @@ struct ShopView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.bottom, 10)
                         }
+                        
+                        Button {
+                            Task {
+                                await iap.restorePurchases()
+                            }
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text("復原購買")
+                                    .font(.title)
+                                    .bold()
+                                Text("嘗試復原帳號的訂閱型或非消耗型購買紀錄")
+                                Text("點擊嘗試")
+                                    .padding(.top, 10)
+                                    .bold()
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .multilineTextAlignment(.leading)
+                            .foregroundStyle(Color(.white))
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color(red: 252 / 255, green: 151 / 255, blue: 7 / 255),
+                                        Color(red: 255 / 255, green: 155 / 255, blue: 207 / 255)
+                                    ]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.bottom, 10)
+                        }
+                        
+                        Text("條款與說明")
+                            .foregroundStyle(Color(.systemGray))
+                            .font(.caption)
+                        
+                        VStack{
+                            Link(destination: URL(string: "https://huangyouci.github.io/app/eula")!){
+                                HStack{
+                                    Text("使用條款")
+                                    Spacer()
+                                    Image(systemName: "arrow.up.right")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(Color(.systemGray))
+                                        .frame(width: 15, height: 15)
+                                }
+                            }
+                            Divider()
+                                .padding(.vertical, 6.5)
+                            Link(destination: URL(string: "https://huangyouci.github.io/app/privacypolicy")!){
+                                HStack{
+                                    Text("隱私政策")
+                                    Spacer()
+                                    Image(systemName: "arrow.up.right")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(Color(.systemGray))
+                                        .frame(width: 15, height: 15)
+                                }
+                            }
+                            Divider()
+                                .padding(.vertical, 6.5)
+                            Link(destination: URL(string: "mailto:ycdev@icloud.com")!){
+                                HStack{
+                                    Text("開發者信箱")
+                                    Spacer()
+                                    Image(systemName: "arrow.up.right")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(Color(.systemGray))
+                                        .frame(width: 15, height: 15)
+                                }
+                            }
+                            Divider()
+                                .padding(.vertical, 6.5)
+                            Link(destination: URL(string: "https://reportaproblem.apple.com")!){
+                                HStack{
+                                    Text("要求退款")
+                                    Spacer()
+                                    Image(systemName: "arrow.up.right")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .foregroundStyle(Color(.systemGray))
+                                        .frame(width: 15, height: 15)
+                                }
+                            }
+                        }
+                        .padding()
+                        .background(Color("BackgroundR1"))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding(.bottom, 10)
                         
                     }
                     .padding(25)

@@ -83,7 +83,7 @@ struct InfoView: View {
                             Divider()
                                 .padding(.vertical, 6.5)
                             HStack{
-                                Text("聯絡信箱")
+                                Text("開發者信箱")
                                 Spacer()
                                 Text("ycdev@icloud.com")
                             }
