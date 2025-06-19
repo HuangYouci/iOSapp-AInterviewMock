@@ -18,6 +18,7 @@ struct AInterviewMockApp: App {
     @StateObject var vm = ViewManager.shared
     @StateObject var co = CoinManager.shared
     @StateObject var uc = UpdateChecker.shared
+    @StateObject var iap: IAPManager
     
     init() {
         // MARK: - Firebase Cofigure
@@ -30,6 +31,7 @@ struct AInterviewMockApp: App {
         let ups = UserProfileService()
         _ups = StateObject(wrappedValue: ups)
         _am = StateObject(wrappedValue: AuthManager(userProfileService: ups))
+        _iap = StateObject(wrappedValue: IAPManager(userProfileService: ups))
     }
     
     var body: some Scene {
@@ -40,6 +42,7 @@ struct AInterviewMockApp: App {
                 .environmentObject(vm)
                 .environmentObject(co)
                 .environmentObject(uc)
+                .environmentObject(iap)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

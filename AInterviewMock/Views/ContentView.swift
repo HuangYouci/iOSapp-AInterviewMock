@@ -36,15 +36,15 @@ struct ContentView: View {
             }
             
             // MARK: - Top Views (Top)
-            // CO NOTIF
-            if (vm.coinModNot){
-                CoinModView(amountChanged: vm.coinModLast, finalAmount: usp.currentUserProfile?.coins ?? 0)
+            // COIN
+            if (usp.pendingModifyCoinNumber > 0){
+                CoinModView()
             }
             // UPDATE
             if ((uc.status == .lower)){
                 UpdateInfoView()
             }
-            // AUTH
+            // AUTH ( BE SURE AT TOP TOP )
             if ((am.user == nil)){
                 AuthView()
             }

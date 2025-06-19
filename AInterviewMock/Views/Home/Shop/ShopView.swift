@@ -11,9 +11,9 @@ struct ShopView: View {
     
     @EnvironmentObject var vm: ViewManager
     @EnvironmentObject var ups: UserProfileService
+    @EnvironmentObject var iap: IAPManager
     @StateObject var co = CoinManager.shared // Depreciated
     @StateObject var ad = AdManager.shared
-    @StateObject var iap = IAPManager.shared
     
     var body: some View {
         VStack{
@@ -63,7 +63,7 @@ struct ShopView: View {
                         .background(Color("BackgroundR1"))
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                         .padding(.bottom, 10)
-                            
+                        
                         Text("獲得代幣")
                             .foregroundStyle(Color(.systemGray))
                             .font(.caption)
@@ -83,7 +83,8 @@ struct ShopView: View {
                                     // 如果沒有正在 present 的畫面，再顯示廣告
                                     if topVC.presentedViewController == nil {
                                         ad.showAd(from: topVC) {
-                                            //                                            ups.callCloudFunctionToUpdateUserCoins(uid: <#T##String#>, amount: <#T##Int#>, completion: <#T##(UserProfileServiceError?) -> Void#>)
+                                            ups.pendingModifyCoinType = .addWatchAd
+                                            ups.setPendingCoins(amount: 5)
                                         }
                                     } else {
                                         print("ShopView | 目前有畫面正在展示，無法顯示廣告")
@@ -139,23 +140,30 @@ struct ShopView: View {
                         
                         // Depreciatied: Remove after sss version
                         if(co.coins > 0){
-                            VStack(alignment: .leading){
-                                Text("遷移代幣")
-                                    .font(.title)
-                                    .bold()
-                                Text("將先前存於本機的代幣轉移到本帳號中")
-                                Text("請確認現在登入的是要轉移到的帳號")
-                                Text("此操作無法復原")
-                                Text("點擊遷移 \(co.coins) 代幣")
-                                    .padding(.top, 10)
-                                    .bold()
+                            Button {
+                                ups.pendingModifyCoinType = .general
+                                ups.setPendingCoins(amount: co.coins)
+                                co.resetKeychainDataForTesting()
+                                // clear
+                            } label: {
+                                VStack(alignment: .leading){
+                                    Text("遷移代幣")
+                                        .font(.title)
+                                        .bold()
+                                    Text("將先前存於本機的代幣轉移到本帳號中")
+                                    Text("請確認現在登入的是要轉移到的帳號")
+                                    Text("此操作無法復原")
+                                    Text("點擊遷移 \(co.coins) 代幣")
+                                        .padding(.top, 10)
+                                        .bold()
+                                }
+                                .padding()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .multilineTextAlignment(.leading)
+                                .background(Color("BackgroundR1"))
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .padding(.bottom, 10)
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
-                            .background(Color("BackgroundR1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .padding(.bottom, 10)
                         }
                         
                         Text("購買代幣")
@@ -163,9 +171,13 @@ struct ShopView: View {
                             .font(.caption)
                         
                         Button {
-                            if let product = iap.products.first(where: { $0.id == "com.huangyouci.AInterviewMock.iap.coinseta" }) {
+                            if let product = iap.products.first(where: { $0.id == ConstantStoreItems.coinSetA }) {
                                 Task {
-                                    let _ = await iap.purchase(product)
+                                    do {
+                                        try await iap.purchase(product)
+                                    } catch {
+                                        _ = error
+                                    }
                                 }
                             }
                         } label: {
@@ -174,7 +186,7 @@ struct ShopView: View {
                                     .font(.title)
                                     .bold()
                                 Text("一次性獲得代幣")
-                                Text(iap.priceString(for: "com.huangyouci.AInterviewMock.iap.coinseta"))
+                                Text(iap.priceString(for: ConstantStoreItems.coinSetA))
                                     .padding(.top, 10)
                                     .bold()
                             }
@@ -197,9 +209,13 @@ struct ShopView: View {
                         }
                         
                         Button {
-                            if let product = iap.products.first(where: { $0.id == "com.huangyouci.AInterviewMock.iap.coinsetb" }) {
+                            if let product = iap.products.first(where: { $0.id == ConstantStoreItems.coinSetB }) {
                                 Task {
-                                    let _ = await iap.purchase(product)
+                                    do {
+                                        try await iap.purchase(product)
+                                    } catch {
+                                        _ = error
+                                    }
                                 }
                             }
                         } label: {
@@ -208,7 +224,7 @@ struct ShopView: View {
                                     .font(.title)
                                     .bold()
                                 Text("一次性獲得代幣")
-                                Text(IAPManager.shared.priceString(for: "com.huangyouci.AInterviewMock.iap.coinsetb"))
+                                Text(iap.priceString(for: ConstantStoreItems.coinSetB))
                                     .padding(.top, 10)
                                     .bold()
                             }
@@ -337,4 +353,5 @@ struct ShopView: View {
         }
         .background(Color("Background"))
     }
+    
 }

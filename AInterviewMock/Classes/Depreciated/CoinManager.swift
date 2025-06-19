@@ -199,7 +199,6 @@ class CoinManager: ObservableObject {
     }
 
     // 用於測試
-    #if DEBUG
     func resetKeychainDataForTesting() {
         print("CoinManager | ⚠️ 正在重置 Keychain 中的代幣和領取時間數據 (用於測試)...")
         _ = deleteFromKeychain(forKey: coinKeychainKey)
@@ -210,5 +209,4 @@ class CoinManager: ObservableObject {
         }
         print("CoinManager | ✅ Keychain 數據已重置。")
     }
-    #endif
 }

@@ -49,12 +49,15 @@
     "_applicationInternalID" : "6745684106",
     "_developerTeamID" : "NSPJ9RY42B",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 768476194.14655006,
+    "_lastSynchronizedDate" : 772040989.05510902,
     "_locale" : "zh_TW",
     "_storefront" : "TWN",
     "_storeKitErrors" : [
       {
-        "current" : null,
+        "current" : {
+          "index" : 2,
+          "type" : "generic"
+        },
         "enabled" : false,
         "name" : "Load Products"
       },
@@ -130,6 +133,34 @@
           "productID" : "com.huangyouci.AInterviewMock.subscription.monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "com.huangyouci.AInterviewMock.subscription.monthly",
+          "subscriptionGroupID" : "21683337",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "120",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6745738194",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "訂閱用戶（試用）",
+              "displayName" : "訂閱用戶（試用）",
+              "locale" : "zh_CN"
+            }
+          ],
+          "productID" : "com.huangyouci.AInterviewMock.subscription.trial",
+          "recurringSubscriptionPeriod" : "P1W",
+          "referenceName" : "com.huangyouci.AInterviewMock.subscription.trial",
           "subscriptionGroupID" : "21683337",
           "type" : "RecurringSubscription",
           "winbackOffers" : [
