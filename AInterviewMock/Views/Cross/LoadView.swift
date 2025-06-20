@@ -11,36 +11,17 @@ struct LoadView: View {
     
     @EnvironmentObject var vm: ViewManager
     
-    @State private var animationA: Bool = false
-    @State private var animationB: Bool = false
     @State private var loadedTimeSec: Int = 0
     @State private var timer: Timer?
     
     var loadingTitle: String = "載入中"
     var loadingDescription: String = "請保持網路連線。若等待許久未果，請嘗試重啟 app。"
-    var canPrevious: Bool = true
     
     var body: some View {
         ZStack{
             VStack(spacing: 20){
-                ZStack{
-                    Circle()
-                        .stroke(Color("AccentColorR1"), lineWidth: 5)
-                        .frame(width: 40, height: 40)
-                    Circle()
-                        .trim(from: animationB ? 0.9 : 0.7, to: 1)
-                        .stroke(Color("AccentColorR3"), lineWidth: 5)
-                        .frame(width: 40, height: 40)
-                        .rotationEffect(Angle(degrees: animationA ? 360 : 0))
-                        .onAppear {
-                            withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
-                                animationA = true
-                            }
-                            withAnimation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true)) {
-                                animationB = true
-                            }
-                        }
-                }
+                LoadViewElement()
+                    .frame(width: 40, height: 40)
                 VStack(spacing: 6){
                     Text(loadingTitle)
                         .font(.title3)
@@ -91,10 +72,8 @@ struct LoadView: View {
     }
     
     private func startTimer() {
-        if (canPrevious){
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                loadedTimeSec += 1
-            }
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            loadedTimeSec += 1
         }
     }
 
@@ -103,6 +82,36 @@ struct LoadView: View {
         timer = nil
     }
     
+}
+
+struct LoadViewElement: View {
+    
+    @State private var animationA: Bool = false
+    @State private var animationB: Bool = false
+    
+    var body: some View {
+        ZStack{
+            Circle()
+                .stroke(Color("AccentColorR1"), lineWidth: 5)
+            Circle()
+                .trim(from: animationB ? 0.9 : 0.7, to: 1)
+                .stroke(Color("AccentColorR3"), lineWidth: 5)
+                .rotationEffect(Angle(degrees: animationA ? 360 : 0))
+                .onAppear {
+                    withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+                        animationA = true
+                    }
+                    withAnimation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true)) {
+                        animationB = true
+                    }
+                }
+        }
+    }
+    
+}
+
+#Preview {
+    LoadViewElement()
 }
 
 #Preview {

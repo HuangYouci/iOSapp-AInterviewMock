@@ -37,6 +37,7 @@ struct CoinModView: View {
     
     @State private var appear: Bool = false
     @State private var appearInitCoins: Int = 0
+    @State private var buttonPushed: Bool = false
     
     var body: some View {
         ZStack{
@@ -125,6 +126,7 @@ struct CoinModView: View {
                         HStack{
                             Spacer()
                             Button{
+                                buttonPushed = true
                                 ups.claimPendingCoins(for: am.user!.uid) { error in
                                     if let error = error {
                                         _ = error
@@ -139,17 +141,22 @@ struct CoinModView: View {
                                     }
                                 }
                             } label: {
-                                HStack{
-                                    Text("確認")
-                                        .font(.title3)
+                                if (buttonPushed) {
+                                    LoadViewElement()
+                                        .frame(width: 40, height: 40)
+                                } else {
+                                    HStack{
+                                        Text("確認")
+                                            .font(.title3)
+                                    }
+                                    .padding(10)
+                                    .padding(.horizontal)
+                                    .foregroundStyle(Color.accentColor)
+                                    .background(Color("BackgroundR1"))
+                                    .clipShape(RoundedRectangle(cornerRadius: 25))
                                 }
-                                .padding(10)
-                                .padding(.horizontal)
-                                .foregroundStyle(Color.accentColor)
-                                .background(Color("BackgroundR1"))
-                                .clipShape(RoundedRectangle(cornerRadius: 25))
                             }
-                            .disabled(!appear)
+                            .disabled(!appear || buttonPushed)
                             Spacer()
                         }
                     }

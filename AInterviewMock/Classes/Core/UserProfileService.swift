@@ -564,6 +564,12 @@ class UserProfileService: ObservableObject {
     ///   - completion: 操作完成後的回調。成功時 error 為 nil，失敗時為相應的 UserProfileServiceError。
     func claimPendingCoins(for uid: String, completion: @escaping (UserProfileServiceError?) -> Void) {
         
+        guard !isLoading else {
+            print("UPS | 警告: 上一次領取操作仍在進行中，已忽略重複的請求。")
+            completion(.generalError(message: "操作繁忙"))
+            return
+        }
+        
         // 確保 isLoading 狀態被正確管理，UI 可以顯示進度指示器
         DispatchQueue.main.async {
             self.isLoading = true

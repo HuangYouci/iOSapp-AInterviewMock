@@ -54,7 +54,7 @@ struct HomeView: View {
                     VStack(alignment: .leading){
                         HStack{
                             Button {
-                                // vm.addPage(view: InterviewView())
+                                vm.addPage(.toolInterview)
                             } label: {
                                 VStack(alignment: .leading){
                                     Text("模擬面試")
@@ -68,7 +68,7 @@ struct HomeView: View {
                                 .padding()
                                 .frame(height: 100, alignment: .topLeading)
                                 .background(
-                                    Image("HomeEntryView_interviewIllu")
+                                    Image("HomeView_Img1")
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 400, height: 200)
@@ -81,16 +81,7 @@ struct HomeView: View {
                                         )
                                         .offset(x: 50)
                                 )
-                                .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [
-                                            Color(red: 122 / 255, green: 121 / 255, blue: 217 / 255),
-                                            Color(red: 88 / 255, green: 86 / 255, blue: 207 / 255)
-                                        ]),
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .background(Color("AccentBackground"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
@@ -110,7 +101,7 @@ struct HomeView: View {
                                 .padding()
                                 .frame(height: 100, alignment: .topLeading)
                                 .background(
-                                    Image("HomeEntryView_speechIllu")
+                                    Image("HomeView_Img2")
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 400, height: 200)
@@ -123,16 +114,7 @@ struct HomeView: View {
                                         )
                                         .offset(x: 50)
                                 )
-                                .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [
-                                            Color(red: 122 / 255, green: 121 / 255, blue: 217 / 255),
-                                            Color(red: 88 / 255, green: 86 / 255, blue: 207 / 255)
-                                        ]),
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
+                                .background(Color("AccentBackground"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
@@ -151,12 +133,20 @@ struct HomeView: View {
                                 }
                                 .padding()
                                 .background(
-                                    Image("HomeEntryView_speechIllu")
+                                    Image("HomeView_Img3")
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 400, height: 200)
+                                        .mask(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [.clear, .white]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
                                         .offset(x: 50)
                                 )
+                                .background(Color("AccentBackground"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }

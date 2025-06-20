@@ -16,6 +16,7 @@ class ViewManager: ObservableObject {
         case profileDeletion
         case appinfo
         case shop
+        case toolInterview
     }
     
     // 主要元件
