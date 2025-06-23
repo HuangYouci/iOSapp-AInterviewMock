@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/*
+
 struct InterviewModifierView: View {
     
     @Binding var selected: InterviewProfile?
@@ -350,3 +352,5 @@ struct InterviewModifierView: View {
 #Preview{
     InterviewModifierView(selected: .constant(DefaultInterviewProfile.college))
 }
+
+*/

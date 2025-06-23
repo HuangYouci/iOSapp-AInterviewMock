@@ -142,7 +142,7 @@ struct CoinModView: View {
                                 }
                             } label: {
                                 if (buttonPushed) {
-                                    LoadViewElement()
+                                    LoadViewElement(circleLineWidth: 7)
                                         .frame(width: 40, height: 40)
                                 } else {
                                     HStack{

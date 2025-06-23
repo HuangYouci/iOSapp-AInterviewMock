@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/*
+
 struct InterviewStartView: View {
     
     enum InterviewStartViewState: Equatable {
@@ -410,3 +412,5 @@ struct InterviewStartView: View {
 #Preview{
     InterviewStartView(selected: .constant(DefaultInterviewProfile.test))
 }
+
+*/

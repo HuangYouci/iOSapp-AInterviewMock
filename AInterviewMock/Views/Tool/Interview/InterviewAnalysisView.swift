@@ -366,7 +366,3 @@ struct InterviewAnalysisView: View {
         }
     }
 }
-
-#Preview {
-    InterviewAnalysisView(selected: .constant(DefaultInterviewProfile.test))
-}

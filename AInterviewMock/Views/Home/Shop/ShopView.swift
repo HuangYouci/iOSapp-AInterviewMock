@@ -48,20 +48,22 @@ struct ShopView: View {
                             .font(.caption)
                         
                         VStack{
-                            Image(systemName: "hockey.puck.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 40, height: 40)
-                                .padding(5)
-                                .foregroundStyle(Color("AppGold"))
+                            HStack{
+                                Spacer()
+                                Image(systemName: "hockey.puck.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 40, height: 40)
+                                    .padding(5)
+                                    .foregroundStyle(Color("AppGold"))
+                                Spacer()
+                            }
                             Text("\(up.coins)")
                                 .font(.title)
                                 .bold()
                         }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color("BackgroundR1"))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                        .frame(alignment: .center)
                         .padding(.bottom, 10)
                         
                         Text("獲得代幣")
@@ -101,21 +103,14 @@ struct ShopView: View {
                                         .padding(.top, 10)
                                         .bold()
                                 }
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .multilineTextAlignment(.leading)
-                                .foregroundStyle(Color(.white))
-                                .background(
-                                    LinearGradient(
-                                        gradient: Gradient(colors: [
-                                            Color(red: 161 / 255, green: 66 / 255, blue: 245 / 255),
-                                            Color(red: 255 / 255, green: 95 / 255, blue: 207 / 255)
-                                        ]),
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .inifBlock(fgColor: Color(.white), bgColor: LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color(red: 161 / 255, green: 66 / 255, blue: 245 / 255),
+                                        Color(red: 255 / 255, green: 95 / 255, blue: 207 / 255)
+                                    ]),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ))
                                 .padding(.bottom, 10)
                             }
                             
@@ -130,11 +125,7 @@ struct ShopView: View {
                                     .padding(.top, 10)
                                     .bold()
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
-                            .background(Color("BackgroundR1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(bgColor: Color("BackgroundR1"))
                             .padding(.bottom, 10)
                         }
                         
@@ -157,11 +148,7 @@ struct ShopView: View {
                                         .padding(.top, 10)
                                         .bold()
                                 }
-                                .padding()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .multilineTextAlignment(.leading)
-                                .background(Color("BackgroundR1"))
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .inifBlock(bgColor: Color("BackgroundR1"))
                                 .padding(.bottom, 10)
                             }
                         }
@@ -190,21 +177,14 @@ struct ShopView: View {
                                     .padding(.top, 10)
                                     .bold()
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
-                            .foregroundStyle(Color(.white))
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color(red: 22 / 255, green: 101 / 255, blue: 17 / 255),
-                                        Color(red: 25 / 255, green: 95 / 255, blue: 207 / 255)
-                                    ]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(fgColor: Color(.white), bgColor: LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color(red: 22 / 255, green: 101 / 255, blue: 17 / 255),
+                                    Color(red: 25 / 255, green: 95 / 255, blue: 207 / 255)
+                                ]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
                             .padding(.bottom, 10)
                         }
                         
@@ -228,21 +208,14 @@ struct ShopView: View {
                                     .padding(.top, 10)
                                     .bold()
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
-                            .foregroundStyle(Color(.white))
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color(red: 22 / 255, green: 101 / 255, blue: 17 / 255),
-                                        Color(red: 25 / 255, green: 95 / 255, blue: 207 / 255)
-                                    ]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(fgColor: Color(.white), bgColor: LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color(red: 22 / 255, green: 101 / 255, blue: 17 / 255),
+                                    Color(red: 25 / 255, green: 95 / 255, blue: 207 / 255)
+                                ]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
                             .padding(.bottom, 10)
                         }
                         
@@ -260,21 +233,14 @@ struct ShopView: View {
                                     .padding(.top, 10)
                                     .bold()
                             }
-                            .padding()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
-                            .foregroundStyle(Color(.white))
-                            .background(
-                                LinearGradient(
-                                    gradient: Gradient(colors: [
-                                        Color(red: 252 / 255, green: 151 / 255, blue: 7 / 255),
-                                        Color(red: 255 / 255, green: 155 / 255, blue: 207 / 255)
-                                    ]),
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(fgColor: Color(.white), bgColor: LinearGradient(
+                                gradient: Gradient(colors: [
+                                    Color(red: 252 / 255, green: 151 / 255, blue: 7 / 255),
+                                    Color(red: 255 / 255, green: 155 / 255, blue: 207 / 255)
+                                ]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
                             .padding(.bottom, 10)
                         }
                         
@@ -334,9 +300,7 @@ struct ShopView: View {
                                 }
                             }
                         }
-                        .padding()
-                        .background(Color("BackgroundR1"))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .inifBlock(bgColor: Color("BackgroundR1"))
                         .padding(.bottom, 10)
                         
                     }

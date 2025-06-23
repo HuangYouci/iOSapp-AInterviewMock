@@ -36,7 +36,8 @@ struct AuthView: View {
                                 .font(.title)
                                 .bold()
                             if (authManager.isLoading){
-                                ProgressView()
+                                LoadViewElement()
+                                    .frame(width: 20, height: 20)
                             }
                             Spacer()
                         }

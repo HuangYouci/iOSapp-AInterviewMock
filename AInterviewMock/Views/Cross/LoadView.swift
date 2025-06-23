@@ -89,10 +89,12 @@ struct LoadViewElement: View {
     @State private var animationA: Bool = false
     @State private var animationB: Bool = false
     
+    var circleLineWidth: Int = 5
+    
     var body: some View {
         ZStack{
             Circle()
-                .stroke(Color("AccentColorR1"), lineWidth: 5)
+                .stroke(Color("AccentColorR1"), lineWidth: CGFloat(circleLineWidth))
             Circle()
                 .trim(from: animationB ? 0.9 : 0.7, to: 1)
                 .stroke(Color("AccentColorR3"), lineWidth: 5)

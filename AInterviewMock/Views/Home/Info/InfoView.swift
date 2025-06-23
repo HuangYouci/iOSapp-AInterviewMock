@@ -64,9 +64,7 @@ struct InfoView: View {
                                     .foregroundStyle(Color(.systemGray))
                             }
                         }
-                        .padding()
-                        .background(Color("BackgroundR1"))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .inifBlock(bgColor: Color("BackgroundR1"))
                         .padding(.bottom, 10)
                         
                         Text("開發者資訊")
@@ -88,9 +86,7 @@ struct InfoView: View {
                                 Text("ycdev@icloud.com")
                             }
                         }
-                        .padding()
-                        .background(Color("BackgroundR1"))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .inifBlock(bgColor: Color("BackgroundR1"))
                         .padding(.bottom, 10)
                         
                         Text("條款與政策")
@@ -123,9 +119,7 @@ struct InfoView: View {
                                 }
                             }
                         }
-                        .padding()
-                        .background(Color("BackgroundR1"))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .inifBlock(bgColor: Color("BackgroundR1"))
                         .padding(.bottom, 10)
                         
                     }
@@ -136,10 +130,15 @@ struct InfoView: View {
                 }
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-            .fixedSize(horizontal: false, vertical: true)
+            .background(
+                VStack{
+                    Color.clear
+                        .frame(maxHeight: 100)
+                    Color("Background")
+                        .ignoresSafeArea(edges: [.bottom])
+                }
+            )
             
-            Color("Background")
-                .ignoresSafeArea(edges: [.bottom])
         }
         .background(Color("AccentBackground"))
         .navigationBarHidden(true)

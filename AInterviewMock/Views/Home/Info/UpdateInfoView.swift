@@ -36,9 +36,7 @@ struct UpdateInfoView: View {
                     }
                 }
             }
-            .padding()
-            .background(Color("BackgroundR1"))
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .inifBlock(bgColor: Color("BackgroundR1"))
             .padding(.bottom, 10)
         }
         .multilineTextAlignment(.center)

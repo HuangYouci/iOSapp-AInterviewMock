@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/*
+
 struct SpeechView: View {
     
     // 第一步
@@ -272,3 +274,5 @@ struct SpeechView: View {
 #Preview {
     SpeechView()
 }
+
+*/

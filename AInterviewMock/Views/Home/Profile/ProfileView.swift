@@ -42,9 +42,13 @@ struct ProfileView: View {
                 ScrollView{
                     VStack(alignment: .leading){
                         VStack {
-                            Text(up.userName ?? "inif")
-                                .font(.title)
-                                .bold()
+                            HStack{
+                                Spacer()
+                                Text(up.userName ?? "inif")
+                                    .font(.title)
+                                    .bold()
+                                Spacer()
+                            }
                             if let email = up.userEmail {
                                 Text(email)
                                     .tint(Color(.white))
@@ -62,6 +66,7 @@ struct ProfileView: View {
                         .padding(25)
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(Color(.white))
+                        .background(Color("AccentBackground"))
                         
                         VStack(alignment: .leading){
                             Text("帳號資訊")
@@ -83,9 +88,7 @@ struct ProfileView: View {
                                         .foregroundStyle(Color(.systemGray))
                                 }
                             }
-                            .padding()
-                            .background(Color("BackgroundR1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(bgColor: Color("BackgroundR1"))
                             .padding(.bottom, 10)
                             
                             Text("帳號操作")
@@ -124,9 +127,7 @@ struct ProfileView: View {
                                     }
                                 }
                             }
-                            .padding()
-                            .background(Color("BackgroundR1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(bgColor: Color("BackgroundR1"))
                             .padding(.bottom, 10)
                         }
                         .padding(25)
@@ -136,10 +137,15 @@ struct ProfileView: View {
                     }
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-                .fixedSize(horizontal: false, vertical: true)
+                .background(
+                    VStack{
+                        Color.clear
+                            .frame(maxHeight: 100)
+                        Color("Background")
+                            .ignoresSafeArea(edges: [.bottom])
+                    }
+                )
                 
-                Color("Background")
-                    .ignoresSafeArea(edges: [.bottom])
             } else {
                 LoadView(loadingTitle: "個人資料載入中")
             }

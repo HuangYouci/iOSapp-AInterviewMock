@@ -158,10 +158,14 @@ struct HomeView: View {
                 }
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-            .fixedSize(horizontal: false, vertical: true)
-            
-            Color("Background")
-                .ignoresSafeArea(edges: [.bottom])
+            .background(
+                VStack{
+                    Color.clear
+                        .frame(maxHeight: 100)
+                    Color("Background")
+                        .ignoresSafeArea(edges: [.bottom])
+                }
+            )
         }
         .background(Color("AccentBackground"))
     }

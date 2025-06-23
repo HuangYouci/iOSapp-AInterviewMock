@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "zh-Hant",
   "strings" : {
+    "*" : {
+
+    },
     "#%lld" : {
 
     },
@@ -520,6 +523,7 @@
     },
     "ConfirmationDialog_Cancel" : {
       "comment" : "Cancel",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -537,6 +541,7 @@
     },
     "ConfirmationDialog_Confirm" : {
       "comment" : "Confirm",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1022,6 +1027,7 @@
     },
     "InterviewEntryView_templateSectionTitle" : {
       "comment" : "Section title for 'Templates' list",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1039,6 +1045,7 @@
     },
     "InterviewEntryView_titleLine1" : {
       "comment" : "First line of the title on the interview type selection screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1056,6 +1063,7 @@
     },
     "InterviewEntryView_titleLine2" : {
       "comment" : "Second line of the title on the interview type selection screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1685,6 +1693,7 @@
     },
     "InterviewProfile_college_preQuestion1_school" : {
       "comment" : "Pre-interview question: Target school?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1702,6 +1711,7 @@
     },
     "InterviewProfile_college_preQuestion2_department" : {
       "comment" : "Pre-interview question: Target department?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1719,6 +1729,7 @@
     },
     "InterviewProfile_college_preQuestion3_selfIntro" : {
       "comment" : "Pre-interview question: Self-introduction requirements?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1736,6 +1747,7 @@
     },
     "InterviewProfile_college_preQuestion4_focusTopics" : {
       "comment" : "Pre-interview question: Department's typical question focus?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1753,6 +1765,7 @@
     },
     "InterviewProfile_college_preQuestion5_specialReqs" : {
       "comment" : "Pre-interview question: Other special interview requirements?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1770,6 +1783,7 @@
     },
     "InterviewProfile_college_templateDescription" : {
       "comment" : "Description for the college interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1787,6 +1801,7 @@
     },
     "InterviewProfile_college_templateName" : {
       "comment" : "Name of the college interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1804,6 +1819,7 @@
     },
     "InterviewProfile_college_templatePrompt" : {
       "comment" : "Base prompt for AI for college interview template. This might be long and could also be a key if parts of it need to change by language, but for now, localizing the whole string.",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1821,6 +1837,7 @@
     },
     "InterviewProfile_internship_preQuestion1_field" : {
       "comment" : "Pre-interview question: What field is the internship in?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1838,6 +1855,7 @@
     },
     "InterviewProfile_internship_preQuestion2_company" : {
       "comment" : "Pre-interview question: Name of the company offering the internship?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1855,6 +1873,7 @@
     },
     "InterviewProfile_internship_preQuestion3_motivation" : {
       "comment" : "Pre-interview question: What motivates you to apply for this specific internship?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1872,6 +1891,7 @@
     },
     "InterviewProfile_internship_preQuestion4_skills" : {
       "comment" : "Pre-interview question: What relevant skills or coursework do you have?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1889,6 +1909,7 @@
     },
     "InterviewProfile_internship_preQuestion5_learningGoals" : {
       "comment" : "Pre-interview question: What do you hope to learn or achieve from this internship?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1906,6 +1927,7 @@
     },
     "InterviewProfile_internship_templateDescription" : {
       "comment" : "Description for the internship interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1923,6 +1945,7 @@
     },
     "InterviewProfile_internship_templateName" : {
       "comment" : "Name of the internship interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1940,6 +1963,7 @@
     },
     "InterviewProfile_internship_templatePrompt" : {
       "comment" : "Base prompt for AI for internship interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1957,6 +1981,7 @@
     },
     "InterviewProfile_jobGeneral_preQuestion1_company" : {
       "comment" : "Pre-interview question: Target company?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1974,6 +1999,7 @@
     },
     "InterviewProfile_jobGeneral_preQuestion2_position" : {
       "comment" : "Pre-interview question: Target position/role?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1991,6 +2017,7 @@
     },
     "InterviewProfile_jobGeneral_preQuestion3_jobDescription" : {
       "comment" : "Pre-interview question: Key requirements or responsibilities from the job description?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2008,6 +2035,7 @@
     },
     "InterviewProfile_jobGeneral_preQuestion4_whyCompany" : {
       "comment" : "Pre-interview question: Why are you interested in this company?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2025,6 +2053,7 @@
     },
     "InterviewProfile_jobGeneral_preQuestion5_whyPosition" : {
       "comment" : "Pre-interview question: Why are you suitable for this position?",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2042,6 +2071,7 @@
     },
     "InterviewProfile_jobGeneral_templateDescription" : {
       "comment" : "Description for the general job interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2059,6 +2089,7 @@
     },
     "InterviewProfile_jobGeneral_templateName" : {
       "comment" : "Name of the general job interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2076,6 +2107,7 @@
     },
     "InterviewProfile_jobGeneral_templatePrompt" : {
       "comment" : "Base prompt for AI for general job interview template",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2093,6 +2125,7 @@
     },
     "InterviewQuesView_answerTextFieldPlaceholder" : {
       "comment" : "Placeholder text for the answer input field",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2110,6 +2143,7 @@
     },
     "InterviewQuesView_requiredFieldIndicator" : {
       "comment" : "Indicator text for a required field, e.g., 'Required'",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2127,6 +2161,7 @@
     },
     "InterviewQuesView_titleLine1" : {
       "comment" : "First line of the title on the pre-interview questions screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2144,6 +2179,7 @@
     },
     "InterviewQuesView_titleLine2" : {
       "comment" : "Second line of the title on the pre-interview questions screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2432,6 +2468,7 @@
     },
     "InterviewView_nextButtonNextStep" : {
       "comment" : "Button text: Next",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2449,6 +2486,7 @@
     },
     "InterviewView_nextButtonStartInterview" : {
       "comment" : "Button text: Start Interview",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2466,6 +2504,7 @@
     },
     "InterviewView_previousButtonCancel" : {
       "comment" : "Button text: Cancel",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2483,6 +2522,7 @@
     },
     "InterviewView_previousButtonLeave" : {
       "comment" : "Button text: Leave",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2500,6 +2540,7 @@
     },
     "InterviewView_previousButtonPreviousStep" : {
       "comment" : "Button text: Previous Step",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2517,6 +2558,7 @@
     },
     "InterviewView_previousButtonSaveChanges" : {
       "comment" : "Button text: Save Changes / Save Draft",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2534,6 +2576,7 @@
     },
     "InterviewView_progressStep1InterviewType" : {
       "comment" : "Progress step 1: Interview Type",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2551,6 +2594,7 @@
     },
     "InterviewView_progressStep2InterviewDetails" : {
       "comment" : "Progress step 2: Interview Details",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2568,6 +2612,7 @@
     },
     "InterviewView_progressStep3DataPreparation" : {
       "comment" : "Progress step 3: Data Preparation (Files)",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2585,6 +2630,7 @@
     },
     "InterviewView_progressStep4DataConfirmation" : {
       "comment" : "Progress step 4: Data Confirmation",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2602,6 +2648,7 @@
     },
     "InterviewView_progressStep5ReadyToStart" : {
       "comment" : "Progress step 5: Ready to Start",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2619,6 +2666,7 @@
     },
     "InterviewView_progressTitle" : {
       "comment" : "Title for the progress steps list",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2636,6 +2684,7 @@
     },
     "ListView_MockInterview" : {
       "comment" : "Tab subment for Mock Interview",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2653,6 +2702,7 @@
     },
     "ListView_MockSpeech" : {
       "comment" : "Tab subment for Mock Speech",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2667,6 +2717,9 @@
           }
         }
       }
+    },
+    "MB" : {
+
     },
     "SpeechAnalysisView_deleteInterviewProfileSectionDescription" : {
       "comment" : "Section description of delete this speech profile",
@@ -5016,6 +5069,12 @@
     "基礎費用" : {
 
     },
+    "填寫關於%@的細節" : {
+
+    },
+    "完成後無法再修改" : {
+
+    },
     "將先前存於本機的代幣轉移到本帳號中" : {
 
     },
@@ -5037,6 +5096,9 @@
     "復原購買" : {
 
     },
+    "提供關於%@的檔案" : {
+
+    },
     "條款與政策" : {
 
     },
@@ -5047,6 +5109,33 @@
 
     },
     "模擬面試" : {
+
+    },
+    "模擬面試類型" : {
+
+    },
+    "檔案名稱" : {
+
+    },
+    "檔案問題" : {
+
+    },
+    "檔案大小" : {
+
+    },
+    "檔案大小不得超過 20 MB" : {
+
+    },
+    "檔案數" : {
+
+    },
+    "檔案數量不得超過 5 件" : {
+
+    },
+    "檔案資訊" : {
+
+    },
+    "檔案附件" : {
 
     },
     "檢測到版本更新！" : {
@@ -5065,6 +5154,12 @@
 
     },
     "準備刪除的帳號" : {
+
+    },
+    "無回答" : {
+
+    },
+    "無附件" : {
 
     },
     "版本" : {
@@ -5117,6 +5212,12 @@
     "程式資訊" : {
 
     },
+    "第 %lld 步" : {
+
+    },
+    "答案" : {
+
+    },
     "紀錄" : {
 
     },
@@ -5130,6 +5231,9 @@
 
     },
     "觀看廣告" : {
+
+    },
+    "請確認所有關於%@的資訊" : {
 
     },
     "請確認現在登入的是要轉移到的帳號" : {
@@ -5153,6 +5257,9 @@
     "遷移代幣" : {
 
     },
+    "選擇欲練習的模擬面試類型" : {
+
+    },
     "錯誤" : {
 
     },
@@ -5169,6 +5276,15 @@
 
     },
     "隱私政策" : {
+
+    },
+    "面試檔案" : {
+
+    },
+    "面試檔案確認" : {
+
+    },
+    "面試細節" : {
 
     },
     "點擊嘗試" : {

@@ -52,9 +52,13 @@ struct ProfileDeletionView: View {
                                 .font(.caption)
                             
                             VStack {
-                                Text(up.userName ?? "inif")
-                                    .font(.title)
-                                    .bold()
+                                HStack{
+                                    Spacer()
+                                    Text(up.userName ?? "inif")
+                                        .font(.title)
+                                        .bold()
+                                    Spacer()
+                                }
                                 if let email = up.userEmail {
                                     Text(email)
                                         .tint(Color(.white))
@@ -69,10 +73,7 @@ struct ProfileDeletionView: View {
                                 .background(Color("Background"))
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color("BackgroundR1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(bgColor: Color("BackgroundR1"))
                             .padding(.bottom, 10)
                             
                             Text("資料檢查")
@@ -87,9 +88,7 @@ struct ProfileDeletionView: View {
                                         .foregroundStyle(Color(.systemGray))
                                 }
                             }
-                            .padding()
-                            .background(Color("BackgroundR1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(bgColor: Color("BackgroundR1"))
                             .padding(.bottom, 10)
                             
                             if (loadedTimeSec < 10){
@@ -125,9 +124,7 @@ struct ProfileDeletionView: View {
                                 }
                                 .disabled(loadedTimeSec < 10)
                             }
-                            .padding()
-                            .background(Color("BackgroundR1"))
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .inifBlock(bgColor: Color("BackgroundR1"))
                             .padding(.bottom, 10)
                             
                             if let em = deletedFailed {
@@ -159,10 +156,15 @@ struct ProfileDeletionView: View {
                     }
                 }
                 .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-                .fixedSize(horizontal: false, vertical: true)
+                .background(
+                    VStack{
+                        Color.clear
+                            .frame(maxHeight: 100)
+                        Color("Background")
+                            .ignoresSafeArea(edges: [.bottom])
+                    }
+                )
                 
-                Color("Background")
-                    .ignoresSafeArea(edges: [.bottom])
             } else {
                 LoadView(loadingTitle: "個人資料載入中")
             }
