@@ -19,6 +19,7 @@ struct AInterviewMockApp: App {
     @StateObject var co = CoinManager.shared
     @StateObject var uc = UpdateChecker.shared
     @StateObject var iap: IAPManager
+    @StateObject var it: InterviewTool = InterviewTool()
     
     init() {
         // MARK: - Firebase Cofigure
@@ -43,6 +44,7 @@ struct AInterviewMockApp: App {
                 .environmentObject(co)
                 .environmentObject(uc)
                 .environmentObject(iap)
+                .environmentObject(it)
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }

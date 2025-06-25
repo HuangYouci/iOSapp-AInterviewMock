@@ -37,6 +37,14 @@ struct ContentView: View {
                     }
             }
             
+            ZStack{
+                if let tv = vm.topView {
+                    tv
+                        .transition(.move(edge: .bottom))
+                }
+            }
+            .animation(.easeInOut, value: vm.rn)
+            
             // MARK: - Top Views (Top)
             // COIN
             if (ups.coinModifyRequest != nil){

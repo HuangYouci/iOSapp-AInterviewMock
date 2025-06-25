@@ -307,7 +307,7 @@ class ToolBase: ObservableObject {
     }
     
     // MARK: - Gemini AI
-    let aiModel = VertexAI.vertexAI().generativeModel(modelName: "gemini-2.0-flash-lite-001")
+    let aiModel = VertexAI.vertexAI(location: "us-central1").generativeModel(modelName: "gemini-2.0-flash-lite")
     
     /// 依照 prompt 生成文字
     func generateText(from prompt: String) async -> String? {
@@ -412,21 +412,17 @@ class ToolBase: ObservableObject {
     }
     
     /// 依照 Schema 生成回饋
-    func generateResponseFromSchema(schema: Schema, textPrompt: String) async -> GenerateContentResponse? {
+    func generateResponseFromSchema(schema: Schema, prompt: [any Part]) async -> GenerateContentResponse? {
         print("\(toolName) | 正在依照 Schema 生成回應")
         
         // Model 建立
-        let gModel = VertexAI.vertexAI().generativeModel(
-            modelName: "gemeni-2.0-flash-lite-001",
+        let gModel = VertexAI.vertexAI(location: "us-central1").generativeModel(
+            modelName: "gemini-2.0-flash-lite",
             generationConfig: GenerationConfig(
                 responseMIMEType: "application/json",
                 responseSchema: schema
             )
         )
-        
-        // prompt 建立
-        var prompt: [any Part] = []
-        prompt.append(TextPart(textPrompt))
         
         // Content 建立
         let content: [ModelContent] = [ModelContent(role: "user", parts: prompt)]

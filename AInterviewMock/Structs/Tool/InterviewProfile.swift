@@ -10,8 +10,9 @@ import Foundation
 enum InterviewProfileStatus: Codable, Equatable {
     case notStarted             // 尚未開始（模板）
     case prepared               // 已準備好（設定完成）
+    case generateQuestions
     case inProgress             // 正在面試中
-    case analyzing              // 正在分析中
+    case generateResults
     case completed              // 完成（完整）
 }
 
@@ -51,10 +52,10 @@ struct InterviewProfileQuestions: Identifiable, Equatable, Codable {
     // 面試當中問題
     var id = UUID()                             // ID
     var question: String                        // 題目問題（ＡＩ）
-    var answerAudioPath: String                 // 回答語音路徑
-    var answer: String                          // 使用者回答（語音轉文字）
-    var score: Int                              // 評分（ＡＩ）
-    var feedback: String                        // 反饋（ＡＩ）
+    var answerAudioPath: String = ""            // 回答語音路徑
+    var answer: String = ""                     // 使用者回答（語音轉文字）
+    var score: Int = 0                          // 評分（ＡＩ）
+    var feedback: String = ""                   // 反饋（ＡＩ）
 }
 
 struct InterviewProfileFeedbacks: Identifiable, Codable {

@@ -37,7 +37,8 @@ struct CoinModView: View {
                     }
                     .padding([.horizontal, .top], 10)
                     
-                    if let request = ups.coinModifyRequest {
+                    if let request = ups.coinModifyRequest,
+                        let up = ups.currentUserProfile {
                         
                         VStack(alignment: .leading, spacing: 10){
                             HStack(spacing: 10){
@@ -60,14 +61,12 @@ struct CoinModView: View {
                                     .font(.title2)
                                     .bold()
                             }
-                            if let up = ups.currentUserProfile {
-                                Divider()
-                                Text("異動前 \(appearInitCoins) → 異動後 \(appearInitCoins + ups.coinModifyRequest!.amount)")
-                                .font(.caption)
-                                .foregroundStyle(Color(.systemGray))
-                                .onAppear {
-                                    appearInitCoins = up.coins
-                                }
+                            Divider()
+                            Text("異動前 \(appearInitCoins) → 異動後 \(appearInitCoins + ups.coinModifyRequest!.amount)")
+                            .font(.caption)
+                            .foregroundStyle(Color(.systemGray))
+                            .onAppear {
+                                appearInitCoins = up.coins
                             }
                             if let email = ups.currentUserProfile?.userEmail {
                                 Divider()
@@ -137,6 +136,7 @@ struct CoinModView: View {
                                                 try? await Task.sleep(for: .seconds(0.3))
                                                 ups.clearRequest()
                                             }
+                                            oC()
                                         } label: {
                                             HStack{
                                                 Text("取消")
@@ -150,36 +150,53 @@ struct CoinModView: View {
                                         }
                                     }
                                     
-                                    Button {
-                                        buttonPushed = true
-                                        ups.modifyCoins(amount: ups.coinModifyRequest!.amount) { error in
-                                            if let error = error {
-                                                _ = error
-                                            } else {
-                                                if let oC = request.onConfirm {
-                                                    oC()
-                                                }
-                                                withAnimation(.spring(duration: 0.3)) {
-                                                    appear = false
-                                                }
-                                                Task {
-                                                    try? await Task.sleep(for: .seconds(0.3))
-                                                    ups.clearRequest()
-                                                }
-                                            }
-                                        }
-                                    } label: {
+                                    if (up.coins+ups.coinModifyRequest!.amount < 0 && ups.coinModifyRequest!.amount < 0){
+                                        // 餘額不足
+                                        
                                         HStack{
-                                            Text("確認")
+                                            Text("餘額不足")
                                                 .font(.title3)
                                         }
                                         .padding(10)
                                         .padding(.horizontal)
-                                        .foregroundStyle(Color.accentColor)
+                                        .foregroundStyle(Color(.red))
                                         .background(Color("BackgroundR1"))
                                         .clipShape(RoundedRectangle(cornerRadius: 25))
+                                        
+                                    } else {
+                                        
+                                        Button {
+                                            buttonPushed = true
+                                            ups.modifyCoins(amount: ups.coinModifyRequest!.amount) { error in
+                                                if let error = error {
+                                                    _ = error
+                                                } else {
+                                                    withAnimation(.spring(duration: 0.3)) {
+                                                        appear = false
+                                                    }
+                                                    Task {
+                                                        try? await Task.sleep(for: .seconds(0.3))
+                                                        ups.clearRequest()
+                                                    }
+                                                    if let oC = request.onConfirm {
+                                                        oC()
+                                                    }
+                                                }
+                                            }
+                                        } label: {
+                                            HStack{
+                                                Text("確認")
+                                                    .font(.title3)
+                                            }
+                                            .padding(10)
+                                            .padding(.horizontal)
+                                            .foregroundStyle(Color.accentColor)
+                                            .background(Color("BackgroundR1"))
+                                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                                        }
+                                        .disabled(!appear || buttonPushed)
+                                        
                                     }
-                                    .disabled(!appear || buttonPushed)
                                     
                                     Spacer()
                                 }
