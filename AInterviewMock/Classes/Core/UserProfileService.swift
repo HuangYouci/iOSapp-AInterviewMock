@@ -124,6 +124,13 @@ class UserProfileService: ObservableObject {
         print("UPS | 初始化完成。")
     }
     
+    /// `UserProfileService` 的反初始化方法。
+    /// 確保在服務實例被銷毀時，移除任何活動的 Firestore 監聽器，以防止記憶體洩漏。
+    deinit {
+        print("UPS | 反初始化 (deinit) 開始，將移除監聽器 (如果存在)。")
+        stopListeningForUserProfileChanges()
+    }
+    
     /// 檢查指定 Firebase Auth 用戶的應用程式 Profile 是否已存在於 Firestore 中。
     /// 如果 Profile 不存在，則調用 `createNewUserProfile` 方法來創建一個新的 Profile。
     /// 如果 Profile 已存在，則獲取該 Profile 並更新本地緩存 (`currentUserProfile`) 和最後登入時間。
@@ -494,22 +501,86 @@ class UserProfileService: ObservableObject {
             print("UPS | 本地用戶 Profile 數據已清理。")
         }
     }
-    
-    /// `UserProfileService` 的反初始化方法。
-    /// 確保在服務實例被銷毀時，移除任何活動的 Firestore 監聽器，以防止記憶體洩漏。
-    deinit {
-        print("UPS | 反初始化 (deinit) 開始，將移除監聽器 (如果存在)。")
-        stopListeningForUserProfileChanges()
-    }
+
     
     // MARK: - 硬幣相關
-    /// 修改硬幣相關（要修改的額）
-    /// 用於確認硬幣修改，若為 0 表示不用修改
-    @Published var pendingModifyCoinNumber: Int = 0
-    @Published var pendingModifyCoinType: CoinModView.CoinModViewType = .restore
+    /// 修改硬幣相關（要修改的額）與支付顯示
     
-    /// 修改硬幣（安全，外部）
-    func setPendingCoins(amount: Int) {
+    enum UserProfileServiceCoinModifyRequestType {
+        case general
+        case add(item: String)
+        case restore
+        case pay(item: String)
+        
+        var title: String {
+            switch self {
+            case .general:
+                return "代幣異動"
+            case .add(item: let item):
+                return "獲得代幣 - \(item)"
+            case .restore:
+                return "未實現的代幣異動"
+            case .pay(item: let item):
+                return "代幣支付 - \(item)"
+            }
+        }
+    }
+    
+    struct UserProfileServiceCoinModifyRequest {
+        let type: UserProfileServiceCoinModifyRequestType
+        let amount: Int
+        let onConfirm: (() -> Void)?
+        let onCancel: (()->Void)?
+    }
+    
+    @Published var coinModifyRequest: UserProfileServiceCoinModifyRequest? = nil
+    
+    /// 設定待處理硬幣
+    func coinRequest(
+        type: UserProfileServiceCoinModifyRequestType,
+        amount: Int,
+        onConfirm: (()->Void)? = nil,
+        onCancel: (()->Void)? = nil
+    ) {
+        guard coinModifyRequest == nil else {
+            print("UPS | 現有一個請求等候中")
+            return
+        }
+        
+        self.coinModifyRequest = UserProfileServiceCoinModifyRequest(type: type, amount: amount, onConfirm: onConfirm, onCancel: onCancel)
+    }
+    
+    /// 清除待處理
+    func clearRequest() {
+        self.coinModifyRequest = nil
+    }
+    
+    /// 硬幣調整
+    func modifyCoins(amount: Int, completion: @escaping (UserProfileServiceError?) -> Void) {
+        
+        guard !isLoading else {
+            print("UPS | 上一個操作仍在進行中")
+            completion(.generalError(message: "操作繁忙，請稍候"))
+            return
+        }
+        
+        self.isLoading = true
+        self.serviceError = nil
+        
+        guard let uid = Auth.auth().currentUser?.uid else {
+            completion(.userNotAuthenticated)
+            return
+        }
+        
+        // 在內部呼叫底層函式，並傳入一個負數來表示扣除
+        callCloudFunctionToUpdateUserCoins(uid: uid, amount: amount) { [weak self] error in
+            self?.isLoading = false
+            completion(error)
+        }
+    }
+    
+    /// 獲得呼叫：設定待處理硬幣，只能是正數。增加金幣用這裡比較安全。(amount 為待處理的金額)
+    func setGetPendingCoins(amount: Int) {
         print("UPS | 準備將待處理金幣數量 \(amount) 存入 Keychain...")
                 
         // 1. 將整數轉換為 Data
@@ -535,10 +606,6 @@ class UserProfileService: ObservableObject {
         // 1. 使用 KeychainHelper 讀取
         guard let data = KeychainHelper.load(forKey: "keychain.pendingModifyCoinNumber") else {
             print("UPS | Keychain 中沒有找到待處理金幣的記錄。")
-            // 確保本地狀態也是乾淨的
-            DispatchQueue.main.async {
-                self.pendingModifyCoinNumber = 0
-            }
             return
         }
         
@@ -548,87 +615,21 @@ class UserProfileService: ObservableObject {
             print("UPS | 從 Keychain 加載到 \(amount) 枚待處理金幣。")
             // 3. 更新到 @Published 變數，觸發 UI 更新
             DispatchQueue.main.async {
-                self.pendingModifyCoinNumber = amount
+                if amount > 0 {
+                    // 有值
+                    self.coinRequest(type: .restore, amount: amount, onConfirm: {
+                        self.setGetPendingCoins(amount: 0)
+                    })
+                }
             }
         } else {
             print("UPS | 錯誤：從 Keychain 讀取的數據格式不正確。")
-            DispatchQueue.main.async {
-                self.pendingModifyCoinNumber = 0
-            }
         }
     }
     
-    /// 領取待處理的金幣。
-    /// - Parameters:
-    ///   - uid: 當前用戶的 Firebase Auth UID。
-    ///   - completion: 操作完成後的回調。成功時 error 為 nil，失敗時為相應的 UserProfileServiceError。
-    func claimPendingCoins(for uid: String, completion: @escaping (UserProfileServiceError?) -> Void) {
-        
-        guard !isLoading else {
-            print("UPS | 警告: 上一次領取操作仍在進行中，已忽略重複的請求。")
-            completion(.generalError(message: "操作繁忙"))
-            return
-        }
-        
-        // 確保 isLoading 狀態被正確管理，UI 可以顯示進度指示器
-        DispatchQueue.main.async {
-            self.isLoading = true
-            self.serviceError = nil
-        }
-        
-        // 先從 Keychain 讀取最新的待處理數量
-        loadPendingCoins()
-        let amountToClaim = pendingModifyCoinNumber
-        
-        guard amountToClaim > 0 else {
-            print("UPS | 沒有待處理的金幣可以領取。")
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
-            // 雖然不是錯誤，但可以回調 nil 表示操作結束且無錯誤
-            completion(nil)
-            return
-        }
-        
-        // 呼叫後端發放金幣
-        callCloudFunctionToUpdateUserCoins(uid: uid, amount: amountToClaim) { [weak self] error in
-            guard let self = self else {
-                completion(.generalError(message: "Service instance was deallocated."))
-                return
-            }
-
-            // 無論成功或失敗，都結束加載狀態
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
-
-            if let error = error {
-                // 1. 發放失敗，pendingCoins 保持不變，等待下次重試
-                print("UPS | 領取金幣失敗：\(error.localizedDescription)。待處理金幣將保留。")
-                
-                // 將錯誤設定到 serviceError 以便全域觀察
-                DispatchQueue.main.async {
-                    self.serviceError = error
-                }
-                
-                // 透過 completion 回調將錯誤傳遞出去
-                completion(error)
-                return
-            }
-
-            // 2. 發放成功！立即清除 Keychain 中的記錄
-            print("UPS | 後端成功發放 \(amountToClaim) 枚金幣。正在清除本地待處理記錄...")
-            
-            // 使用 setPendingCoins(amount: 0) 來清除記錄（留給ＶＩＥＷ處理）
-            
-            print("UPS | 領取流程成功完成。")
-            // 透過 completion 回調 nil 表示成功
-            completion(nil)
-        }
-    }
-    
-    /// 修改硬幣（內部）
+    /// 增減硬幣。交易呼叫此函數（amount 為 變動值）
     private func callCloudFunctionToUpdateUserCoins(uid: String, amount: Int, completion: @escaping (UserProfileServiceError?) -> Void) {
+        
         guard !uid.isEmpty else {
             print("UPS | 更新金幣錯誤：UID 為空。")
             completion(.generalError(message: "用戶 UID 無效，無法更新金幣。"))
@@ -673,6 +674,5 @@ class UserProfileService: ObservableObject {
             }
         }
     }
-    
     
 }

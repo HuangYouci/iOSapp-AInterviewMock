@@ -248,8 +248,11 @@ class IAPManager: ObservableObject {
         // 調用 UserProfileService 的 pendingCoins 機制，確保獎勵能可靠地送達用戶
         print("IAPManager | 準備將 \(coinAmount) 枚金幣設為待處理...")
         // 這裡的 userProfileService 是被注入的，遵循了依賴反轉原則
-        userProfileService.pendingModifyCoinType = .addBuy
-        userProfileService.setPendingCoins(amount: coinAmount)
+        userProfileService.coinRequest(type: .add(item: "代幣購買"), amount: coinAmount, onConfirm: {
+            self.userProfileService.setGetPendingCoins(amount: 0)
+        })
+        
+        userProfileService.setGetPendingCoins(amount: coinAmount)
     }
 }
 

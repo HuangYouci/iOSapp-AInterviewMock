@@ -8,7 +8,7 @@
 class InterviewTool: ToolBase {
     
     override var toolName: String {
-        return "InterviewProfileDocuments"
+        return "Interview"
     }
     
 }

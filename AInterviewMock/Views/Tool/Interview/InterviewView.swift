@@ -12,7 +12,7 @@ struct InterviewView: View {
     @EnvironmentObject var vm: ViewManager
     @StateObject private var it: InterviewTool = InterviewTool()
     @State private var aip: [InterviewProfile] = []
-    @State private var running: Bool = false
+    @State private var ip: InterviewProfile?
     
     var body: some View {
         VStack(spacing: 0){
@@ -67,7 +67,7 @@ struct InterviewView: View {
                 VStack(alignment: .leading, spacing: 15){
                     
                     Button {
-                        running = true
+                        ip = InterviewProfile(templateName: "notset", templateDescription: "", templateImage: "", templatePrompt: "")
                     } label: {
                         HStack{
                             Spacer()
@@ -108,7 +108,7 @@ struct InterviewView: View {
                                             .frame(width: 20, height: 20)
                                             .foregroundStyle(Color("AppGold"))
                                     }
-                                    Text("每個檔案")
+                                    Text("每個附件")
                                         .font(.caption)
                                 }
                                 VStack(spacing: 3){
@@ -133,8 +133,15 @@ struct InterviewView: View {
                     Text("紀錄")
                         .foregroundStyle(Color(.systemGray))
                     
-                    ForEach(aip){ ip in
-                        Text(ip.templateName)
+                    ForEach(aip){ i in
+                        Button{
+                            ip = i
+                        } label: {
+                            VStack{
+                                Text(i.templateName)
+                            }
+                            .inifBlock(bgColor: Color("BackgroundR1"))
+                        }
                     }
                     
                 }
@@ -153,28 +160,35 @@ struct InterviewView: View {
         .navigationBarHidden(true)
         .onAppear {
             UIApplication.shared.isIdleTimerDisabled = true
-            aip = it.load(all: InterviewProfile.self)
+            load()
         }
         .onDisappear {
             UIApplication.shared.isIdleTimerDisabled = false
         }
-        .fullScreenCover(isPresented: $running) {
-            InterviewView_Holder(ip: InterviewProfile(templateName: "notset", templateDescription: "", templateImage: "", templatePrompt: ""), running: $running)
+        .fullScreenCover(item: $ip) { wip in
+            InterviewView_Holder(ip: wip)
+                .environmentObject(it)
+                .onDisappear {
+                    load()
+                }
         }
+    }
+    
+    private func load() {
+        aip = it.load(all: InterviewProfile.self).sorted(by: { $0.date > $1.date })
     }
 }
 
 struct InterviewView_Holder: View {
     
     @State var ip: InterviewProfile
-    @Binding var running: Bool
     
     var body: some View {
         switch(ip.status){
         case .notStarted:
-            InterviewView_Entry(running: $running, ip: $ip)
+            InterviewView_Entry(ip: $ip)
         case .prepared:
-            Color.red
+            InterviewView_Prepared(ip: $ip)
         case .inProgress:
             Color.green
         case .analyzing:
@@ -187,7 +201,9 @@ struct InterviewView_Holder: View {
 
 struct InterviewView_Entry: View {
     
-    @Binding var running: Bool
+    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject var it: InterviewTool
+    
     @Binding var ip: InterviewProfile
     @State private var session: Int = 0
     
@@ -258,7 +274,7 @@ struct InterviewView_Entry: View {
                             HStack{
                                 actionButton(title: "取消",
                                              requirements: { true },
-                                             onTap: { running = false }
+                                             onTap: { dismiss() }
                                 )
                                 .frame(maxWidth: 100)
                                 actionButton(title: "下一步",
@@ -320,7 +336,7 @@ struct InterviewView_Entry: View {
                                 Text("面試檔案")
                                     .bold()
                                     .font(.title)
-                                Text("提供關於\(ip.templateName)的檔案")
+                                Text("提供關於\(ip.templateName)的附件")
                             }
                             
                             VStack{
@@ -505,7 +521,10 @@ struct InterviewView_Entry: View {
                                 .frame(maxWidth: 100)
                                 actionButton(title: "完成",
                                              requirements: { true },
-                                             onTap: { ip.status = .prepared }
+                                             onTap: {
+                                    saveTempFile()
+                                    ip.status = .prepared
+                                }
                                 )
                             }
                         }
@@ -529,6 +548,7 @@ struct InterviewView_Entry: View {
                         .ignoresSafeArea(edges: [.bottom])
                 }
             )
+            .animation(.easeInOut(duration: 0.3), value: session)
         }
         .background(Color("AccentBackground"))
     }
@@ -553,9 +573,11 @@ struct InterviewView_Entry: View {
         Button {
             onTap()
         } label: {
-            VStack(alignment: .leading){
+            HStack{
+                Spacer()
                 Text(title)
                     .bold()
+                Spacer()
             }
             .inifBlock(fgColor: isDisabled ? Color(.systemGray2) : Color(.white), bgColor: isDisabled ? Color("BackgroundR1") : Color("AccentBackground") )
         }
@@ -563,6 +585,438 @@ struct InterviewView_Entry: View {
         .animation(.easeInOut, value: isDisabled)
     }
     
+    private func saveTempFile() {
+        var files: [String] = []
+        for f in tempFilePath {
+            if let urlString = it.saveFile(from: f, for: ip.id){
+                files.append(urlString)
+            }
+        }
+        ip.filesPath = files
+    }
+    
+}
+
+struct InterviewView_Prepared: View {
+    
+    @Environment(\.dismiss) var dismiss
+    
+    @Binding var ip: InterviewProfile
+    @EnvironmentObject var it: InterviewTool
+    @EnvironmentObject var ups: UserProfileService
+    
+    private var cost: Int {
+        var cost = 10
+        cost += ip.filesPath.count
+        cost += ip.questionNumbers
+        return cost
+    }
+    
+    var body: some View {
+        VStack(spacing: 0){
+            HStack{
+                Text("inif")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                Text("模擬面試")
+                    .font(.title)
+                    .fontWeight(.heavy)
+                Spacer()
+            }
+            .foregroundStyle(Color(.white))
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+            .padding(.bottom, 5)
+            .background(
+                Image("HomeView_Img1")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 400, alignment: .leading)
+                    .mask(
+                        LinearGradient(
+                            gradient: Gradient(colors: [.clear, .white]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+            )
+            
+            ScrollView{
+                
+                VStack(alignment: .leading, spacing: 15){
+                    
+                    Group {
+                        VStack(alignment: .leading){
+                            Text("模擬面試即將開始")
+                                .bold()
+                                .font(.title)
+                            Text("請再調整面試檔案的細節")
+                        }
+                        
+                        Text("檔案資訊")
+                            .foregroundStyle(Color(.systemGray))
+                            .font(.caption)
+                        VStack{
+                            HStack{
+                                Text("檔案名稱")
+                                Spacer()
+                                Text(ip.templateName)
+                                    .foregroundStyle(Color(.systemGray))
+                            }
+                            Divider()
+                                .padding(.vertical, 6.5)
+                            HStack{
+                                Text("檔案問題")
+                                Spacer()
+                                Text("\(ip.preQuestions.filter { $0.required && !$0.answer.isEmpty } .count) / \(ip.preQuestions.count) 題已回答")
+                                    .foregroundStyle(Color(.systemGray))
+                            }
+                            Divider()
+                                .padding(.vertical, 6.5)
+                            HStack{
+                                Text("檔案附件")
+                                Spacer()
+                                Text("\(ip.filesPath.count) 件")
+                                    .foregroundStyle(Color(.systemGray))
+                            }
+                        }
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                        
+                        Text("檔案設定")
+                            .foregroundStyle(Color(.systemGray))
+                            .font(.caption)
+                        
+                        VStack{
+                            HStack{
+                                Text("問題數量")
+                                    .bold()
+                                Spacer()
+                            }
+                            HStack(spacing: 3){
+                                Text("\(ip.questionNumbers)")
+                                    .font(.title3)
+                                Text("題")
+                                Spacer()
+                            }
+                            .animation(.easeInOut, value: ip.questionNumbers)
+                            HStack(spacing: 3){
+                                Button {
+                                    ip.questionNumbers = 5
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("基礎")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionNumbers = 8
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("一般")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionNumbers = 10
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("完整")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionNumbers = 15
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("最多")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        }
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                        
+                        VStack{
+                            HStack{
+                                Text("正式程度")
+                                    .bold()
+                                Spacer()
+                            }
+                            HStack(spacing: 3){
+                                Text(String(format: "%.0f", ip.questionFormalStyle*100))
+                                    .font(.title3)
+                                Text("%")
+                                Spacer()
+                            }
+                            .animation(.easeInOut, value: ip.questionFormalStyle)
+                            HStack(spacing: 3){
+                                Button {
+                                    ip.questionFormalStyle = 0.2
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("輕鬆")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionFormalStyle = 0.5
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("一般")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionFormalStyle = 0.8
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("正式")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionFormalStyle = 1
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("嚴謹")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        }
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                        
+                        VStack{
+                            HStack{
+                                Text("嚴格程度")
+                                    .bold()
+                                Spacer()
+                            }
+                            HStack(spacing: 3){
+                                Text(String(format: "%.0f", ip.questionStrictStyle*100))
+                                    .font(.title3)
+                                Text("%")
+                                Spacer()
+                            }
+                            .animation(.easeInOut, value: ip.questionStrictStyle)
+                            HStack(spacing: 3){
+                                Button {
+                                    ip.questionStrictStyle = 0.2
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("簡單")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionStrictStyle = 0.5
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("一般")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionStrictStyle = 0.8
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("嚴格")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                                Button {
+                                    ip.questionStrictStyle = 1
+                                } label: {
+                                    HStack{
+                                        Spacer()
+                                        Text("嚴厲")
+                                        Spacer()
+                                    }
+                                    .padding(5)
+                                }
+                                .buttonStyle(.plain)
+                                .foregroundStyle(Color(.white))
+                                .background(Color("AccentBackground"))
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        }
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                        
+                        Text("費用")
+                            .foregroundStyle(Color(.systemGray))
+                            .font(.caption)
+                        
+                        VStack{
+                            HStack{
+                                Text("啟動費用")
+                                    .bold()
+                                Spacer()
+                                Text("\(cost)")
+                                    .bold()
+                                Image(systemName: "hockey.puck.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .foregroundStyle(Color("AppGold"))
+                                
+                            }
+                            Divider()
+                            HStack{
+                                Text("基礎費用")
+                                Spacer()
+                                Text("10")
+                                Image(systemName: "hockey.puck.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 15, height: 15)
+                            }
+                            .foregroundStyle(Color(.systemGray))
+                            HStack{
+                                Text("附件")
+                                Spacer()
+                                Text("\(ip.filesPath.count)")
+                                Image(systemName: "hockey.puck.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 15, height: 15)
+                            }
+                            .foregroundStyle(Color(.systemGray))
+                            HStack{
+                                Text("問題")
+                                Spacer()
+                                Text("\(ip.questionNumbers)")
+                                Image(systemName: "hockey.puck.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 15, height: 15)
+                            }
+                            .foregroundStyle(Color(.systemGray))
+                        }
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                        
+                        HStack{
+                            actionButton(title: "儲存並退出",
+                                         requirements: { true },
+                                         onTap: {
+                                save()
+                                dismiss()
+                            }
+                            )
+                            .frame(maxWidth: 150)
+                            actionButton(title: "開始",
+                                         requirements: { true },
+                                         onTap: {
+                                save()
+                                ups.coinRequest(type: .pay(item: "模擬面試"), amount: cost, onConfirm: {
+                                    ip.status = .inProgress
+                                }, onCancel: {
+                                    print("InterviewView | 取消開始面試")
+                                })
+                            }
+                            )
+                        }
+                    }
+                    
+                }
+                .padding(25)
+                .frame(maxWidth: .infinity)
+                .background(Color("Background"))
+                .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+            }
+            .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+            .background(
+                VStack{
+                    Color.clear
+                        .frame(maxHeight: 100)
+                    Color("Background")
+                        .ignoresSafeArea(edges: [.bottom])
+                }
+            )
+        }
+        .background(Color("AccentBackground"))
+    }
+    
+    @ViewBuilder
+    private func actionButton(title: String, requirements: @escaping () -> Bool, onTap: @escaping () -> Void) -> some View {
+        let isDisabled = !(requirements())
+        Button {
+            onTap()
+        } label: {
+            HStack{
+                Spacer()
+                Text(title)
+                    .bold()
+                Spacer()
+            }
+            .inifBlock(fgColor: isDisabled ? Color(.systemGray2) : Color(.white), bgColor: isDisabled ? Color("BackgroundR1") : Color("AccentBackground") )
+        }
+        .disabled(isDisabled)
+        .animation(.easeInOut, value: isDisabled)
+    }
+    
+    private func save() {
+        Task {
+            let _ = it.save(ip)
+        }
+    }
+
 }
 
 #Preview {

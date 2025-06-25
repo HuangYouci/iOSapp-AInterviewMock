@@ -10,7 +10,7 @@ import FirebaseAnalytics
 
 struct ContentView: View {
     
-    @EnvironmentObject var usp: UserProfileService
+    @EnvironmentObject var ups: UserProfileService
     @EnvironmentObject var am: AuthManager
     @EnvironmentObject var vm: ViewManager
     @EnvironmentObject var co: CoinManager
@@ -39,7 +39,7 @@ struct ContentView: View {
             
             // MARK: - Top Views (Top)
             // COIN
-            if (usp.pendingModifyCoinNumber > 0){
+            if (ups.coinModifyRequest != nil){
                 CoinModView()
             }
             // UPDATE

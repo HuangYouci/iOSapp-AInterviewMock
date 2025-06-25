@@ -12,10 +12,13 @@ class ViewManager: ObservableObject {
     static let shared = ViewManager()
     
     enum ViewManagerRoute: Hashable {
+        // Home
         case profile
         case profileDeletion
         case appinfo
         case shop
+        
+        // Tool
         case toolInterview
     }
     

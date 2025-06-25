@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/*
+
 struct SpeechStartView: View {
     
     enum SpeechStartViewState: Equatable {
@@ -462,3 +464,5 @@ struct SpeechStartView: View {
 #Preview{
     SpeechStartView(selected: .constant(DefaultSpeechProfile.test))
 }
+
+*/

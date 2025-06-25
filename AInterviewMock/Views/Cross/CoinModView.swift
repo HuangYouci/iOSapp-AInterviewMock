@@ -7,30 +7,10 @@
 
 import SwiftUI
 
+/// PendingAdd：用於「代幣異動（正）」
+/// 只能同意，不能取消。用於保存持久性（關閉 app 後會自動復原 -> 搭配 UPS, IAP）
+/// 分類：general（未知原因）、addBuy（IAP）、addWatchAd（AdManager）、restore（關閉 app 復原）
 struct CoinModView: View {
-    
-    enum CoinModViewType {
-        case general
-        case addBuy
-        case addWatchAd
-        case removePay
-        case restore        // 預設，錯誤回覆
-        
-        var title: String {
-            switch self {
-            case .general:
-                return "代幣異動"
-            case .addBuy:
-                return "購買代幣"
-            case .addWatchAd:
-                return "代幣獎勵"
-            case .removePay:
-                return "代幣支付"
-            case .restore:
-                return "未實現的代幣異動"
-            }
-        }
-    }
     
     @EnvironmentObject var ups: UserProfileService
     @EnvironmentObject var am: AuthManager
@@ -47,6 +27,7 @@ struct CoinModView: View {
             VStack{
                 Spacer()
                 VStack(alignment: .leading, spacing: 12){
+                    
                     HStack{
                         Text("inif")
                             .font(.largeTitle)
@@ -56,53 +37,11 @@ struct CoinModView: View {
                     }
                     .padding([.horizontal, .top], 10)
                     
-                    VStack(alignment: .leading, spacing: 10){
-                        HStack(spacing: 10){
-                            Image(systemName: "hockey.puck.fill")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 15, height: 15)
-                                .padding(5)
-                                .foregroundStyle(Color(.white))
-                                .background(Color("AppGold"))
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
-                            Text(ups.pendingModifyCoinType.title)
-                            Spacer()
-                        }
-                        VStack(alignment: .leading){
-                            Text("異動數量")
-                                .font(.caption)
-                                .foregroundStyle(Color(.systemGray))
-                            Text("\(ups.pendingModifyCoinNumber)")
-                                .font(.title2)
-                                .bold()
-                        }
-                        if let up = ups.currentUserProfile {
-                            Divider()
-                            Text("異動前 \(appearInitCoins) → 異動後 \(appearInitCoins + ups.pendingModifyCoinNumber)")
-                            .font(.caption)
-                            .foregroundStyle(Color(.systemGray))
-                            .onAppear {
-                                appearInitCoins = up.coins
-                            }
-                        }
-                        if let email = ups.currentUserProfile?.userEmail {
-                            Divider()
-                            VStack(alignment: .leading){
-                                Text("帳號：\(email)")
-                                    .foregroundStyle(Color(.systemGray))
-                                    .font(.caption)
-                            }
-                        }
-                    }
-                    .padding()
-                    .background(Color("BackgroundR1"))
-                    .clipShape(RoundedRectangle(cornerRadius: 25))
-                    
-                    if let error = ups.serviceError {
+                    if let request = ups.coinModifyRequest {
+                        
                         VStack(alignment: .leading, spacing: 10){
                             HStack(spacing: 10){
-                                Image(systemName: "exclamationmark.triangle.fill")
+                                Image(systemName: "hockey.puck.fill")
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 15, height: 15)
@@ -110,57 +49,152 @@ struct CoinModView: View {
                                     .foregroundStyle(Color(.white))
                                     .background(Color("AppGold"))
                                     .clipShape(RoundedRectangle(cornerRadius: 5))
-                                Text("發生錯誤")
+                                Text(request.type.title)
                                 Spacer()
                             }
-                            Text(error.errorDescription)
-                            Divider()
-                            Text("尚未異動的代幣數量將保留，重啟 app 將會重新嘗試")
-                                .foregroundStyle(Color(.systemGray))
+                            VStack(alignment: .leading){
+                                Text("異動數量")
+                                    .font(.caption)
+                                    .foregroundStyle(Color(.systemGray))
+                                Text("\(request.amount)")
+                                    .font(.title2)
+                                    .bold()
+                            }
+                            if let up = ups.currentUserProfile {
+                                Divider()
+                                Text("異動前 \(appearInitCoins) → 異動後 \(appearInitCoins + ups.coinModifyRequest!.amount)")
                                 .font(.caption)
+                                .foregroundStyle(Color(.systemGray))
+                                .onAppear {
+                                    appearInitCoins = up.coins
+                                }
+                            }
+                            if let email = ups.currentUserProfile?.userEmail {
+                                Divider()
+                                VStack(alignment: .leading){
+                                    Text("帳號：\(email)")
+                                        .foregroundStyle(Color(.systemGray))
+                                        .font(.caption)
+                                }
+                            }
                         }
                         .padding()
                         .background(Color("BackgroundR1"))
                         .clipShape(RoundedRectangle(cornerRadius: 25))
-                    } else {
-                        HStack{
-                            Spacer()
-                            Button{
-                                buttonPushed = true
-                                ups.claimPendingCoins(for: am.user!.uid) { error in
-                                    if let error = error {
-                                        _ = error
-                                    } else {
-                                        withAnimation(.spring(duration: 0.3)) {
-                                            appear = false
-                                        }
-                                        Task {
-                                           try? await Task.sleep(for: .seconds(0.3))
-                                            ups.setPendingCoins(amount: 0)
-                                        }
-                                    }
+                        
+                        if let error = ups.serviceError {
+                            VStack(alignment: .leading, spacing: 10){
+                                HStack(spacing: 10){
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 15, height: 15)
+                                        .padding(5)
+                                        .foregroundStyle(Color(.white))
+                                        .background(Color("AppGold"))
+                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                    Text("發生錯誤")
+                                    Spacer()
                                 }
-                            } label: {
-                                if (buttonPushed) {
+                                Text(error.errorDescription)
+                                Divider()
+                                Text("尚未異動的代幣數量將保留，重啟 app 將會重新嘗試")
+                                    .foregroundStyle(Color(.systemGray))
+                                    .font(.caption)
+                            }
+                            .padding()
+                            .background(Color("BackgroundR1"))
+                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                        } else {
+                            
+                            // 沒錯誤
+                            
+                            if (buttonPushed || !appear){
+                                
+                                // 載入中
+                                HStack{
+                                    Spacer()
                                     LoadViewElement(circleLineWidth: 7)
                                         .frame(width: 40, height: 40)
-                                } else {
-                                    HStack{
-                                        Text("確認")
-                                            .font(.title3)
-                                    }
-                                    .padding(10)
-                                    .padding(.horizontal)
-                                    .foregroundStyle(Color.accentColor)
-                                    .background(Color("BackgroundR1"))
-                                    .clipShape(RoundedRectangle(cornerRadius: 25))
+                                    Spacer()
                                 }
+                                .padding(.vertical, 3)
+                                
+                            } else {
+                             
+                                // 載入成功
+                                
+                                HStack{
+                                    Spacer()
+                                    
+                                    if let oC = request.onCancel {
+                                        Button {
+                                            buttonPushed = true
+                                            withAnimation(.spring(duration: 0.3)) {
+                                                appear = false
+                                            }
+                                            Task {
+                                                try? await Task.sleep(for: .seconds(0.3))
+                                                ups.clearRequest()
+                                            }
+                                        } label: {
+                                            HStack{
+                                                Text("取消")
+                                                    .font(.title3)
+                                            }
+                                            .padding(10)
+                                            .padding(.horizontal)
+                                            .foregroundStyle(Color.accentColor)
+                                            .background(Color("BackgroundR1"))
+                                            .clipShape(RoundedRectangle(cornerRadius: 25))
+                                        }
+                                    }
+                                    
+                                    Button {
+                                        buttonPushed = true
+                                        ups.modifyCoins(amount: ups.coinModifyRequest!.amount) { error in
+                                            if let error = error {
+                                                _ = error
+                                            } else {
+                                                if let oC = request.onConfirm {
+                                                    oC()
+                                                }
+                                                withAnimation(.spring(duration: 0.3)) {
+                                                    appear = false
+                                                }
+                                                Task {
+                                                    try? await Task.sleep(for: .seconds(0.3))
+                                                    ups.clearRequest()
+                                                }
+                                            }
+                                        }
+                                    } label: {
+                                        HStack{
+                                            Text("確認")
+                                                .font(.title3)
+                                        }
+                                        .padding(10)
+                                        .padding(.horizontal)
+                                        .foregroundStyle(Color.accentColor)
+                                        .background(Color("BackgroundR1"))
+                                        .clipShape(RoundedRectangle(cornerRadius: 25))
+                                    }
+                                    .disabled(!appear || buttonPushed)
+                                    
+                                    Spacer()
+                                }
+                                
                             }
-                            .disabled(!appear || buttonPushed)
-                            Spacer()
+                            
                         }
+                        
+                    } else {
+                        
+                        LoadViewElement()
+                            .frame(width: 50, height: 50)
+                        
                     }
-                    
+                
                 }
                 .padding()
                 .background(Color("Background"))
@@ -180,11 +214,3 @@ struct CoinModView: View {
         }
     }
 }
-
-//#Preview {
-//    ZStack{
-//        LinearGradient(colors: [.blue, .black], startPoint: .top, endPoint: .bottom)
-//            .ignoresSafeArea(.all)
-//        CoinModView()
-//    }
-//}

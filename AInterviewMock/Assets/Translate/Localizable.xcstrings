@@ -7,6 +7,9 @@
     "#%lld" : {
 
     },
+    "%" : {
+
+    },
     "%lld" : {
       "localizations" : {
         "en" : {
@@ -22,6 +25,19 @@
           }
         }
       }
+    },
+    "%lld / %lld 題已回答" : {
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld 題已回答"
+          }
+        }
+      }
+    },
+    "%lld 件" : {
+
     },
     "5" : {
 
@@ -1081,6 +1097,7 @@
     },
     "InterviewFileView_addNewFileButton" : {
       "comment" : "Button text to add a new file",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1098,6 +1115,7 @@
     },
     "InterviewFileView_clearAllFilesButton" : {
       "comment" : "Button text to clear all selected files",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1115,6 +1133,7 @@
     },
     "InterviewFileView_fileSizeFormatMB" : {
       "comment" : "Format string for file size in MB, e.g. '%.2f MB'. The %.2f will be replaced by the file size.",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1132,6 +1151,7 @@
     },
     "InterviewFileView_fileTooLargeError" : {
       "comment" : "Error message when a selected file is too large.",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1149,6 +1169,7 @@
     },
     "InterviewFileView_titleLine1" : {
       "comment" : "First line of the title on the file selection screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1166,6 +1187,7 @@
     },
     "InterviewFileView_titleLine2" : {
       "comment" : "Second line of the title on the file selection screen",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -5030,6 +5052,9 @@
     "一次性獲得代幣" : {
 
     },
+    "一般" : {
+
+    },
     "代幣" : {
 
     },
@@ -5048,6 +5073,9 @@
     "使用條款" : {
 
     },
+    "最多" : {
+
+    },
     "刪除" : {
 
     },
@@ -5060,10 +5088,34 @@
     "加載中" : {
 
     },
+    "取消" : {
+
+    },
+    "問題" : {
+
+    },
+    "問題數量" : {
+
+    },
     "嘗試復原帳號的訂閱型或非消耗型購買紀錄" : {
 
     },
+    "嚴厲" : {
+
+    },
+    "嚴格" : {
+
+    },
+    "嚴格程度" : {
+
+    },
+    "嚴謹" : {
+
+    },
     "在一段期間內可觀看一定次數" : {
+
+    },
+    "基礎" : {
 
     },
     "基礎費用" : {
@@ -5073,6 +5125,9 @@
 
     },
     "完成後無法再修改" : {
+
+    },
+    "完整" : {
 
     },
     "將先前存於本機的代幣轉移到本帳號中" : {
@@ -5096,7 +5151,10 @@
     "復原購買" : {
 
     },
-    "提供關於%@的檔案" : {
+    "提供關於%@的附件" : {
+
+    },
+    "啟動費用" : {
 
     },
     "條款與政策" : {
@@ -5109,6 +5167,9 @@
 
     },
     "模擬面試" : {
+
+    },
+    "模擬面試即將開始" : {
 
     },
     "模擬面試類型" : {
@@ -5132,6 +5193,9 @@
     "檔案數量不得超過 5 件" : {
 
     },
+    "檔案設定" : {
+
+    },
     "檔案資訊" : {
 
     },
@@ -5141,13 +5205,19 @@
     "檢測到版本更新！" : {
 
     },
+    "正式" : {
+
+    },
+    "正式程度" : {
+
+    },
     "此操作無法復原" : {
 
     },
     "每個問題" : {
 
     },
-    "每個檔案" : {
+    "每個附件" : {
 
     },
     "測試版" : {
@@ -5218,6 +5288,9 @@
     "答案" : {
 
     },
+    "簡單" : {
+
+    },
     "紀錄" : {
 
     },
@@ -5233,6 +5306,9 @@
     "觀看廣告" : {
 
     },
+    "請再調整面試檔案的細節" : {
+
+    },
     "請確認所有關於%@的資訊" : {
 
     },
@@ -5246,6 +5322,9 @@
 
     },
     "購買代幣" : {
+
+    },
+    "輕鬆" : {
 
     },
     "輕鬆獲得代幣" : {
@@ -5275,6 +5354,9 @@
     "開發者資訊" : {
 
     },
+    "附件" : {
+
+    },
     "隱私政策" : {
 
     },
@@ -5285,6 +5367,9 @@
 
     },
     "面試細節" : {
+
+    },
+    "題" : {
 
     },
     "點擊嘗試" : {

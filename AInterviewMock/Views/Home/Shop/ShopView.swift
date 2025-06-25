@@ -85,8 +85,7 @@ struct ShopView: View {
                                     // 如果沒有正在 present 的畫面，再顯示廣告
                                     if topVC.presentedViewController == nil {
                                         ad.showAd(from: topVC) {
-                                            ups.pendingModifyCoinType = .addWatchAd
-                                            ups.setPendingCoins(amount: 5)
+                                            ups.coinRequest(type: .add(item: "觀看廣告"), amount: 5)
                                         }
                                     } else {
                                         print("ShopView | 目前有畫面正在展示，無法顯示廣告")
@@ -132,9 +131,14 @@ struct ShopView: View {
                         // Depreciatied: Remove after sss version
                         if(co.coins > 0){
                             Button {
-                                ups.pendingModifyCoinType = .general
-                                ups.setPendingCoins(amount: co.coins)
+                                ups.coinRequest(type: .add(item: "舊版本代幣遷移"), amount: co.coins, onConfirm: {
+                                    ups.setGetPendingCoins(amount: 0)
+                                    co.resetKeychainDataForTesting()
+                                })
+                                
+                                ups.setGetPendingCoins(amount: co.coins)
                                 co.resetKeychainDataForTesting()
+                                
                                 // clear
                             } label: {
                                 VStack(alignment: .leading){

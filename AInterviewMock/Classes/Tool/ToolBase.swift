@@ -78,9 +78,10 @@ class ToolBase: ObservableObject {
     /// 嘗試將任何遵守 `Identifiable` 協定的物件序列化成 JSON 並儲存。
     /// 此函式【假設】物件的 `id` 屬性是 `UUID` 類型。如果不是，將會直接返回 nil。
     /// 儲存路徑為：.../Documents/<toolName>/<object.id>.json
-    /// - Parameter object: 要儲存的物件，它必須遵守 Identifiable 協定，並且最好是 Encodable 的。
+    /// - Parameters:
+    ///     - _: 要儲存的物件，它必須遵守 Identifiable 協定，並且最好是 Encodable 的。
     /// - Returns: 如果成功，返回儲存後新檔案的 URL；如果失敗，返回 `nil`。
-    func save(identifiable object: any Identifiable & Encodable) -> URL? {
+    func save(_ object: any Identifiable & Encodable) -> URL? {
         
         // 1. 核心檢查：使用 guard let 和 as? 來「假設」並安全地解包 UUID
         // 如果 object.id 無法被轉換為 UUID，函式會立即執行 else 區塊並返回 nil。
@@ -92,7 +93,6 @@ class ToolBase: ObservableObject {
         let fileManager = FileManager.default
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        encoder.dateEncodingStrategy = .iso8601
 
         // 2. 獲取 App 的 Documents 目錄 URL
         guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -100,8 +100,10 @@ class ToolBase: ObservableObject {
             return nil
         }
         
-        // 3. 創建目標【資料夾】路徑：.../Documents/<toolName>/
-        let destinationFolderURL = documentsURL.appendingPathComponent(self.toolName, isDirectory: true)
+        // 3. 創建目標【資料夾】路徑：.../Documents/<toolName>/<uuid>/<toolName>.json
+        let destinationFolderURL = documentsURL
+                                    .appendingPathComponent(self.toolName, isDirectory: true)
+                                    .appendingPathComponent(uuid.uuidString, isDirectory: true)
         
         do {
             try fileManager.createDirectory(at: destinationFolderURL, withIntermediateDirectories: true, attributes: nil)
@@ -112,7 +114,7 @@ class ToolBase: ObservableObject {
         
         // 4. 創建最終的目標【檔案】路徑，檔名為 uuid.json
         let destinationFileURL = destinationFolderURL
-            .appendingPathComponent(uuid.uuidString)
+            .appendingPathComponent(self.toolName)
             .appendingPathExtension("json")
             
         // 5. 將物件編碼成 JSON Data
@@ -159,34 +161,32 @@ class ToolBase: ObservableObject {
         var loadedObjects: [T] = []
         
         do {
-            // 4. 獲取資料夾內所有檔案的 URL
-            let fileURLs = try fileManager.contentsOfDirectory(at: sourceFolderURL, includingPropertiesForKeys: nil)
+            // 獲取根目錄下的所有子目錄
+            let subfolderURLs = try fileManager.contentsOfDirectory(at: sourceFolderURL, includingPropertiesForKeys: [.isDirectoryKey])
             
-            // 5. 遍歷每一個檔案 URL
-            for fileURL in fileURLs {
-                // 我們只對 .json 檔案感興趣
-                guard fileURL.pathExtension == "json" else {
+            // 便利每一個子目錄
+            for subfolderURL in subfolderURLs {
+                let resourceValues = try? subfolderURL.resourceValues(forKeys: [.isDirectoryKey])
+                guard resourceValues?.isDirectory == true else {
                     continue
                 }
                 
-                do {
-                    // 6. 讀取檔案內容到 Data
-                    let jsonData = try Data(contentsOf: fileURL)
-                    
-                    // 7. 嘗試將 JSON Data 解碼為目標類型 T
-                    let object = try decoder.decode(T.self, from: jsonData)
-                    
-                    // 8. 如果解碼成功，將其加入到我們的結果陣列中
-                    loadedObjects.append(object)
-                    
-                } catch let decodingError as DecodingError {
-                    // 如果某個檔案解碼失敗（例如，它不是我們想要的類型），就打印一個警告並繼續處理下一個檔案
-                    print("\(toolName) | 警告：解碼檔案 \(fileURL.lastPathComponent) 失敗: \(decodingError.localizedDescription)")
-                    continue
-                } catch {
-                    // 處理其他讀取檔案的錯誤
-                    print("\(toolName) | 警告：讀取檔案 \(fileURL.lastPathComponent) 時發生錯誤: \(error.localizedDescription)")
-                    continue
+                // 存於「toolName.json」
+                var profileFileURL = subfolderURL
+                profileFileURL.appendPathComponent(self.toolName)
+                profileFileURL.appendPathExtension("json")
+                
+                // 5. 如果 profile.json 存在，就嘗試讀取和解碼
+                if fileManager.fileExists(atPath: profileFileURL.path) {
+                    do {
+                        let jsonData = try Data(contentsOf: profileFileURL)
+                        let object = try decoder.decode(T.self, from: jsonData)
+                        loadedObjects.append(object)
+                    } catch {
+                        // 如果某個 profile.json 解碼失敗，打印錯誤並繼續
+                        print("\(toolName) | 警告：解碼檔案 \(profileFileURL.lastPathComponent) 失敗: \(error)")
+                        continue
+                    }
                 }
             }
         } catch {
@@ -327,7 +327,6 @@ class ToolBase: ObservableObject {
     }
     
     /// 依照語音路徑語音轉文字
-    
     func generateAudioText(source audioPath: String) async -> String {
         
         // 1. Validate source path
@@ -412,4 +411,34 @@ class ToolBase: ObservableObject {
         }
     }
     
+    /// 依照 Schema 生成回饋
+    func generateResponseFromSchema(schema: Schema, textPrompt: String) async -> GenerateContentResponse? {
+        print("\(toolName) | 正在依照 Schema 生成回應")
+        
+        // Model 建立
+        let gModel = VertexAI.vertexAI().generativeModel(
+            modelName: "gemeni-2.0-flash-lite-001",
+            generationConfig: GenerationConfig(
+                responseMIMEType: "application/json",
+                responseSchema: schema
+            )
+        )
+        
+        // prompt 建立
+        var prompt: [any Part] = []
+        prompt.append(TextPart(textPrompt))
+        
+        // Content 建立
+        let content: [ModelContent] = [ModelContent(role: "user", parts: prompt)]
+        
+        // Response 建立（回傳 GenerateContentResponse）
+        let response: GenerateContentResponse
+        do {
+            response = try await gModel.generateContent(content)
+        } catch {
+            return nil
+        }
+        
+        return response
+    }
 }
