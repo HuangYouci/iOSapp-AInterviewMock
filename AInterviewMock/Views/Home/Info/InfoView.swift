@@ -119,7 +119,7 @@ struct InfoView: View {
                                 }
                             }
                         }
-                        .inifBlock(bgColor: Color("BackgroundR1"))
+                        .inifBlock(fgColor: Color.accentColor, bgColor: Color("BackgroundR1"))
                         .padding(.bottom, 10)
                         
                     }

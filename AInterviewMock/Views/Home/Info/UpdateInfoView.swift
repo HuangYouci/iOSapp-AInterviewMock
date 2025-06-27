@@ -27,12 +27,14 @@ struct UpdateInfoView: View {
             VStack{
                 Link(destination: URL(string: "https://apps.apple.com/tw/app/id6745684106")!){
                     HStack{
+                        Spacer()
                         Text("至 App Store 更新")
                         Image(systemName: "chevron.right")
                             .resizable()
                             .scaledToFit()
                             .foregroundStyle(Color(.systemGray))
                             .frame(width: 15, height: 15)
+                        Spacer()
                     }
                 }
             }

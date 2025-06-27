@@ -132,9 +132,8 @@
 			developmentRegion = "zh-Hant";
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				Base,
 				"zh-Hant",
-				en,
+				Base,
 			);
 			mainGroup = 731D45782DC770C70006F044;
 			minimizedProjectReferenceProxies = 1;

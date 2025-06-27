@@ -12,7 +12,6 @@ struct InterviewView: View {
     @EnvironmentObject var vm: ViewManager
     @EnvironmentObject var it: InterviewTool
     @State private var aip: [InterviewProfile] = []
-    @State private var ip: InterviewProfile?
     
     var body: some View {
         VStack(spacing: 0){
@@ -67,7 +66,7 @@ struct InterviewView: View {
                 VStack(alignment: .leading, spacing: 15){
                     
                     Button {
-                        vm.setTopView(InterviewView_Holder(ip: InterviewProfile(templateName: "notset", templateDescription: "", templateImage: "", templatePrompt: "")))
+                        vm.setTopView(InterviewView_Holder(ip: InterviewProfile(templateName: "notset", templateDescription: "", templatePrompt: "")))
                     } label: {
                         HStack{
                             Spacer()
@@ -133,16 +132,23 @@ struct InterviewView: View {
                     Text("紀錄")
                         .foregroundStyle(Color(.systemGray))
                     
-                    ForEach(aip){ i in
-                        Button{
-                            vm.setTopView(InterviewView_Holder(ip: i))
-                        } label: {
-                            VStack{
-                                Text(i.templateName)
+                    VStack(alignment: .leading){
+                        ForEach(aip.indices, id: \.self){ index in
+                            let i = aip[index]
+                            Button{
+                                vm.setTopView(InterviewView_Holder(ip: i))
+                            } label: {
+                                HStack{
+                                    Text(i.name.isEmpty ? i.templateName : i.name)
+                                }
                             }
-                            .inifBlock(bgColor: Color("BackgroundR1"))
+                            if(index < aip.count-1){
+                                Divider()
+                                    .padding(.vertical, 6.5)
+                            }
                         }
                     }
+                    .inifBlock(fgColor: Color.accentColor, bgColor: Color("BackgroundR1"))
                     
                 }
                 .padding(25)
@@ -170,18 +176,32 @@ struct InterviewView: View {
         }
     }
     
-    private func load() {
+    func load() {
         aip = it.load(all: InterviewProfile.self).sorted(by: { $0.date > $1.date })
     }
 }
 
 struct InterviewView_Holder: View {
     
+    @EnvironmentObject var vm: ViewManager
     @State var ip: InterviewProfile
     
     var body: some View {
         VStack(spacing: 0){
             HStack{
+                if ip.status == .completed {
+                    Button{
+                        vm.clearTopView()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20, height: 20)
+                            .padding(8)
+                            .background(Color("AccentBackgroundP1"))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    }
+                }
                 Text("inif")
                     .font(.largeTitle)
                     .fontWeight(.heavy)
@@ -209,10 +229,10 @@ struct InterviewView_Holder: View {
                 InterviewView_Progress(ip: $ip)
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             case .generateResults:
-                EmptyView()
+                InterviewView_GenerateResults(ip: $ip)
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             case .completed:
-                EmptyView()
+                InterviewView_Completed(ip: $ip)
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             }
         }
@@ -1009,6 +1029,8 @@ struct InterviewView_GenerateQuestions: View {
     @EnvironmentObject var it: InterviewTool
     @EnvironmentObject var ups: UserProfileService
     
+    @State private var loadingProcess: String = "生成題目中"
+    
     var body: some View {
         
         VStack(spacing: 15){
@@ -1017,7 +1039,7 @@ struct InterviewView_GenerateQuestions: View {
             
             LoadViewElement(circleLineWidth: 7)
                 .frame(width: 50, height: 50)
-            Text("生成面試問題中...")
+            Text(loadingProcess)
             
             Spacer()
             
@@ -1033,20 +1055,14 @@ struct InterviewView_GenerateQuestions: View {
                     ip = ri
                     let _ = it.save(ip)
                 } else {
+                    loadingProcess = "生目失敗。請重啟 app，點擊該檔案重試"
                     print("Generate Failed")
                 }
             }
         }
     }
-    
-    private func save() {
-        Task {
-            let _ = it.save(ip)
-        }
-    }
 
 }
-
 
 struct InterviewView_Progress: View {
     
@@ -1056,6 +1072,117 @@ struct InterviewView_Progress: View {
     @EnvironmentObject var it: InterviewTool
     @EnvironmentObject var ups: UserProfileService
     
+    @State private var cur: Int = 0
+    @State private var timer: Timer? = nil
+    @State private var timerSec: Int = 0
+    
+    var body: some View {
+        
+        VStack(alignment: .leading, spacing: 15){
+            
+            Text("第 \(cur+1) 題")
+            
+            Text(ip.questions[cur].question)
+                .bold()
+                .font(.title2)
+            
+            Spacer()
+            
+            HStack{
+                VStack(alignment: .leading){
+                    HStack{
+                        Circle()
+                            .frame(width: 10, height: 10)
+                            .foregroundStyle(Color(.red))
+                            .opacity(timerSec%2 == 0 ? 1 : 0.5)
+                            .animation(.linear(duration: 1), value: timerSec)
+                        Text("錄製中")
+                            .bold()
+                    }
+                    Text("系統正錄製您的回答")
+                }
+                Spacer()
+                Text(String(format: "%02d:%02d", timerSec/60, timerSec%60))
+                    .font(.title3)
+                    .bold()
+            }
+            .inifBlock(bgColor: Color("BackgroundR1"))
+            
+            HStack{
+                actionButton(title: cur < ip.questions.count-1 ? "下一題" : "完成", requirements: { true }, onTap: {
+                    next()
+                })
+            }
+            
+        }
+        .padding(25)
+        .frame(maxWidth: .infinity)
+        .background(Color("Background"))
+        .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+        .ignoresSafeArea(edges: [.bottom])
+        .onAppear {
+            startTimer()
+            it.startRecording()
+        }
+        .onDisappear {
+            stopTimer()
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func actionButton(title: String, requirements: @escaping () -> Bool, onTap: @escaping () -> Void) -> some View {
+        let isDisabled = !(requirements())
+        Button {
+            onTap()
+        } label: {
+            HStack{
+                Spacer()
+                Text(title)
+                    .bold()
+                Spacer()
+            }
+            .inifBlock(fgColor: isDisabled ? Color(.systemGray2) : Color(.white), bgColor: isDisabled ? Color("BackgroundR1") : Color("AccentBackground") )
+        }
+        .disabled(isDisabled)
+        .animation(.easeInOut, value: isDisabled)
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    private func startTimer() {
+        stopTimer()
+        timerSec = 0
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true){ _ in
+            timerSec += 1
+        }
+    }
+
+    private func next() {
+        ip.questions[cur].answerAudioPath = it.saveFile(from: it.stopRecording()!, for: ip.id)!
+        
+        if (cur < ip.questions.count-1) {
+            it.startRecording()
+            cur += 1
+        } else {
+            ip.status = .generateResults
+            let _ = it.save(ip)
+        }
+    }
+    
+}
+
+struct InterviewView_GenerateResults: View {
+    
+    @Binding var ip: InterviewProfile
+    @EnvironmentObject var it: InterviewTool
+    @EnvironmentObject var ups: UserProfileService
+    
+    @State private var loadingProcess: String = "生成結果中"
+    
     var body: some View {
         
         VStack(spacing: 15){
@@ -1064,7 +1191,7 @@ struct InterviewView_Progress: View {
             
             LoadViewElement(circleLineWidth: 7)
                 .frame(width: 50, height: 50)
-            Text("生成面試問題中...")
+            Text(loadingProcess)
             
             Spacer()
             
@@ -1074,9 +1201,153 @@ struct InterviewView_Progress: View {
         .background(Color("Background"))
         .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
         .ignoresSafeArea(edges: [.bottom])
-        
+        .onAppear {
+            Task{
+                // 1. 轉錄音訊
+                for (index, question) in ip.questions.enumerated() {
+                    let _ = question
+                    loadingProcess = "生成結果中 - 轉錄回答 \(index+1)"
+                    ip.questions[index].answer = await it.generateAudioText(source: ip.questions[index].answerAudioPath)
+                }
+                
+                // 2. 生成回答
+                loadingProcess = "生成結果中 - 分析結果"
+                if let ri = await it.generateResults(i: ip) {
+                    ip = ri
+                    let _ = it.save(ip)
+                } else {
+                    loadingProcess = "分析失敗。請重啟 app，點擊該檔案重試"
+                    print("Generate Failed")
+                }
+            }
+        }
     }
 
+}
+
+struct InterviewView_Completed: View {
+    
+    @Binding var ip: InterviewProfile
+    @EnvironmentObject var it: InterviewTool
+    @EnvironmentObject var ups: UserProfileService
+    
+    @State private var displayBlockScore: CGFloat = 100
+    
+    var body: some View {
+        
+        ScrollView{
+            
+            VStack(alignment: .leading, spacing: 15){
+                
+                Group {
+                    
+                    VStack(alignment: .leading){
+                        Text(ip.name)
+                            .bold()
+                            .font(.title)
+                        Text(ip.templateName)
+                        HStack{
+                            Spacer()
+                            Text({
+                                let formatter = DateFormatter()
+                                formatter.dateFormat = "yyyy/MM/dd HH:mm"
+                                return formatter.string(from: ip.date)
+                            }())
+                        }
+                    }
+                    
+                    VStack(alignment: .leading){
+                        Text("得分")
+                        Text("\(ip.overallRating)")
+                            .font(.title)
+                            .bold()
+                        HStack(spacing: 0){
+                            Rectangle()
+                                .fill(Color("AccentBackground"))
+                                .frame(width: (displayBlockScore/100 * CGFloat(ip.overallRating)))
+                                .animation(.spring(duration: 2.0), value: displayBlockScore)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                            Rectangle()
+                                .fill(Color("Background"))
+                        }
+                        .frame(height: 8)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                        .padding(.top, -10)
+                        .background(GeometryReader { proxy in
+                            Color.clear
+                                .onAppear {
+                                    self.displayBlockScore = proxy.size.width
+                                }
+                                .onChange(of: proxy.size){ t in
+                                    self.displayBlockScore = t.width
+                                }
+                        })
+                    }
+                    .inifBlock(bgColor: Color("BackgroundR1"))
+                    
+                    VStack(alignment: .leading){
+                        Text("整體評價")
+                            .bold()
+                        Text(ip.feedback)
+                    }
+                    .inifBlock(bgColor: Color("BackgroundR1"))
+                    
+                    Text("回饋")
+                        .foregroundStyle(Color(.systemGray))
+                        .font(.caption)
+                    
+                    ForEach(ip.feedbacks) { i in
+                        VStack(alignment: .leading){
+                            Text(i.content)
+                                .bold()
+                            Text(i.suggestion)
+                        }
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                    }
+                    
+                    Text("問答")
+                        .foregroundStyle(Color(.systemGray))
+                        .font(.caption)
+                    
+                    ForEach(ip.questions) { i in
+                        VStack(alignment: .leading){
+                            Text(i.question)
+                                .padding(.leading, 10)
+                                .overlay(alignment: .leading){
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color(.systemGray))
+                                        .frame(width: 4)
+                                }
+                                .padding(.bottom, 2)
+                            Text(i.answer)
+                            Divider()
+                            Text("\(i.score) 分")
+                                .bold()
+                            Text(i.feedback)
+                        }
+                        .inifBlock(bgColor: Color("BackgroundR1"))
+                    }
+                    
+                }
+                
+            }
+            .padding(25)
+            .frame(maxWidth: .infinity)
+            .background(Color("Background"))
+            .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+        }
+        .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+        .background(
+            VStack{
+                Color.clear
+                    .frame(maxHeight: 100)
+                Color("Background")
+                    .ignoresSafeArea(edges: [.bottom])
+            }
+        )
+        
+    }
+    
 }
 
 #Preview {

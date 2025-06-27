@@ -67,7 +67,7 @@ class ToolBase: ObservableObject {
             print("\(toolName) | 檔案成功儲存至: \(destinationFileURL.path)")
             
             // 6. ✅ 回傳新檔案的 URL 字串
-            return destinationFileURL.absoluteString
+            return destinationFileURL.path
             
         } catch {
             print("\(toolName) | 複製檔案時發生錯誤: \(error.localizedDescription)")
@@ -383,7 +383,7 @@ class ToolBase: ObservableObject {
         Transcribe the following audio to text. Output only the spoken words, with no commentary.
         If the language is Chinese, use Traditional Chinese characters (繁體字), not Simplified.
         If the audio is empty or unclear, return an empty string.
-        Do not add empty line at end.
+        Do not add new line at end.
         """
         let textPart = TextPart(transcriptionPrompt)
 
@@ -396,7 +396,7 @@ class ToolBase: ObservableObject {
 
             if let transcribedText = response.text, !transcribedText.isEmpty {
                 print("GeminiService | Audio transcribed successfully. Length: \(transcribedText.count)")
-                return transcribedText
+                return transcribedText.trimmingCharacters(in: .newlines)
             } else if response.text != nil && response.text!.isEmpty {
                 print("GeminiService | Gemini returned an empty transcription (possibly silent or unintelligible audio).")
                 return ""

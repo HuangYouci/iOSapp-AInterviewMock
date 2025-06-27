@@ -45,7 +45,6 @@ class ViewManager: ObservableObject {
     func perviousPage() {
         if (!path.isEmpty){
             path.removeLast()
-            calRn()
         }
     }
     
@@ -54,7 +53,6 @@ class ViewManager: ObservableObject {
         withAnimation {
             topView = AnyView(view)
         }
-        calRn()
     }
     
     /// 清除 Top View

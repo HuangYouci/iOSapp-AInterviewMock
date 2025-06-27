@@ -2,17 +2,12 @@
   "sourceLanguage" : "zh-Hant",
   "strings" : {
     "CFBundleDisplayName" : {
-      "extractionState" : "manual",
+      "comment" : "Bundle display name",
+      "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "inif"
-          }
-        },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "new",
             "value" : "inif"
           }
         }
@@ -22,12 +17,6 @@
       "comment" : "Bundle name",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AInterviewMock"
-          }
-        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "new",
