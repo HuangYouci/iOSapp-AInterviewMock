@@ -38,17 +38,17 @@ struct InterviewView: View {
             .padding(.vertical, 5)
             .padding(.bottom, 5)
             
+            HStack{
+                Text("模擬面試")
+                    .font(.largeTitle)
+                    .fontWeight(.heavy)
+                    .foregroundStyle(Color(.white))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal)
+            .padding(.vertical, 30)
+            
             ScrollView{
-                
-                HStack{
-                    Text("模擬面試")
-                        .font(.largeTitle)
-                        .fontWeight(.heavy)
-                        .foregroundStyle(Color(.white))
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
-                .padding(.vertical, 30)
                 
                 VStack(alignment: .leading, spacing: 15){
                     
@@ -140,9 +140,9 @@ struct InterviewView: View {
                 }
                 .padding(25)
                 .frame(maxWidth: .infinity)
-                .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
+            .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
         
         }
         .background(
