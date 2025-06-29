@@ -962,7 +962,7 @@ struct InterviewView_Prepared: View {
                         actionButton(title: "儲存並退出",
                                      requirements: { true },
                                      onTap: {
-                            save()
+                            let _ = it.save(ip)
                             vm.clearTopView()
                         }
                         )
@@ -970,7 +970,7 @@ struct InterviewView_Prepared: View {
                         actionButton(title: "開始",
                                      requirements: { true },
                                      onTap: {
-                            save()
+                            let _ = it.save(ip)
                             ups.coinRequest(type: .pay(item: "模擬面試"), amount: -cost, onConfirm: {
                                 ip.status = .generateQuestions
                                 let _ = it.save(ip)
@@ -1007,12 +1007,6 @@ struct InterviewView_Prepared: View {
         }
         .disabled(isDisabled)
         .animation(.easeInOut, value: isDisabled)
-    }
-    
-    private func save() {
-        Task {
-            let _ = it.save(ip)
-        }
     }
 
 }

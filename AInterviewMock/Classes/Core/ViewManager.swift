@@ -46,6 +46,7 @@ class ViewManager: ObservableObject {
         if (!path.isEmpty){
             path.removeLast()
         }
+        calRn()
     }
     
     /// 新增 Top View
@@ -53,6 +54,7 @@ class ViewManager: ObservableObject {
         withAnimation {
             topView = AnyView(view)
         }
+        calRn()
     }
     
     /// 清除 Top View
@@ -67,8 +69,9 @@ class ViewManager: ObservableObject {
     private func calRn() {
         var number: Int = 0
         number += path.count
-        number += (topView != nil ? 1 : 0) * 10
+        number += (topView != nil ? 1 : 0)
         rn = number
+        print("ViewManager | rn is \(rn) now.")
     }
     
 }
