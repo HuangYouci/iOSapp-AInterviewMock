@@ -87,39 +87,6 @@ struct HomeView: View {
                         }
                         HStack{
                             Button {
-                                // vm.addPage(view: SpeechView())
-                            } label: {
-                                VStack(alignment: .leading){
-                                    Text("模擬演講")
-                                        .font(.title)
-                                        .bold()
-                                        .foregroundStyle(Color(.white))
-                                    HStack{
-                                        Spacer()
-                                    }
-                                }
-                                .padding()
-                                .frame(height: 100, alignment: .topLeading)
-                                .background(
-                                    Image("HomeView_Img2")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 400, height: 200)
-                                        .mask(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [.clear, .white]),
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
-                                        )
-                                        .offset(x: 50)
-                                )
-                                .background(Color("AccentBackground"))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            }
-                        }
-                        HStack{
-                            Button {
                                 vm.addPage(.shop)
                             } label: {
                                 VStack(alignment: .leading){

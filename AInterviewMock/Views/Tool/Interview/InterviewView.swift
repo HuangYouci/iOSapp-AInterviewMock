@@ -37,19 +37,6 @@ struct InterviewView: View {
             .padding(.horizontal)
             .padding(.vertical, 5)
             .padding(.bottom, 5)
-            .background(
-                Image("HomeView_Img1")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 400, alignment: .top)
-                    .mask(
-                        LinearGradient(
-                            gradient: Gradient(colors: [.clear, .white]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-            )
             
             ScrollView{
                 
@@ -153,16 +140,35 @@ struct InterviewView: View {
                 }
                 .padding(25)
                 .frame(maxWidth: .infinity)
-                .background(Color("Background"))
-                .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+                .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
             }
             .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-            .fixedSize(horizontal: false, vertical: true)
-            
-            Color("Background")
-                .ignoresSafeArea(edges: [.bottom])
+        
         }
-        .background(Color("AccentBackground"))
+        .background(
+            VStack{
+                Image("HomeView_Img1")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 400)
+                    .mask(
+                        LinearGradient(
+                            gradient: Gradient(colors: [.clear, .white]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                Spacer()
+            }
+                .ignoresSafeArea(.all)
+        )
+        .background(
+            VStack{
+                Color("AccentBackground")
+                Color("Background")
+            }
+                .ignoresSafeArea(.all)
+        )
         .navigationBarHidden(true)
         .onAppear {
             UIApplication.shared.isIdleTimerDisabled = true
@@ -241,7 +247,7 @@ struct InterviewView_Holder: View {
                 Image("HomeView_Img1")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: UIScreen.main.bounds.width, height: 400)
+                    .frame(height: 400)
                     .mask(
                         LinearGradient(
                             gradient: Gradient(colors: [.clear, .white]),
@@ -249,11 +255,17 @@ struct InterviewView_Holder: View {
                             endPoint: .bottom
                         )
                     )
-                    .ignoresSafeArea(edges: [.top])
                 Spacer()
             }
+                .ignoresSafeArea(.all)
         )
-        .background(Color("AccentBackground"))
+        .background(
+            VStack{
+                Color("AccentBackground")
+                Color("Background")
+            }
+                .ignoresSafeArea(.all)
+        )
         .animation(.spring(duration: 0.3), value: ip.status)
     }
 }
@@ -567,20 +579,11 @@ struct InterviewView_Entry: View {
                 
             }
             .padding(25)
-            .frame(maxWidth: .infinity)
-            .background(Color("Background"))
-            .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+            .frame(maxHeight: .infinity)
         }
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-        .background(
-            VStack{
-                Color.clear
-                    .frame(maxHeight: 100)
-                Color("Background")
-                    .ignoresSafeArea(edges: [.bottom])
-            }
-        )
         .animation(.easeInOut(duration: 0.3), value: session)
+        .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
         
     }
     
@@ -981,19 +984,10 @@ struct InterviewView_Prepared: View {
                 
             }
             .padding(25)
-            .frame(maxWidth: .infinity)
-            .background(Color("Background"))
-            .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+            .frame(maxHeight: .infinity)
         }
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-        .background(
-            VStack{
-                Color.clear
-                    .frame(maxHeight: 100)
-                Color("Background")
-                    .ignoresSafeArea(edges: [.bottom])
-            }
-        )
+        .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
         
     }
     
@@ -1046,8 +1040,7 @@ struct InterviewView_GenerateQuestions: View {
         }
         .padding(25)
         .frame(maxWidth: .infinity)
-        .background(Color("Background"))
-        .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+        .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
         .ignoresSafeArea(edges: [.bottom])
         .onAppear {
             Task{
@@ -1055,7 +1048,7 @@ struct InterviewView_GenerateQuestions: View {
                     ip = ri
                     let _ = it.save(ip)
                 } else {
-                    loadingProcess = "生目失敗。請重啟 app，點擊該檔案重試"
+                    loadingProcess = "生成失敗。請重啟 app，點擊該檔案重試"
                     print("Generate Failed")
                 }
             }
@@ -1117,8 +1110,7 @@ struct InterviewView_Progress: View {
         }
         .padding(25)
         .frame(maxWidth: .infinity)
-        .background(Color("Background"))
-        .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+        .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
         .ignoresSafeArea(edges: [.bottom])
         .onAppear {
             startTimer()
@@ -1198,8 +1190,7 @@ struct InterviewView_GenerateResults: View {
         }
         .padding(25)
         .frame(maxWidth: .infinity)
-        .background(Color("Background"))
-        .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+        .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
         .ignoresSafeArea(edges: [.bottom])
         .onAppear {
             Task{
@@ -1332,19 +1323,11 @@ struct InterviewView_Completed: View {
                 
             }
             .padding(25)
-            .frame(maxWidth: .infinity)
-            .background(Color("Background"))
-            .clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20))
+            .frame(maxHeight: .infinity)
+            
         }
         .scrollBounceBehavior(.basedOnSize, axes: [.vertical])
-        .background(
-            VStack{
-                Color.clear
-                    .frame(maxHeight: 100)
-                Color("Background")
-                    .ignoresSafeArea(edges: [.bottom])
-            }
-        )
+        .background(Color("Background").clipShape(.rect(topLeadingRadius: 20, bottomLeadingRadius: 0, bottomTrailingRadius: 0, topTrailingRadius: 20)))
         
     }
     
