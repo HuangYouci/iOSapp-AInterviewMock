@@ -48,7 +48,7 @@ export const createInitialUserProfile = onCall(
         let nextUserId = 1;
         if (counterDoc.exists && typeof counterDoc
           .data()?.nextUserId === "number") {
-          nextUserId = (counterDoc.data()?.nextUserId as number) + 1;
+          nextUserId = counterDoc.data()?.nextUserId as number;
         }
 
         newProfileData = {
@@ -61,7 +61,7 @@ export const createInitialUserProfile = onCall(
           lastloginDate: new Date(),
         };
 
-        transaction.set(counterRef, {nextUserId: nextUserId},
+        transaction.set(counterRef, {nextUserId: nextUserId + 1},
           {merge: true});
         transaction.set(userProfileRef, newProfileData);
       });
