@@ -113,9 +113,10 @@ class UpdateChecker: ObservableObject {
                 } else {
                     
                     // 版本等於商店版本：正式版
-                    
-                    print("UpdateChecker | App is up to date. Current: \(currentVersionString), AppStore: \(appStoreVersion)")
-                    self.status = .same
+                    DispatchQueue.main.async {
+                        print("UpdateChecker | App is up to date. Current: \(currentVersionString), AppStore: \(appStoreVersion)")
+                        self.status = .same
+                    }
                 }
                 
                 DispatchQueue.main.async {

@@ -85,7 +85,7 @@ struct InterviewView: View {
                                 Divider()
                                 VStack(spacing: 3){
                                     HStack{
-                                        Text("5")
+                                        Text("1")
                                             .font(.title2)
                                             .bold()
                                         Image(systemName: "hockey.puck.fill")
@@ -99,7 +99,7 @@ struct InterviewView: View {
                                 }
                                 VStack(spacing: 3){
                                     HStack{
-                                        Text("5")
+                                        Text("1")
                                             .font(.title2)
                                             .bold()
                                         Image(systemName: "hockey.puck.fill")
@@ -133,6 +133,11 @@ struct InterviewView: View {
                                 Divider()
                                     .padding(.vertical, 6.5)
                             }
+                        }
+                        
+                        if (aip.count == 0){
+                            Text("尚無紀錄")
+                                .foregroundStyle(Color(.systemGray))
                         }
                     }
                     .inifBlock(fgColor: Color.accentColor, bgColor: Color("BackgroundR1"))
@@ -1215,8 +1220,10 @@ struct InterviewView_Completed: View {
     @Binding var ip: InterviewProfile
     @EnvironmentObject var it: InterviewTool
     @EnvironmentObject var ups: UserProfileService
+    @EnvironmentObject var vm: ViewManager
     
     @State private var displayBlockScore: CGFloat = 100
+    @State private var displayDeleteConfirm: Bool = false
     
     var body: some View {
         
@@ -1224,96 +1231,118 @@ struct InterviewView_Completed: View {
             
             VStack(alignment: .leading, spacing: 15){
                 
-                Group {
-                    
-                    VStack(alignment: .leading){
-                        Text(ip.name)
-                            .bold()
-                            .font(.title)
-                        Text(ip.templateName)
-                        HStack{
-                            Spacer()
-                            Text({
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "yyyy/MM/dd HH:mm"
-                                return formatter.string(from: ip.date)
-                            }())
-                        }
+                VStack(alignment: .leading){
+                    Text(ip.name)
+                        .bold()
+                        .font(.title)
+                    Text(ip.templateName)
+                    HStack{
+                        Spacer()
+                        Text({
+                            let formatter = DateFormatter()
+                            formatter.dateFormat = "yyyy/MM/dd HH:mm"
+                            return formatter.string(from: ip.date)
+                        }())
                     }
-                    
-                    VStack(alignment: .leading){
-                        Text("得分")
-                        Text("\(ip.overallRating)")
-                            .font(.title)
-                            .bold()
-                        HStack(spacing: 0){
-                            Rectangle()
-                                .fill(Color("AccentBackground"))
-                                .frame(width: (displayBlockScore/100 * CGFloat(ip.overallRating)))
-                                .animation(.spring(duration: 2.0), value: displayBlockScore)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                            Rectangle()
-                                .fill(Color("Background"))
-                        }
-                        .frame(height: 8)
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .padding(.top, -10)
-                        .background(GeometryReader { proxy in
-                            Color.clear
-                                .onAppear {
-                                    self.displayBlockScore = proxy.size.width
-                                }
-                                .onChange(of: proxy.size){ t in
-                                    self.displayBlockScore = t.width
-                                }
-                        })
-                    }
-                    .inifBlock(bgColor: Color("BackgroundR1"))
-                    
-                    VStack(alignment: .leading){
-                        Text("整體評價")
-                            .bold()
-                        Text(ip.feedback)
-                    }
-                    .inifBlock(bgColor: Color("BackgroundR1"))
-                    
-                    Text("回饋")
-                        .foregroundStyle(Color(.systemGray))
-                        .font(.caption)
-                    
-                    ForEach(ip.feedbacks) { i in
-                        VStack(alignment: .leading){
-                            Text(i.content)
-                                .bold()
-                            Text(i.suggestion)
-                        }
-                        .inifBlock(bgColor: Color("BackgroundR1"))
-                    }
-                    
-                    Text("問答")
-                        .foregroundStyle(Color(.systemGray))
-                        .font(.caption)
-                    
-                    ForEach(ip.questions) { i in
-                        VStack(alignment: .leading){
-                            Text(i.question)
-                                .padding(.leading, 10)
-                                .overlay(alignment: .leading){
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color(.systemGray))
-                                        .frame(width: 4)
-                                }
-                                .padding(.bottom, 2)
-                            Text(i.answer)
-                            Divider()
-                            Text("\(i.score) 分")
-                                .bold()
-                            Text(i.feedback)
-                        }
-                        .inifBlock(bgColor: Color("BackgroundR1"))
-                    }
-                    
                 }
+                
+                VStack(alignment: .leading){
+                    Text("得分")
+                    Text("\(ip.overallRating)")
+                        .font(.title)
+                        .bold()
+                    HStack(spacing: 0){
+                        Rectangle()
+                            .fill(Color("AccentBackground"))
+                            .frame(width: (displayBlockScore/100 * CGFloat(ip.overallRating)))
+                            .animation(.spring(duration: 2.0), value: displayBlockScore)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        Rectangle()
+                            .fill(Color("Background"))
+                    }
+                    .frame(height: 8)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.top, -10)
+                    .background(GeometryReader { proxy in
+                        Color.clear
+                            .onAppear {
+                                self.displayBlockScore = proxy.size.width
+                            }
+                            .onChange(of: proxy.size){ t in
+                                self.displayBlockScore = t.width
+                            }
+                    })
+                }
+                .inifBlock(bgColor: Color("BackgroundR1"))
+                
+                VStack(alignment: .leading){
+                    Text("整體評價")
+                        .bold()
+                    Text(ip.feedback)
+                }
+                .inifBlock(bgColor: Color("BackgroundR1"))
+                
+                Text("回饋")
+                    .foregroundStyle(Color(.systemGray))
+                    .font(.caption)
+                
+                ForEach(ip.feedbacks) { i in
+                    VStack(alignment: .leading){
+                        Text(i.content)
+                            .bold()
+                        Text(i.suggestion)
+                    }
+                    .inifBlock(bgColor: Color("BackgroundR1"))
+                }
+                
+                Text("問答")
+                    .foregroundStyle(Color(.systemGray))
+                    .font(.caption)
+                
+                ForEach(ip.questions) { i in
+                    VStack(alignment: .leading){
+                        Text(i.question)
+                            .padding(.leading, 10)
+                            .overlay(alignment: .leading){
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color(.systemGray))
+                                    .frame(width: 4)
+                            }
+                            .padding(.bottom, 2)
+                        Text(i.answer)
+                        Divider()
+                        Text("\(i.score) 分")
+                            .bold()
+                        Text(i.feedback)
+                    }
+                    .inifBlock(bgColor: Color("BackgroundR1"))
+                }
+                
+                Text("操作")
+                    .foregroundStyle(Color(.systemGray))
+                    .font(.caption)
+                
+                VStack{
+                    if (displayDeleteConfirm){
+                        Button {
+                            it.delete(for: ip.id)
+                            vm.clearTopView()
+                        } label: {
+                            Text("確認刪除？")
+                                .bold()
+                        }
+                    } else {
+                        Button {
+                            withAnimation(.easeIn(duration: 0.1)) {
+                                displayDeleteConfirm = true
+                            }
+                        } label: {
+                            Text("刪除")
+                        }
+                    }
+                }
+                .inifBlock(fgColor: Color(.red), bgColor: Color("BackgroundR1"))
+                
                 
             }
             .padding(25)
