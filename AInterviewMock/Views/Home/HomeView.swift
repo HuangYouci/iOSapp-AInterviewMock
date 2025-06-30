@@ -50,8 +50,41 @@ struct HomeView: View {
             
             ScrollView{
                 VStack(alignment: .leading){
-                    
                     VStack(alignment: .leading){
+                        HStack{
+                            Button {
+                                vm.addPage(.diaryView)
+                            } label: {
+                                VStack(alignment: .leading){
+                                    Text("日記")
+                                        .font(.title)
+                                        .bold()
+                                        .foregroundStyle(Color(.white))
+                                    HStack{
+                                        Spacer()
+                                    }
+                                }
+                                .padding()
+                                .frame(height: 100, alignment: .topLeading)
+                                .background(
+                                    Image("HomeView_Img4")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 400, height: 200)
+                                        .mask(
+                                            LinearGradient(
+                                                gradient: Gradient(colors: [.clear, .white]),
+                                                startPoint: .leading,
+                                                endPoint: .trailing
+                                            )
+                                        )
+                                        .offset(x: 50)
+                                )
+                                .background(Color("AccentBackground"))
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            }
+                        }
+                        
                         HStack{
                             Button {
                                 vm.addPage(.toolInterview)
@@ -85,6 +118,7 @@ struct HomeView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
+                        
                         HStack{
                             Button {
                                 vm.addPage(.shop)

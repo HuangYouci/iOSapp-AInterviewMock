@@ -20,6 +20,7 @@ class ViewManager: ObservableObject {
         
         // Tool
         case toolInterview
+        case diaryView
     }
     
     // 主要元件

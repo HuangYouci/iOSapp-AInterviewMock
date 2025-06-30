@@ -33,6 +33,8 @@ struct ContentView: View {
                             ShopView()
                         case .toolInterview:
                             InterviewView()
+                        case .diaryView:
+                            DiaryView()
                         }
                     }
             }
