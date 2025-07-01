@@ -53,7 +53,7 @@ struct DiaryView: View {
                 VStack(alignment: .leading, spacing: 15){
                     
                     Button {
-                        vm.setTopView(DiaryView_Holder(dp: DiaryProfile(status: .prepared)))
+                        vm.setTopView(DiaryView_Holder(dp: DiaryProfile()))
                     } label: {
                         HStack{
                             Spacer()
@@ -113,6 +113,13 @@ struct DiaryView: View {
                             } label: {
                                 HStack{
                                     Text(i.diaryTitle)
+                                    Spacer()
+                                    Text({
+                                        let formatter = DateFormatter()
+                                        formatter.dateFormat = "MM/dd"
+                                        return formatter.string(from: i.date)
+                                    }())
+                                    .foregroundStyle(Color(.systemGray))
                                 }
                             }
                             if(index < adp.count-1){
@@ -214,7 +221,7 @@ struct DiaryView_Holder: View {
             
             switch(dp.status){
             case .notStarted:
-                EmptyView() // 目前尚未使用到
+                DiaryView_Prepared(dp: $dp) // 目前尚未使用到 先暫時用 Prepared
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
             case .prepared:
                 DiaryView_Prepared(dp: $dp)
@@ -534,6 +541,7 @@ struct DiaryView_Completed: View {
     
     @State private var displayCopy: Bool = false
     @State private var displayDeleteConfirm: Bool = false
+    @State private var displayResponseLoading: Bool = false
     
     var body: some View {
         
@@ -589,6 +597,42 @@ struct DiaryView_Completed: View {
                 Text("聽眾留言")
                     .foregroundStyle(Color(.systemGray))
                     .font(.caption)
+                
+                ForEach(dp.diaryResponse){ i in
+                    VStack(alignment: .leading){
+                        Text(i.name)
+                            .bold()
+                        Text(i.comment)
+                    }
+                    .inifBlock(bgColor: Color("BackgroundR1"))
+                }
+                
+                HStack{
+                    Button {
+                        ups.coinRequest(type: .pay(item: "日記 聽眾留言"), amount: -1, onConfirm: {
+                            displayResponseLoading = true
+                            Task {
+                                if let r = await dt.generateResponse(i: dp) {
+                                    dp.diaryResponse.append(r)
+                                    let _ = dt.save(dp)
+                                }
+                                displayResponseLoading = false
+                            }
+                        }, onCancel: {
+                            print("Canceled")
+                        })
+                    } label: {
+                        HStack{
+                            Image(systemName: "plus")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 15, height: 15)
+                            Text("新增聽眾留言")
+                        }
+                    }
+                    .disabled(displayResponseLoading)
+                }
+                .inifBlock(fgColor: Color.accentColor, bgColor: Color("BackgroundR1"))
                 
                 Text("操作")
                     .foregroundStyle(Color(.systemGray))
