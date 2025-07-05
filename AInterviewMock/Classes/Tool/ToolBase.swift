@@ -269,7 +269,11 @@ class ToolBase: ObservableObject {
     func startRecording() {
         let session = AVAudioSession.sharedInstance()
         do {
-            try session.setCategory(.playAndRecord, mode: .default)
+            try session.setCategory(
+                .playAndRecord,
+                mode: .default,
+                options: [.defaultToSpeaker, .allowBluetooth]
+            )
             try session.setActive(true)
             
             let fileManager = FileManager.default
