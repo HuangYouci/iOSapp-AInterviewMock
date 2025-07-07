@@ -1,5 +1,5 @@
 //
-//  DiaryProfile.swift
+//  DiaryStruct.swift
 //  AInterviewMock
 //
 //  Created by 黃宥琦 on 2025/6/30.

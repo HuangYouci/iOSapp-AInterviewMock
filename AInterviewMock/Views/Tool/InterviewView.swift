@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ActivityKit
 
 struct InterviewView: View {
     
@@ -187,9 +188,12 @@ struct InterviewView: View {
         }
     }
     
+    // MARK: - 函數區
+    
     func load() {
         aip = it.load(all: InterviewProfile.self).sorted(by: { $0.date > $1.date })
     }
+    
 }
 
 struct InterviewView_Holder: View {
@@ -1067,6 +1071,7 @@ struct InterviewView_Progress: View {
     @State private var cur: Int = 0
     @State private var timer: Timer? = nil
     @State private var timerSec: Int = 0
+    @State private var activity: Activity<InterviewActivityAttributes>?
     
     var body: some View {
         
@@ -1121,6 +1126,8 @@ struct InterviewView_Progress: View {
         
     }
     
+    // MARK: - 函數區 (通用建構)
+    
     @ViewBuilder
     private func actionButton(title: String, requirements: @escaping () -> Bool, onTap: @escaping () -> Void) -> some View {
         let isDisabled = !(requirements())
@@ -1139,6 +1146,8 @@ struct InterviewView_Progress: View {
         .animation(.easeInOut, value: isDisabled)
     }
     
+    // MARK: - 函數區 (時間、錄音、實時動態)
+    
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
@@ -1147,8 +1156,10 @@ struct InterviewView_Progress: View {
     private func startTimer() {
         stopTimer()
         timerSec = 0
+        startActivity()
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true){ _ in
             timerSec += 1
+            updateActivity()
         }
     }
 
@@ -1159,10 +1170,63 @@ struct InterviewView_Progress: View {
             it.startRecording()
             cur += 1
         } else {
+            endActivity()
             ip.status = .generateResults
             let _ = it.save(ip)
         }
     }
+    
+    private func startActivity() {
+        let attributes = InterviewActivityAttributes(interviewID: UUID().uuidString)
+        
+        let initialState = InterviewActivityAttributes.ContentState(
+            question: ip.questions[cur].question,
+            currentQuestion: cur,
+            totalQuestions: ip.questionNumbers,
+            timer: timerSec
+        )
+
+        do {
+            self.activity = try Activity<InterviewActivityAttributes>.request(
+                attributes: attributes,
+                content: .init(state: initialState, staleDate: nil),
+                pushType: nil
+            )
+            print("Live Activity 已啟動：\(activity?.id ?? "未知")")
+        } catch {
+            print("啟動 Live Activity 失敗：\(error.localizedDescription)")
+        }
+    }
+    
+    private func updateActivity() {
+        guard let activity else { return }
+        let newState = InterviewActivityAttributes.ContentState(
+            question: ip.questions[cur].question,
+            currentQuestion: cur,
+            totalQuestions: ip.questionNumbers,
+            timer: timerSec
+        )
+        Task {
+            await activity.update(ActivityContent(state: newState, staleDate: nil))
+        }
+    }
+    
+    private func endActivity() {
+        guard let activity else { return }
+        let finalState = InterviewActivityAttributes.ContentState(
+            question: ip.questions[cur].question,
+            currentQuestion: cur,
+            totalQuestions: ip.questionNumbers,
+            timer: timerSec
+        )
+        Task {
+            await activity.end(
+                ActivityContent(state: finalState, staleDate: nil),
+                dismissalPolicy: .immediate
+            )
+        }
+    }
+
     
 }
 

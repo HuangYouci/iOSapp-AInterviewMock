@@ -1,11 +1,12 @@
 //
-//  InterviewProfile.swift
+//  InterviewStruct.swift
 //  AInterviewMock
 //
 //  Created by 黃宥琦 on 2025/5/5.
 //
 
 import Foundation
+import ActivityKit
 
 enum InterviewProfileStatus: Codable, Equatable {
     case notStarted             // 尚未開始（模板）
@@ -65,7 +66,7 @@ struct InterviewProfileFeedbacks: Identifiable, Codable {
     var suggestion: String                      // 改善方向
 }
 
-// Constants
+// MARK: - 模板
 
 struct DefaultInterviewProfile {
     // template
@@ -117,4 +118,16 @@ struct DefaultInterviewProfile {
             ]
         )
     }
+}
+
+// MARK: - 動態島
+
+struct InterviewActivityAttributes: ActivityAttributes {
+    struct ContentState: Codable, Hashable {
+        var question: String
+        var currentQuestion: Int
+        var totalQuestions: Int
+        var timer: Int
+    }
+    var interviewID: String
 }
