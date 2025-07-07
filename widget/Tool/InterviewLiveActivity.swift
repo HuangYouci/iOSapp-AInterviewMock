@@ -82,7 +82,6 @@ struct InterviewLockScreenView: View {
             HStack(alignment: .center){
                 Text("inif")
                     .fontWeight(.heavy)
-                    .foregroundStyle(Color(.white))
                     .font(.title3)
                 Text("模擬面試")
                     .bold()
@@ -100,6 +99,7 @@ struct InterviewLockScreenView: View {
                     .bold()
             }
         }
+        .foregroundStyle(Color(.white))
         .padding()
         .background(Color(.accentBackground))
     }
