@@ -20,12 +20,12 @@ struct InterviewLiveActivity: Widget {
                     HStack{
                         Image(systemName: "questionmark.bubble.fill")
                             .scaledToFit()
-                            .frame(width: 15, height: 15)
+                            .frame(width: 10, height: 10)
                         Text("問題 \(context.state.currentQuestion + 1)")
                             .bold()
                     }
                     .padding(6)
-                    .padding(.horizontal, 3)
+                    .padding(.horizontal, 6)
                     .background(Color(.accentBackground))
                     .clipShape(Capsule())
                 }
@@ -38,7 +38,7 @@ struct InterviewLiveActivity: Widget {
                 }
                 DynamicIslandExpandedRegion(.bottom){
                     Text("\(context.state.question)")
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal, 3)
                 }
                 
             } compactLeading: {
@@ -49,7 +49,8 @@ struct InterviewLiveActivity: Widget {
                     Text("\(context.state.currentQuestion + 1)")
                         .bold()
                 }
-                .padding(6)
+                .padding(3)
+                .padding(.horizontal, 3)
                 .background(Color(.accentBackground))
                 .clipShape(Capsule())
             } compactTrailing: {

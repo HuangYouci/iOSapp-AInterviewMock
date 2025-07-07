@@ -67,20 +67,21 @@ struct HomeView: View {
                                 .padding()
                                 .frame(height: 100, alignment: .topLeading)
                                 .background(
-                                    Image("HomeView_Img4")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 400, height: 200)
-                                        .mask(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [.clear, .white]),
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
+                                    Color("AccentBackground")
+                                        .overlay(
+                                            Image("HomeView_Img2")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .mask(
+                                                    LinearGradient(
+                                                        gradient: Gradient(colors: [.clear, .white]),
+                                                        startPoint: .leading,
+                                                        endPoint: .trailing
+                                                    )
+                                                )
+                                            , alignment: .trailing
                                         )
-                                        .offset(x: 50)
                                 )
-                                .background(Color("AccentBackground"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
@@ -101,20 +102,21 @@ struct HomeView: View {
                                 .padding()
                                 .frame(height: 100, alignment: .topLeading)
                                 .background(
-                                    Image("HomeView_Img1")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 400, height: 200)
-                                        .mask(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [.clear, .white]),
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
+                                    Color("AccentBackground")
+                                        .overlay(
+                                            Image("HomeView_Img1")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .mask(
+                                                    LinearGradient(
+                                                        gradient: Gradient(colors: [.clear, .white]),
+                                                        startPoint: .leading,
+                                                        endPoint: .trailing
+                                                    )
+                                                )
+                                            , alignment: .trailing
                                         )
-                                        .offset(x: 50)
                                 )
-                                .background(Color("AccentBackground"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
@@ -134,20 +136,21 @@ struct HomeView: View {
                                 }
                                 .padding()
                                 .background(
-                                    Image("HomeView_Img3")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 400, height: 200)
-                                        .mask(
-                                            LinearGradient(
-                                                gradient: Gradient(colors: [.clear, .white]),
-                                                startPoint: .leading,
-                                                endPoint: .trailing
-                                            )
+                                    Color("AccentBackground")
+                                        .overlay(
+                                            Image("HomeView_Img3")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .mask(
+                                                    LinearGradient(
+                                                        gradient: Gradient(colors: [.clear, .white]),
+                                                        startPoint: .leading,
+                                                        endPoint: .trailing
+                                                    )
+                                                )
+                                            , alignment: .trailing
                                         )
-                                        .offset(x: 50)
                                 )
-                                .background(Color("AccentBackground"))
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                             }
                         }
